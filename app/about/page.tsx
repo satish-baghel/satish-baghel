@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { SocialLinks } from "@/components/SocialLinks";
+import {
+  ActivitySection,
+  ActivitySectionSkeleton,
+} from "@/components/ActivitySection";
 import { TechBadge } from "@/components/TechGrid";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { ProjectGrid } from "@/components/ProjectGrid";
@@ -78,6 +83,16 @@ export default function AboutPage() {
       </h2>
       <div className="mt-8">
         <ExperienceTimeline items={EXPERIENCE} />
+      </div>
+
+      {/* Coding activity — GitHub + LeetCode, past year */}
+      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
+        Last 6 months in code
+      </h2>
+      <div className="mt-6">
+        <Suspense fallback={<ActivitySectionSkeleton />}>
+          <ActivitySection />
+        </Suspense>
       </div>
 
       {/* Projects */}
