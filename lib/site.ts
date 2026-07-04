@@ -11,6 +11,9 @@ export const site = {
   email: "satish769843@gmail.com",
   phone: "+91 8238394388",
   github: "https://github.com/satish-baghel",
+  githubUsername: "satish-baghel",
+  leetcode: "https://leetcode.com/u/satish_baghel/",
+  leetcodeUsername: "satish_baghel",
   linkedin: "https://www.linkedin.com/in/satish-baghel",
   locale: "en_US",
 } as const;

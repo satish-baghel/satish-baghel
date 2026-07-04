@@ -1,6 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Suspense } from "react";
 import { getAllPosts } from "@/lib/posts";
+import {
+  ActivitySection,
+  ActivitySectionSkeleton,
+} from "@/components/ActivitySection";
 import { PostCard } from "@/components/PostCard";
 import { FeaturedPost } from "@/components/FeaturedPost";
 import { SocialLinks } from "@/components/SocialLinks";
@@ -159,6 +164,19 @@ export default function Home() {
           )}
         </section>
       )}
+
+      {/* Coding activity — GitHub + LeetCode, past year */}
+      <section className="border-t border-border py-14 sm:py-16">
+        <SectionHeader
+          eyebrow="Activity"
+          title="Last 6 months in code"
+        />
+        <div className="reveal mt-6">
+          <Suspense fallback={<ActivitySectionSkeleton />}>
+            <ActivitySection />
+          </Suspense>
+        </div>
+      </section>
 
       {/* Ask my resume — AI chat */}
       <section className="border-t border-border py-14 sm:py-16">

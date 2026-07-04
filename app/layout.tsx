@@ -90,6 +90,12 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="dark"
+      // The inline themeScript sets data-theme from localStorage before React
+      // hydrates, so the SSR value ("dark") can differ from the DOM at hydration
+      // time. This is unavoidable for a no-flash theme; suppress the warning for
+      // this element's attributes (one level deep only). See Next.js "Preventing
+      // flash before hydration" guide.
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
