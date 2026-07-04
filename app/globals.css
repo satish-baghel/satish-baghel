@@ -1,0 +1,432 @@
+@import "tailwindcss";
+
+/*
+ * Dark-first developer palette — deep slate + violet accent.
+ * Violet signals creativity + growth ("inspiration") against a calm slate canvas.
+ * :root is the DARK default. [data-theme="light"] overrides it.
+ * An inline script in layout.tsx sets data-theme before paint (no FOUC).
+ */
+:root {
+  --background: #0f172a; /* slate-900 — page canvas */
+  --surface: #1b2336; /* elevated card surface */
+  --surface-muted: #1e293b; /* slate-800 — subtle fills, chips */
+  --border: #28344b; /* cool divider, visible on dark */
+  --foreground: #f8fafc; /* slate-50 — primary text */
+  --muted: #94a3b8; /* slate-400 — secondary text, ≥4.5:1 on bg */
+  --accent: #8b5cf6; /* violet-500 — links / CTA */
+  --accent-strong: #a78bfa; /* violet-400 — hover brightens on dark */
+  --shadow-card: 0 1px 2px rgba(2, 6, 23, 0.4),
+    0 10px 28px -14px rgba(2, 6, 23, 0.7);
+  --shadow-card-hover: 0 2px 6px rgba(139, 92, 246, 0.14),
+    0 18px 40px -16px rgba(139, 92, 246, 0.4);
+}
+
+:root[data-theme="light"] {
+  --background: #f8fafc; /* slate-50 — paper */
+  --surface: #ffffff;
+  --surface-muted: #f1f5f9; /* slate-100 */
+  --border: #e2e8f0; /* slate-200 */
+  --foreground: #0f172a; /* slate-900 — primary ink */
+  --muted: #475569; /* slate-600 — ≥4.5:1 on white */
+  --accent: #7c3aed; /* violet-600 — AA on white */
+  --accent-strong: #6d28d9; /* violet-700 — hover / active */
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px -12px rgba(15, 23, 42, 0.12);
+  --shadow-card-hover: 0 2px 4px rgba(124, 58, 237, 0.1),
+    0 16px 36px -14px rgba(124, 58, 237, 0.24);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+/* Display headings use a tight, clean sans (Inter) for a technical feel. */
+.font-display {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/*
+ * Decorative hero backdrop: a faint dot grid with an accent glow, masked to
+ * fade at the edges. Static (no animation) so it stays calm + reduced-motion-safe.
+ */
+.hero-grid {
+  background-image:
+    radial-gradient(
+      55% 45% at 12% -5%,
+      color-mix(in srgb, var(--accent) 26%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 40% at 88% 6%,
+      color-mix(in srgb, var(--accent-strong) 20%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(currentColor 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    22px 22px;
+  color: var(--border);
+  -webkit-mask-image: radial-gradient(
+    120% 90% at 50% 0%,
+    #000 35%,
+    transparent 80%
+  );
+  mask-image: radial-gradient(120% 90% at 50% 0%, #000 35%, transparent 80%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/*
+ * Subtle entrance: fade + rise. Uses transform/opacity only with an ease-out
+ * curve. `animation-fill-mode: both` holds the final (visible) state, and the
+ * reduced-motion block above collapses both duration AND delay — so motion-averse
+ * users land on the finished layout instantly (nothing stuck at opacity 0).
+ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal {
+  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.reveal-1 {
+  animation-delay: 0.05s;
+}
+.reveal-2 {
+  animation-delay: 0.12s;
+}
+.reveal-3 {
+  animation-delay: 0.19s;
+}
+.reveal-4 {
+  animation-delay: 0.26s;
+}
+.reveal-5 {
+  animation-delay: 0.33s;
+}
+
+/* "Available for work" status pill — green dot is paired with text, not color-only. */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  padding: 0.375rem 0.75rem 0.375rem 0.625rem;
+  font-size: 0.8125rem;
+  color: var(--foreground);
+}
+.status-dot {
+  position: relative;
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: #22c55e; /* green-500 */
+}
+.status-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #22c55e;
+  animation: ping 1.9s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* Soft accent glow behind the hero avatar for a premium, lifted feel (static). */
+.avatar-glow::after {
+  content: "";
+  position: absolute;
+  inset: -14%;
+  z-index: -1;
+  border-radius: 9999px;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--accent) 42%, transparent),
+    transparent 72%
+  );
+  filter: blur(30px);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+/* Premium contact panel — surface with a corner accent wash. */
+.cta-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(
+      120% 140% at 100% 0%,
+      color-mix(in srgb, var(--accent) 16%, transparent),
+      transparent 55%
+    ),
+    var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+/*
+ * Prose styles for server-rendered Markdown (lib/markdown.ts output).
+ * Hand-rolled to avoid adding @tailwindcss/typography as a dependency.
+ */
+.prose {
+  color: var(--foreground);
+  line-height: 1.75;
+  font-size: 1.0625rem;
+}
+.prose > * + * {
+  margin-top: 1.25em;
+}
+.prose h2 {
+  margin-top: 2.25em;
+  margin-bottom: 0.75em;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 6rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+.prose h3 {
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+  font-size: 1.25rem;
+  font-weight: 600;
+  scroll-margin-top: 6rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote {
+  color: var(--foreground);
+}
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.prose a:hover {
+  color: var(--accent-strong);
+}
+.prose strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li + li {
+  margin-top: 0.4em;
+}
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  color: var(--muted);
+  font-style: italic;
+}
+/* Inline code — tinted on a subtle surface for the light canvas. */
+.prose :not(pre) > code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875em;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.15em 0.4em;
+  color: var(--accent-strong);
+}
+/* Fenced code blocks — cool slate, a distinct surface in both themes. */
+.prose pre {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  background: #0b1120; /* deep slate */
+  border: 1px solid #1f2937; /* slate-800 */
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+}
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #e2e8f0; /* slate-200 */
+}
+.prose figure.code {
+  margin-top: 1.5em;
+}
+.prose figure.code figcaption {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+/*
+ * Code block chrome (components/CodeBlock.tsx). A rounded card with a header bar
+ * holding a filename + language tab + copy button, wrapping the highlighted body.
+ * Colors come from theme vars so it adapts to the light/dark toggle; the code
+ * surface itself stays a deep slate in both themes for legibility.
+ */
+.code-card {
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #0b1120;
+  box-shadow: var(--shadow-card);
+}
+.code-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem 0.5rem 1rem;
+  border-bottom: 1px solid #1f2937;
+  background: #0d1526;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+}
+.code-dots {
+  display: inline-flex;
+  gap: 0.375rem;
+}
+.code-dots span {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 9999px;
+  background: #334155;
+}
+.code-file {
+  color: #cbd5e1;
+}
+.code-lang {
+  margin-left: auto;
+  color: var(--accent-strong);
+  border: 1px solid #1f2937;
+  border-radius: 9999px;
+  padding: 0.1rem 0.5rem;
+  background: rgba(139, 92, 246, 0.1);
+}
+.code-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #94a3b8;
+  border: 1px solid #1f2937;
+  border-radius: 0.375rem;
+  padding: 0.15rem 0.5rem;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.code-copy:hover {
+  color: var(--accent-strong);
+  border-color: var(--accent);
+}
+.code-copy:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+/* react-syntax-highlighter renders its own <pre>; reset prose spacing/border. */
+.code-card pre {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+/*
+ * Terminal command card (components/Terminal.tsx) — the "npm i satish-baghel"
+ * flex on the home page. Same deep-slate surface as code cards.
+ */
+.terminal {
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #0b1120;
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+}
+.terminal-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #1f2937;
+  background: #0d1526;
+  color: #64748b;
+  font-size: 0.7rem;
+}
+.terminal-body {
+  padding: 0.9rem 1rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+}
+.terminal-body .prompt {
+  color: var(--accent-strong);
+}
+.terminal-body .comment {
+  color: #64748b;
+}
+.terminal-body .ok {
+  color: #34d399;
+}
