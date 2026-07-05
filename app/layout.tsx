@@ -44,6 +44,9 @@ export const metadata: Metadata = {
     description: site.description,
   },
   robots: { index: true, follow: true },
+  verification: {
+    google: "AvkWsky5CJA5xo8Vna0FRoLo1Vl1_Qf7uDMZ-XxzPIU",
+  },
 };
 
 // Per Next.js 16 docs, themeColor/viewport belong in the viewport export,

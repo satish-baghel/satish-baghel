@@ -37,12 +37,15 @@
 }
 
 :root[data-theme="light"] {
-  --background: #f8fafc; /* slate-50 — paper */
-  --surface: #ffffff;
-  --surface-muted: #f1f5f9; /* slate-100 */
-  --border: #e2e8f0; /* slate-200 */
-  --foreground: #0f172a; /* slate-900 — primary ink */
-  --muted: #475569; /* slate-600 — ≥4.5:1 on white */
+  /* Softer off-white paper — the whole scale is dialed a step darker than pure
+   * white so the canvas reads calm/premium instead of glaring. Surface still
+   * sits lighter than the background so cards keep their elevation. */
+  --background: #eceef2; /* soft cool off-white canvas (was slate-50) */
+  --surface: #f7f8fa; /* off-white card — never pure #fff */
+  --surface-muted: #e3e7ee; /* subtle fills, chips */
+  --border: #d3d9e3; /* divider, visible on the softer canvas */
+  --foreground: #0f172a; /* slate-900 — primary ink (15:1 on canvas) */
+  --muted: #475569; /* slate-600 — ≥4.5:1 on all surfaces */
 
   --accent: #4f46e5; /* indigo-600 — AA on white (~5.8:1) */
   --accent-strong: #4338ca; /* indigo-700 — hover / active */
