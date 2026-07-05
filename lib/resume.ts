@@ -115,6 +115,8 @@ export type Project = {
   description: string;
   tech: string[];
   url?: string;
+  /** One scannable, quantified outcome — surfaced as an amber "impact" badge. */
+  impact?: string;
 };
 
 export const PROJECTS: Project[] = [
@@ -124,6 +126,7 @@ export const PROJECTS: Project[] = [
       "Scalable React.js event platform for 100K+ users with 99.9% uptime — Rabbit Bank-integrated data entry (−60% manual input), PCI-compliant Stripe payments (+45% membership revenue), and event modules (Control Sheet, Breed Assignment, Judging).",
     tech: ["React", "Node.js", "MongoDB", "Stripe"],
     url: "https://time2enter.net",
+    impact: "100K+ users · +45% revenue",
   },
   {
     name: "EV India",
@@ -131,6 +134,7 @@ export const PROJECTS: Project[] = [
       "Fast, SEO-friendly Next.js platform serving 10,000+ monthly visitors (−40% load time, +25% organic traffic). Built a side-by-side EV comparison tool, layered filters, and a React Master Admin Panel (−50% admin task time) over 35+ Node/Express APIs.",
     tech: ["Next.js", "React", "Node.js", "Express", "MongoDB"],
     url: "https://evindia.online",
+    impact: "−40% load · +25% traffic",
   },
   {
     name: "Elumat",
@@ -138,6 +142,7 @@ export const PROJECTS: Project[] = [
       "Interactive K–8 math-learning platform with gamified experiences. Dynamic adaptive question engine across 5+ topics (+25% quiz accuracy), PDFMake worksheets, and batch export of 1,000+ reports saving educators 6+ hours weekly.",
     tech: ["React", "Node.js", "MongoDB"],
     url: "https://elumat.com",
+    impact: "+25% accuracy · 6+ hrs saved/wk",
   },
   {
     name: "Lystigardar (P.M.S)",
@@ -145,24 +150,28 @@ export const PROJECTS: Project[] = [
       "Property management system with reusable React.js/Reactstrap/CoreUI components (+40% dev speed), full English/Icelandic i18n, and modular architecture — 100% cross-browser compatibility across 6+ browsers.",
     tech: ["React", "Bootstrap", "Node.js"],
     url: "https://vinna.lystigardar.is",
+    impact: "+40% dev speed",
   },
   {
     name: "Trading App",
     description:
       "Real-time trading platform (Investor/Consultant/Admin roles) for 5,000+ users with Socket.io chat (1000+ concurrent, <200ms), Zerodha + TradingView integration, Twitter sentiment analysis (10K+ tweets/day), and Razorpay subscription billing.",
     tech: ["React", "Node.js", "MongoDB"],
+    impact: "1000+ concurrent · <200ms",
   },
   {
     name: "Water Taker",
     description:
       "50+ REST APIs in Node.js/Express/Sequelize (MySQL) at sub-300ms and 99.9% uptime, with geolocation-based dynamic pricing (+45% query speed), live 10s order tracking (98% delivery success), and English/Arabic localization (+30% retention in Dubai).",
     tech: ["Node.js", "Express", "MySQL"],
+    impact: "+45% query speed · +30% retention",
   },
   {
     name: "Inter Academy",
     description:
       "Full-stack course management platform to sell and manage 30+ courses with complete admin control (−40% content management effort), a dynamic React UI, digital course-book sharing, and 15+ Node/Express APIs backed by Sequelize.",
     tech: ["React", "Node.js", "Express", "MySQL"],
+    impact: "−40% content effort",
   },
 ];
 
@@ -185,6 +194,51 @@ export const EDUCATION: Education[] = [
     institution: "Nootan Sarva Vidyalaya Kelavani Mandal Sanchalit",
     location: "Visnagar, Gujarat, IN",
     year: "2019",
+  },
+];
+
+/**
+ * At-a-glance recruiter facts for the quick-facts strip on home + about.
+ * Keep these current — they're the first thing a hiring manager scans.
+ */
+export const QUICK_FACTS = [
+  { label: "Experience", value: "5+ years" },
+  { label: "Role", value: "Full Stack Developer" },
+  { label: "Core stack", value: "React · Next.js · Node" },
+  { label: "Location", value: "Ahmedabad, India" },
+  { label: "Status", value: "Not actively looking" },
+  { label: "Open to", value: "Networking & advice" },
+] as const;
+
+export type Testimonial = {
+  quote: string;
+  name: string;
+  title: string;
+};
+
+/**
+ * Recommendations / references. These are PLACEHOLDERS — replace `quote`,
+ * `name`, and `title` with real LinkedIn recommendations or manager
+ * references. The layout renders whatever is in this array (0, 1, or many).
+ */
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote:
+      "Satish consistently shipped clean, well-tested React features ahead of schedule and lifted the whole front-end team's standards. He's the engineer you want owning a critical path.",
+    name: "Reporting Manager",
+    title: "Engineering Manager · (add company)",
+  },
+  {
+    quote:
+      "He took our slow, hard-to-maintain dashboard and turned it into something fast and delightful. Load times dropped noticeably and our users felt it immediately.",
+    name: "Product Lead",
+    title: "Product Manager · (add company)",
+  },
+  {
+    quote:
+      "Reliable, communicative, and deeply thoughtful about performance and code quality. Satish mentored our juniors while still out-delivering on his own roadmap.",
+    name: "Senior Colleague",
+    title: "Tech Lead · (add company)",
   },
 ];
 

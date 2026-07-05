@@ -10,6 +10,8 @@ export const site = {
   location: "Ahmedabad, India",
   email: "satish769843@gmail.com",
   phone: "+91 8238394388",
+  // Drop the PDF at public/resume.pdf to enable the "Download résumé" button.
+  resume: "/resume.pdf",
   github: "https://github.com/satish-baghel",
   githubUsername: "satish-baghel",
   leetcode: "https://leetcode.com/u/satish_baghel/",

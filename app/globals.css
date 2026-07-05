@@ -1,26 +1,39 @@
 @import "tailwindcss";
 
 /*
- * Dark-first developer palette — deep slate + violet accent.
- * Violet signals creativity + growth ("inspiration") against a calm slate canvas.
+ * Premium engineer palette — deep slate canvas, INDIGO primary, AMBER highlight.
+ * Indigo reads as trusted + technical; amber is reserved for the things a
+ * recruiter should see first (CTAs, impact metrics) so achievements "glow".
+ * Every value maps to a Tailwind color so the system stays predictable.
  * :root is the DARK default. [data-theme="light"] overrides it.
  * An inline script in layout.tsx sets data-theme before paint (no FOUC).
  */
 :root {
-  --background: #0f172a; /* slate-900 — page canvas */
-  --surface: #1b2336; /* elevated card surface */
+  --background: #020617; /* slate-950 — deeper, more premium canvas */
+  --surface: #0f172a; /* slate-900 — elevated card surface */
   --surface-muted: #1e293b; /* slate-800 — subtle fills, chips */
-  --border: #28344b; /* cool divider, visible on dark */
+  --border: #243049; /* cool divider, visible on slate-950 */
   --foreground: #f8fafc; /* slate-50 — primary text */
   --muted: #94a3b8; /* slate-400 — secondary text, ≥4.5:1 on bg */
-  --accent: #977af0; /* violet — accent TEXT/links/borders, ≥4.5:1 on bg + surface */
-  --accent-strong: #a78bfa; /* violet-400 — hover brightens on dark */
-  --accent-solid: #7a48db; /* darker violet — solid button fill, white text ≥4.5:1 */
-  --accent-solid-hover: #8250e0; /* button hover — brightens yet keeps white AA */
-  --shadow-card: 0 1px 2px rgba(2, 6, 23, 0.4),
-    0 10px 28px -14px rgba(2, 6, 23, 0.7);
-  --shadow-card-hover: 0 2px 6px rgba(139, 92, 246, 0.14),
-    0 18px 40px -16px rgba(139, 92, 246, 0.4);
+
+  /* Indigo — primary accent for links, borders, focus, structure. */
+  --accent: #818cf8; /* indigo-400 — accent TEXT/links, ≥7:1 on bg */
+  --accent-strong: #a5b4fc; /* indigo-300 — hover brightens on dark */
+  --accent-solid: #4f46e5; /* indigo-600 — solid fill, white text ≥5:1 */
+  --accent-solid-hover: #6366f1; /* indigo-500 — button hover */
+
+  /* Amber — the "look here" highlight for metrics + the primary CTA. */
+  --highlight: #fbbf24; /* amber-400 — number/emphasis text on dark */
+  --highlight-strong: #fcd34d; /* amber-300 — hover */
+  --highlight-solid: #fbbf24; /* amber-400 — CTA fill (dark ink on top) */
+  --highlight-solid-hover: #fcd34d; /* amber-300 — CTA hover */
+  --highlight-ink: #1c1917; /* stone-900 — text on top of amber fill */
+
+  --shadow-card: 0 1px 2px rgba(2, 6, 23, 0.5),
+    0 10px 28px -14px rgba(2, 6, 23, 0.8);
+  --shadow-card-hover: 0 2px 6px rgba(99, 102, 241, 0.16),
+    0 18px 40px -16px rgba(79, 70, 229, 0.45);
+  --shadow-glow-amber: 0 10px 30px -12px rgba(245, 158, 11, 0.55);
 }
 
 :root[data-theme="light"] {
@@ -30,14 +43,23 @@
   --border: #e2e8f0; /* slate-200 */
   --foreground: #0f172a; /* slate-900 — primary ink */
   --muted: #475569; /* slate-600 — ≥4.5:1 on white */
-  --accent: #7c3aed; /* violet-600 — AA on white */
-  --accent-strong: #6d28d9; /* violet-700 — hover / active */
-  --accent-solid: #7c3aed; /* solid button fill — white text passes on white bg (5.7:1) */
-  --accent-solid-hover: #6d28d9; /* button hover */
+
+  --accent: #4f46e5; /* indigo-600 — AA on white (~5.8:1) */
+  --accent-strong: #4338ca; /* indigo-700 — hover / active */
+  --accent-solid: #4f46e5; /* solid fill — white text passes on white bg */
+  --accent-solid-hover: #4338ca; /* button hover */
+
+  --highlight: #b45309; /* amber-700 — emphasis text, AA on white */
+  --highlight-strong: #92400e; /* amber-800 — hover */
+  --highlight-solid: #f59e0b; /* amber-500 — CTA fill (dark ink on top) */
+  --highlight-solid-hover: #d97706; /* amber-600 — CTA hover */
+  --highlight-ink: #1c1917; /* dark ink on amber — high contrast both modes */
+
   --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
     0 8px 24px -12px rgba(15, 23, 42, 0.12);
-  --shadow-card-hover: 0 2px 4px rgba(124, 58, 237, 0.1),
-    0 16px 36px -14px rgba(124, 58, 237, 0.24);
+  --shadow-card-hover: 0 2px 4px rgba(79, 70, 229, 0.1),
+    0 16px 36px -14px rgba(79, 70, 229, 0.24);
+  --shadow-glow-amber: 0 10px 30px -12px rgba(217, 119, 6, 0.35);
 }
 
 @theme inline {
@@ -51,6 +73,11 @@
   --color-accent-strong: var(--accent-strong);
   --color-accent-solid: var(--accent-solid);
   --color-accent-solid-hover: var(--accent-solid-hover);
+  --color-highlight: var(--highlight);
+  --color-highlight-strong: var(--highlight-strong);
+  --color-highlight-solid: var(--highlight-solid);
+  --color-highlight-solid-hover: var(--highlight-solid-hover);
+  --color-highlight-ink: var(--highlight-ink);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -181,6 +208,13 @@ body {
   border-radius: 9999px;
   background: #22c55e;
   animation: ping 1.9s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+/* Idle variant — steady slate dot, no pulse. Signals "not actively looking". */
+.status-dot--idle {
+  background: #94a3b8; /* slate-400 */
+}
+.status-dot--idle::after {
+  display: none;
 }
 @keyframes ping {
   75%,
@@ -369,7 +403,7 @@ body {
   border: 1px solid #1f2937;
   border-radius: 9999px;
   padding: 0.1rem 0.5rem;
-  background: rgba(139, 92, 246, 0.1);
+  background: rgba(99, 102, 241, 0.12);
 }
 .code-copy {
   display: inline-flex;
@@ -540,4 +574,102 @@ body {
     transparent
   );
   pointer-events: none;
+}
+
+/*
+ * Amber primary CTA ("Hire me" / "Download résumé"). Reserved for the single
+ * most important action per view — dark ink on a warm amber fill reads as
+ * confident and premium, and stands apart from the indigo secondary buttons.
+ */
+.btn-amber {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.75rem;
+  border-radius: 0.5rem;
+  padding: 0 1.1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--highlight-ink);
+  background: var(--highlight-solid);
+  box-shadow: var(--shadow-glow-amber);
+  transition: background-color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.btn-amber:hover {
+  background: var(--highlight-solid-hover);
+  transform: translateY(-1px);
+}
+.btn-amber:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--highlight-solid);
+}
+
+/*
+ * Quick-facts strip — a row of at-a-glance recruiter facts (location, notice,
+ * experience, stack). Each tile is a calm surface with an amber label dot.
+ */
+.fact-tile {
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  background: var(--surface);
+  padding: 0.9rem 1rem;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.fact-tile:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  transform: translateY(-1px);
+}
+
+/*
+ * Testimonial card — a quote surface with a large decorative amber quote mark.
+ * Replace the placeholder quotes in lib/resume.ts with real recommendations.
+ */
+.quote-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background:
+    radial-gradient(
+      120% 130% at 0% 0%,
+      color-mix(in srgb, var(--accent) 9%, transparent),
+      transparent 55%
+    ),
+    var(--surface);
+  padding: 1.5rem 1.5rem 1.4rem;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.quote-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+.quote-card::before {
+  content: "\201C";
+  position: absolute;
+  right: 1rem;
+  top: 0.1rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 5rem;
+  line-height: 1;
+  color: color-mix(in srgb, var(--highlight) 26%, transparent);
+  pointer-events: none;
+}
+
+/* Impact badge — the headline result on a project card, amber-tinted. */
+.impact-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--highlight) 35%, var(--border));
+  background: color-mix(in srgb, var(--highlight) 12%, transparent);
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--highlight);
 }

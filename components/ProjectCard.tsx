@@ -107,10 +107,18 @@ export function ProjectCard({
             )}
           </h3>
 
+          {/* Headline outcome — the number a recruiter scans for. */}
+          {project.impact && (
+            <p className="impact-badge mt-3 font-mono">
+              <ImpactIcon />
+              {project.impact}
+            </p>
+          )}
+
           {/* In the compact card, description + tech live in this column. */}
           {!featured && (
             <>
-              <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-muted">
+              <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-muted">
                 {project.description}
               </p>
               <TechList
@@ -137,6 +145,26 @@ export function ProjectCard({
         )}
       </div>
     </article>
+  );
+}
+
+/** Small upward-trend glyph paired with the impact metric. */
+function ImpactIcon() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M3 17l6-6 4 4 8-8" />
+      <path d="M17 7h4v4" />
+    </svg>
   );
 }
 

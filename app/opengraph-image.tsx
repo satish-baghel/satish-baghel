@@ -16,12 +16,12 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "#0f172a",
+          background: "#020617",
           color: "#f8fafc",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", fontSize: 28, color: "#8b5cf6" }}>
+        <div style={{ display: "flex", fontSize: 28, color: "#818cf8" }}>
           {new URL(site.url).hostname}
         </div>
         <div
