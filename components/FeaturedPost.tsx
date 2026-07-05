@@ -11,7 +11,8 @@ export function FeaturedPost({ post }: { post: PostMeta }) {
   return (
     <article className="group relative overflow-hidden rounded-2xl border border-border bg-surface p-7 shadow-[var(--shadow-card)] transition-all duration-200 hover:border-accent/60 hover:shadow-[var(--shadow-card-hover)] sm:p-9">
       <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-muted">
-        <span className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-0.5 font-medium text-accent">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-highlight/30 bg-highlight/10 px-2.5 py-0.5 font-medium text-highlight">
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-highlight" />
           Featured
         </span>
         <time dateTime={post.date}>{formatDate(post.date)}</time>

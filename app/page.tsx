@@ -14,6 +14,9 @@ import { TechGrid } from "@/components/TechGrid";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { ResumeChat } from "@/components/ResumeChat";
+import { QuickFacts } from "@/components/QuickFacts";
+import { Testimonials } from "@/components/Testimonials";
+import { ResumeButton } from "@/components/ResumeButton";
 import { site } from "@/lib/site";
 import { SUMMARY, METRICS, TECH, EXPERIENCE, PROJECTS } from "@/lib/resume";
 
@@ -34,8 +37,8 @@ export default function Home() {
           {/* Left: who I am */}
           <div>
             <span className="status-badge reveal reveal-1 font-mono">
-              <span className="status-dot" aria-hidden="true" />
-              Available for work
+              <span className="status-dot status-dot--idle" aria-hidden="true" />
+              Not actively looking
             </span>
             <p className="reveal reveal-2 mt-5 font-mono text-sm font-medium text-accent">
               {site.tagline}
@@ -48,14 +51,14 @@ export default function Home() {
               {SUMMARY}
             </p>
 
-            {/* Credibility metrics */}
+            {/* Credibility metrics — amber numbers draw the recruiter's eye. */}
             <dl className="reveal reveal-3 mt-8 grid grid-cols-3 gap-3">
               {METRICS.map((m) => (
                 <div
                   key={m.label}
-                  className="rounded-xl border border-border bg-surface px-3 py-2.5 transition-colors hover:border-accent/50"
+                  className="rounded-xl border border-border bg-surface px-3 py-2.5 transition-colors hover:border-highlight/50"
                 >
-                  <dt className="font-display text-lg font-semibold tracking-tight text-accent sm:text-xl">
+                  <dt className="font-display text-lg font-semibold tracking-tight text-highlight sm:text-xl">
                     {m.value}
                   </dt>
                   <dd className="mt-0.5 font-mono text-[11px] uppercase tracking-wide text-muted">
@@ -66,9 +69,10 @@ export default function Home() {
             </dl>
 
             <div className="reveal reveal-4 mt-8 flex flex-wrap items-center gap-3">
+              <ResumeButton />
               <Link
                 href="/about"
-                className="group inline-flex h-11 items-center gap-1.5 rounded-lg bg-accent-solid px-4 font-mono text-sm font-medium text-white shadow-[0_8px_24px_-10px_var(--accent)] transition-colors hover:bg-accent-solid-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="group inline-flex h-11 items-center gap-1.5 rounded-lg border border-border bg-surface px-4 font-mono text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 View my work
                 <span
@@ -78,8 +82,8 @@ export default function Home() {
                   →
                 </span>
               </Link>
-              <SocialLinks />
             </div>
+            <SocialLinks className="reveal reveal-4 mt-4" />
           </div>
 
           {/* Right: circular caricature avatar + terminal */}
@@ -106,6 +110,16 @@ export default function Home() {
               <Terminal command="npm i satish-baghel" />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Quick facts — recruiter TL;DR, scannable at a glance */}
+      <section className="border-t border-border py-10 sm:py-12">
+        <p className="font-mono text-xs uppercase tracking-widest text-accent">
+          At a glance
+        </p>
+        <div className="reveal mt-5">
+          <QuickFacts />
         </div>
       </section>
 
@@ -170,6 +184,17 @@ export default function Home() {
         </section>
       )}
 
+      {/* Recommendations — social proof from managers & peers */}
+      <section className="border-t border-border py-14 sm:py-16">
+        <SectionHeader
+          eyebrow="Recommendations"
+          title="What people say"
+        />
+        <div className="reveal mt-6">
+          <Testimonials />
+        </div>
+      </section>
+
       {/* Coding activity — GitHub + LeetCode, past year */}
       <section className="border-t border-border py-14 sm:py-16">
         <SectionHeader
@@ -205,10 +230,15 @@ export default function Home() {
             Let&apos;s build something.
           </h2>
           <p className="mt-3 max-w-xl text-muted">
-            Open to full-stack roles and freelance projects. The fastest way to
-            reach me is email — I read everything and reply to most.
+            I&apos;m not actively job-hunting right now, but I&apos;m always
+            happy to talk shop, swap ideas, or help on an interesting problem.
+            Email is the fastest way to reach me — I read everything and reply
+            to most.
           </p>
-          <SocialLinks className="mt-6" />
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <ResumeButton />
+            <SocialLinks />
+          </div>
         </div>
       </section>
     </div>

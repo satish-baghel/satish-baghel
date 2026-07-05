@@ -9,6 +9,9 @@ import { TechBadge } from "@/components/TechGrid";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { JsonLd } from "@/components/JsonLd";
+import { QuickFacts } from "@/components/QuickFacts";
+import { Testimonials } from "@/components/Testimonials";
+import { ResumeButton } from "@/components/ResumeButton";
 import { site } from "@/lib/site";
 import { SUMMARY, SKILLS, EXPERIENCE, PROJECTS, EDUCATION } from "@/lib/resume";
 
@@ -60,6 +63,16 @@ export default function AboutPage() {
         {SUMMARY}
       </p>
 
+      <div className="mt-7 flex flex-wrap items-center gap-3">
+        <ResumeButton />
+        <SocialLinks />
+      </div>
+
+      {/* Quick facts — recruiter TL;DR */}
+      <div className="mt-10">
+        <QuickFacts />
+      </div>
+
       {/* Skills */}
       <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
         Skills
@@ -85,6 +98,14 @@ export default function AboutPage() {
       </h2>
       <div className="mt-8">
         <ExperienceTimeline items={EXPERIENCE} />
+      </div>
+
+      {/* Recommendations */}
+      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
+        What people say
+      </h2>
+      <div className="mt-6">
+        <Testimonials />
       </div>
 
       {/* Coding activity — GitHub + LeetCode, past year */}
@@ -133,10 +154,13 @@ export default function AboutPage() {
         Get in touch
       </h2>
       <p className="mt-3 text-muted">
-        Based in {site.location}. Open to full-stack roles and freelance work —
-        email is the fastest way to reach me.
+        Based in {site.location}. Not actively looking right now, but always
+        open to a good conversation — email is the fastest way to reach me.
       </p>
-      <SocialLinks className="mt-5" />
+      <div className="mt-5 flex flex-wrap items-center gap-3">
+        <ResumeButton />
+        <SocialLinks />
+      </div>
     </div>
   );
 }
