@@ -430,3 +430,108 @@ body {
 .terminal-body .ok {
   color: #34d399;
 }
+/* Give the window controls real macOS "traffic light" colors (scoped to the
+ * terminal so code cards keep their neutral dots). */
+.terminal .code-dots span:nth-child(1) {
+  background: #ff5f57;
+}
+.terminal .code-dots span:nth-child(2) {
+  background: #febc2e;
+}
+.terminal .code-dots span:nth-child(3) {
+  background: #28c840;
+}
+/* Faint inner top sheen + a gentle accent lift on hover — makes the card feel
+ * like glass, not a flat box. Interaction is decorative, so it stays subtle. */
+.terminal {
+  position: relative;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.terminal::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  pointer-events: none;
+}
+.terminal:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  box-shadow: var(--shadow-card-hover);
+}
+/* Blinking block caret replaces the static ▎ glyph for a "live" terminal feel. */
+.terminal .caret {
+  display: inline-block;
+  width: 0.55ch;
+  height: 1.05em;
+  margin-left: 0.12rem;
+  vertical-align: -0.18em;
+  border-radius: 1px;
+  background: var(--accent-strong);
+  animation: caret-blink 1.15s steps(1, end) infinite;
+}
+@keyframes caret-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Hold the caret solid instead of letting the global reset freeze it hidden. */
+  .terminal .caret {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Header: hairline accent glow under the sticky bar when it separates content. */
+.site-header {
+  background: color-mix(in srgb, var(--background) 82%, transparent);
+}
+.site-header::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--accent) 45%, transparent),
+    transparent
+  );
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Footer: a soft accent wash rising from the bottom edge + a top accent hairline
+ * so the page closes with intent rather than a bare divider. */
+.site-footer {
+  position: relative;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--accent) 6%, transparent),
+    transparent 55%
+  );
+}
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--accent) 40%, transparent),
+    transparent
+  );
+  pointer-events: none;
+}

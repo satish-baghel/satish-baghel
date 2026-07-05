@@ -29,7 +29,8 @@ export function Terminal({
         <div className="ok">＋ satish-baghel@5.0.0</div>
         <div className="comment"># added 1 senior full-stack developer in 0.2s</div>
         <div>
-          <span className="prompt">$</span> <span className="comment">ready to build ▎</span>
+          <span className="prompt">$</span> ready to build
+          <span className="caret" aria-hidden="true" />
         </div>
       </div>
     </div>

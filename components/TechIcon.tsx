@@ -32,6 +32,17 @@ function Tile({
       <g fill={fg} stroke={fg}>
         {children}
       </g>
+      {/* Hairline top-light ring gives the tile subtle depth (glass edge). */}
+      <rect
+        x="0.5"
+        y="0.5"
+        width="23"
+        height="23"
+        rx="4.5"
+        fill="none"
+        stroke="#ffffff"
+        strokeOpacity="0.14"
+      />
     </svg>
   );
 }
@@ -93,8 +104,18 @@ export function TechIcon({ name, size = 28 }: IconProps) {
       );
     case "Next.js":
       return (
-        <Tile bg="#111827" size={size}>
-          <Mono text="N" fill="#ffffff" />
+        <Tile bg="#000000" size={size}>
+          <g
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            {/* N with the signature diagonal descender */}
+            <path d="M8.4 16.5V7.5l7.2 9.2" />
+            <path d="M15.4 7.6v6" />
+          </g>
         </Tile>
       );
     case "Node.js":
@@ -141,13 +162,39 @@ export function TechIcon({ name, size = 28 }: IconProps) {
     case "MySQL":
       return (
         <Tile bg="#00618A" size={size}>
-          <Mono text="SQL" fill="#ffffff" />
+          {/* database cylinder — reads as "SQL data store" */}
+          <g
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth="1.3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <ellipse cx="12" cy="7" rx="5.2" ry="2.1" />
+            <path d="M6.8 7v10c0 1.16 2.33 2.1 5.2 2.1s5.2-.94 5.2-2.1V7" />
+            <path d="M6.8 12c0 1.16 2.33 2.1 5.2 2.1s5.2-.94 5.2-2.1" />
+          </g>
         </Tile>
       );
     case "Redux":
       return (
         <Tile bg="#764ABC" size={size}>
-          <Mono text="Rx" fill="#ffffff" />
+          {/* three-orbit atom mark */}
+          <g fill="#ffffff" stroke="none">
+            <circle cx="12" cy="5.8" r="1.6" />
+            <circle cx="6.6" cy="16" r="1.6" />
+            <circle cx="17.4" cy="16" r="1.6" />
+          </g>
+          <g
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          >
+            <path d="M13.4 6.4a7 7 0 0 1 3.2 8" />
+            <path d="M16 16.9a7 7 0 0 1-8 0" />
+            <path d="M7.4 14.4a7 7 0 0 1 3.2-8" />
+          </g>
         </Tile>
       );
     case "Tailwind":

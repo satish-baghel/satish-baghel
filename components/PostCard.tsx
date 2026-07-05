@@ -4,16 +4,25 @@ import { TagChip } from "@/components/TagChip";
 
 export function PostCard({ post }: { post: PostMeta }) {
   return (
-    <article className="group rounded-xl border border-border bg-surface p-5 shadow-[var(--shadow-card)] transition-all duration-200 hover:border-accent/60 hover:shadow-[var(--shadow-card-hover)]">
-      <div className="flex items-center gap-2 font-mono text-xs text-muted">
-        <time dateTime={post.date}>{formatDate(post.date)}</time>
-        <span aria-hidden="true">·</span>
-        <span>{post.readingMinutes} min read</span>
+    <article className="group relative flex flex-col rounded-xl border border-border bg-surface p-5 shadow-[var(--shadow-card)] transition-all duration-200 hover:border-accent/60 hover:shadow-[var(--shadow-card-hover)]">
+      <div className="flex items-center justify-between gap-2 font-mono text-xs text-muted">
+        <div className="flex items-center gap-2">
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{post.readingMinutes} min read</span>
+        </div>
+        <span
+          aria-hidden="true"
+          className="transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
+        >
+          →
+        </span>
       </div>
       <h3 className="font-display mt-2 text-lg font-semibold tracking-tight">
+        {/* Stretched link — the whole card is one click/tap target (Fitts's law). */}
         <Link
           href={`/blog/${post.slug}`}
-          className="text-foreground transition-colors group-hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+          className="text-foreground transition-colors after:absolute after:inset-0 group-hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
         >
           {post.title}
         </Link>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { type Pagination, type PostMeta, blogPath } from "@/lib/types";
 import { PostCard } from "@/components/PostCard";
+import { FeaturedPost } from "@/components/FeaturedPost";
 
 const chipBase =
   "inline-flex h-9 items-center rounded-full border px-3 font-mono text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
@@ -12,11 +13,14 @@ export function BlogList({
   tags,
   activeTag,
   pagination,
+  featured = null,
 }: {
   posts: PostMeta[];
   tags: string[];
   activeTag: string | null;
   pagination: Pagination;
+  /** Optional lead post rendered as a large editorial card above the list. */
+  featured?: PostMeta | null;
 }) {
   const filters: (string | null)[] = [null, ...tags];
 
@@ -43,10 +47,11 @@ export function BlogList({
       </div>
 
       <div className="mt-8 flex flex-col gap-4">
+        {featured && <FeaturedPost post={featured} />}
         {posts.length > 0 ? (
           posts.map((post) => <PostCard key={post.slug} post={post} />)
         ) : (
-          <p className="text-muted">No posts match this filter.</p>
+          !featured && <p className="text-muted">No posts match this filter.</p>
         )}
       </div>
 

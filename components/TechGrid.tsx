@@ -3,8 +3,10 @@ import { TechIcon } from "@/components/TechIcon";
 /** A single tech chip: brand icon + label. Reuses the site's chip styling. */
 export function TechBadge({ name }: { name: string }) {
   return (
-    <li className="font-mono inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-1.5 text-sm text-foreground transition-colors hover:border-accent/60">
-      <TechIcon name={name} size={18} />
+    <li className="group font-mono inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2 text-sm text-foreground shadow-[var(--shadow-card)] transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-card-hover)]">
+      <span className="transition-transform duration-200 group-hover:scale-110">
+        <TechIcon name={name} size={18} />
+      </span>
       {name}
     </li>
   );
