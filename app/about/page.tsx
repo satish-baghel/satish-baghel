@@ -32,16 +32,18 @@ const profileSchema = {
   "@type": "ProfilePage",
   mainEntity: {
     "@type": "Person",
+    "@id": `${site.url}/#person`,
     name: site.name,
     jobTitle: site.jobTitle,
     email: `mailto:${site.email}`,
     url: site.url,
+    image: `${site.url}/me.png`,
     address: {
       "@type": "PostalAddress",
       addressLocality: "Ahmedabad",
       addressCountry: "IN",
     },
-    sameAs: [site.github, site.linkedin],
+    sameAs: [site.github, site.linkedin, site.leetcode],
   },
 };
 

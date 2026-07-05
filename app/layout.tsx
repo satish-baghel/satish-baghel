@@ -75,8 +75,28 @@ const websiteSchema = {
       "@id": `${site.url}/#person`,
       name: site.name,
       url: site.url,
+      image: `${site.url}/me.png`,
       jobTitle: site.jobTitle,
       email: `mailto:${site.email}`,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Ahmedabad",
+        addressCountry: "IN",
+      },
+      // sameAs ties this site to Satish's verified profiles so search engines
+      // and AI answer engines resolve them to one entity (Knowledge Graph).
+      sameAs: [site.github, site.linkedin, site.leetcode],
+      // Topical authority signal — what this person can be cited about.
+      knowsAbout: [
+        "React",
+        "Next.js",
+        "Node.js",
+        "TypeScript",
+        "JavaScript",
+        "MongoDB",
+        "MySQL",
+        "Full Stack Development",
+      ],
     },
   ],
 };
