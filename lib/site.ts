@@ -3,10 +3,10 @@ export const site = {
   name: "Satish Baghel",
   title: "Satish Baghel — Full Stack Developer",
   description:
-    "Full Stack Developer with 5+ years building scalable web apps with React, Next.js, Node.js, and MongoDB. Portfolio, projects, and writing.",
+    "Backend-focused Full Stack Developer with 5+ years building scalable REST APIs and microservices with Node.js, Express, MongoDB, MySQL, and Redis. Portfolio, projects, and writing.",
   url: "https://satishbaghel.com",
-  jobTitle: "Full Stack Developer",
-  tagline: "Full Stack Developer · 5+ yrs · Ahmedabad, India",
+  jobTitle: "Backend-focused Full Stack Developer",
+  tagline: "Backend-focused Full Stack Developer · 5+ yrs · Ahmedabad, India",
   location: "Ahmedabad, India",
   email: "satish769843@gmail.com",
   phone: "+91 8238394388",
