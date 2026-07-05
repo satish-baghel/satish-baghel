@@ -19,6 +19,12 @@ function cellColor(level: ContributionDay["level"]): string {
   return `color-mix(in srgb, var(--accent) ${pct}%, transparent)`;
 }
 
+/** "2026-03-14" → "Mar 14, 2026" for tooltips. */
+function formatDate(iso: string): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return `${MONTH[m - 1]} ${d}, ${y}`;
+}
+
 /** Group days into columns of 7, padding the first column to start on Sunday. */
 function toWeeks(days: ContributionDay[]): (ContributionDay | null)[][] {
   if (days.length === 0) return [];
@@ -89,9 +95,15 @@ export function ContributionHeatmap({ days }: { days: ContributionDay[] }) {
                   return (
                     <span
                       key={di}
-                      title={`${day.count} ${day.count === 1 ? "contribution" : "contributions"} on ${day.date}`}
-                      className="h-[11px] w-[11px] rounded-[2px] ring-1 ring-inset ring-border/40"
-                      style={{ backgroundColor: cellColor(day.level) }}
+                      title={`${day.count} ${day.count === 1 ? "contribution" : "contributions"} on ${formatDate(day.date)}`}
+                      className="h-[11px] w-[11px] rounded-[2px] ring-1 ring-inset ring-border/40 transition-[transform,box-shadow] duration-150 hover:scale-125 hover:ring-accent motion-reduce:transition-none motion-reduce:hover:scale-100"
+                      style={{
+                        backgroundColor: cellColor(day.level),
+                        boxShadow:
+                          day.level === 4
+                            ? "0 0 6px color-mix(in srgb, var(--accent) 55%, transparent)"
+                            : undefined,
+                      }}
                     />
                   );
                 })}

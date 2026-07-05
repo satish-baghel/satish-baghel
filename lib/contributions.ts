@@ -25,6 +25,51 @@ export type ActivityCalendar = {
   days: ContributionDay[];
 };
 
+/** Derived headline numbers for a calendar window. */
+export type ActivityStats = {
+  total: number;
+  activeDays: number;
+  currentStreak: number;
+  longestStreak: number;
+  busiestDay: ContributionDay | null;
+};
+
+/**
+ * Summarize a calendar: total, active-day count, current & longest streaks
+ * (in days), and the single busiest day. Assumes `days` is chronological.
+ */
+export function computeStats(cal: ActivityCalendar): ActivityStats {
+  let activeDays = 0;
+  let longestStreak = 0;
+  let run = 0;
+  let busiestDay: ContributionDay | null = null;
+
+  for (const d of cal.days) {
+    if (d.count > 0) {
+      activeDays++;
+      run++;
+      longestStreak = Math.max(longestStreak, run);
+      if (!busiestDay || d.count > busiestDay.count) busiestDay = d;
+    } else {
+      run = 0;
+    }
+  }
+
+  // Current streak: consecutive active days counting back from the end.
+  let currentStreak = 0;
+  for (let i = cal.days.length - 1; i >= 0 && cal.days[i].count > 0; i--) {
+    currentStreak++;
+  }
+
+  return {
+    total: cal.total,
+    activeDays,
+    currentStreak,
+    longestStreak,
+    busiestDay,
+  };
+}
+
 /**
  * Trim a calendar to its most recent `months`, recomputing the total so it
  * matches the visible window. Levels are left as-is (already bucketed).

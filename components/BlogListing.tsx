@@ -19,6 +19,13 @@ export function BlogListing({
   const { posts, pagination } = resolveListing(activeTag, page);
   const tags = getAllTags();
 
+  // Lead the unfiltered first page with a large editorial card for the newest
+  // post; the rest fall into the standard grid. Filtered/paged views stay a
+  // uniform list so nothing is visually "promoted" out of context.
+  const showFeatured = !activeTag && pagination.page === 1 && posts.length > 0;
+  const featured = showFeatured ? posts[0] : null;
+  const listPosts = showFeatured ? posts.slice(1) : posts;
+
   // rel=prev/next hints for search engines. Absolute URLs; React 19 hoists
   // these <link> tags into <head>. Kept alongside the canonical in metadata.
   const prevUrl = pagination.hasPrev
@@ -32,7 +39,8 @@ export function BlogListing({
     <div className="mx-auto w-full max-w-3xl px-6 py-16">
       {prevUrl && <link rel="prev" href={prevUrl} />}
       {nextUrl && <link rel="next" href={nextUrl} />}
-      <h1 className="font-display text-4xl font-semibold tracking-tight">
+      <p className="font-mono text-sm font-medium text-accent">Writing</p>
+      <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight">
         All posts
       </h1>
       <p className="mt-3 text-muted">
@@ -42,10 +50,11 @@ export function BlogListing({
       </p>
       <div className="mt-10">
         <BlogList
-          posts={posts}
+          posts={listPosts}
           tags={tags}
           activeTag={activeTag}
           pagination={pagination}
+          featured={featured}
         />
       </div>
     </div>

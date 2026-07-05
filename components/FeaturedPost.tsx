@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { type Post, formatDate } from "@/lib/types";
+import { type PostMeta, formatDate } from "@/lib/types";
 import { TagChip } from "@/components/TagChip";
 
 /**
  * Large editorial "featured" card for the newest post. Visually heavier than
- * the standard PostCard used in lists.
+ * the standard PostCard used in lists. Takes `PostMeta` — it never needs the
+ * Markdown body, so listings (which omit `content`) can render it too.
  */
-export function FeaturedPost({ post }: { post: Post }) {
+export function FeaturedPost({ post }: { post: PostMeta }) {
   return (
     <article className="group relative overflow-hidden rounded-2xl border border-border bg-surface p-7 shadow-[var(--shadow-card)] transition-all duration-200 hover:border-accent/60 hover:shadow-[var(--shadow-card-hover)] sm:p-9">
       <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-muted">

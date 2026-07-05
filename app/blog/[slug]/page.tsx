@@ -139,8 +139,11 @@ export default async function PostPage({
         ← Back to blog
       </Link>
 
-      <header className="mt-6">
-        <h1 className="font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+      <header className="mt-6 border-b border-border pb-8">
+        <p className="font-mono text-sm font-medium text-accent">
+          {post.type === "howto" ? "Guide" : "Article"}
+        </p>
+        <h1 className="font-display mt-3 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
           {post.title}
         </h1>
         <div className="mt-4 flex flex-wrap items-center gap-2 font-mono text-xs text-muted">
@@ -181,6 +184,18 @@ export default async function PostPage({
           ),
         )}
       </div>
+
+      <footer className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-8">
+        <p className="text-sm text-muted">
+          Written by <span className="text-foreground">{site.name}</span>
+        </p>
+        <Link
+          href="/blog"
+          className="font-mono inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3.5 py-2 text-sm text-muted transition-colors hover:border-accent/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
+          <span aria-hidden="true">←</span> All posts
+        </Link>
+      </footer>
     </article>
   );
 }

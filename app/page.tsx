@@ -53,9 +53,9 @@ export default function Home() {
               {METRICS.map((m) => (
                 <div
                   key={m.label}
-                  className="rounded-xl border border-border bg-surface px-3 py-2.5"
+                  className="rounded-xl border border-border bg-surface px-3 py-2.5 transition-colors hover:border-accent/50"
                 >
-                  <dt className="font-display text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+                  <dt className="font-display text-lg font-semibold tracking-tight text-accent sm:text-xl">
                     {m.value}
                   </dt>
                   <dd className="mt-0.5 font-mono text-[11px] uppercase tracking-wide text-muted">
@@ -68,10 +68,15 @@ export default function Home() {
             <div className="reveal reveal-4 mt-8 flex flex-wrap items-center gap-3">
               <Link
                 href="/about"
-                className="inline-flex h-11 items-center gap-1.5 rounded-lg bg-accent px-4 font-mono text-sm font-medium text-white transition-colors hover:bg-accent-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="group inline-flex h-11 items-center gap-1.5 rounded-lg bg-accent px-4 font-mono text-sm font-medium text-white shadow-[0_8px_24px_-10px_var(--accent)] transition-colors hover:bg-accent-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 View my work
-                <span aria-hidden="true">→</span>
+                <span
+                  aria-hidden="true"
+                  className="transition-transform duration-200 group-hover:translate-x-0.5"
+                >
+                  →
+                </span>
               </Link>
               <SocialLinks />
             </div>
