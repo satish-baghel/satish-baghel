@@ -5,7 +5,7 @@
  */
 
 export const SUMMARY =
-  "Backend-focused Full Stack Developer with 5+ years architecting and scaling server-side systems — RESTful APIs and microservices in Node.js and Express, backed by MongoDB, MySQL, and Redis caching. I design reliable, low-latency back-ends (sub-200ms responses, 99.9% uptime) for high-traffic platforms with 100K+ users, and round it out with clean React and Next.js front-ends when the product needs them.";
+  "Full Stack Developer with 5+ years — most of it deep in the server layer, architecting and scaling RESTful APIs and microservices in Node.js and Express, backed by MongoDB, MySQL, and Redis caching. I design reliable, low-latency back-ends (sub-200ms responses, 99.9% uptime) for high-traffic platforms with 100K+ users, then pair them with clean React and Next.js front-ends to ship features end-to-end.";
 
 /**
  * Headline credibility metrics for the home hero — pulled from real numbers in
@@ -206,7 +206,7 @@ export const EDUCATION: Education[] = [
  */
 export const QUICK_FACTS = [
   { label: "Experience", value: "5+ years" },
-  { label: "Role", value: "Backend-focused Full Stack Dev" },
+  { label: "Role", value: "Full Stack Developer" },
   { label: "Core stack", value: "Node · Express · Redis · React" },
   { label: "Location", value: "Ahmedabad, India" },
   { label: "Status", value: "Not actively looking" },
