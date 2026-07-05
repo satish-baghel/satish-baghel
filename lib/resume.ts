@@ -5,7 +5,7 @@
  */
 
 export const SUMMARY =
-  "Full Stack Developer with 5+ years designing, building, and maintaining scalable web applications with JavaScript, React, Node.js, MongoDB, MySQL, Next.js, and microservices. I ship clean, maintainable front-ends in React and reliable REST APIs in Node.js — and I've helped deliver high-traffic platforms with 100K+ users, cutting load times ~30% along the way.";
+  "Full Stack Developer with 5+ years — most of it deep in the server layer, architecting and scaling RESTful APIs and microservices in Node.js and Express, backed by MongoDB, MySQL, and Redis caching. I design reliable, low-latency back-ends (sub-200ms responses, 99.9% uptime) for high-traffic platforms with 100K+ users, then pair them with clean React and Next.js front-ends to ship features end-to-end.";
 
 /**
  * Headline credibility metrics for the home hero — pulled from real numbers in
@@ -13,13 +13,26 @@ export const SUMMARY =
  */
 export const METRICS = [
   { value: "5+", label: "Years shipping" },
-  { value: "100K+", label: "Users served" },
-  { value: "~30%", label: "Faster loads" },
+  { value: "80+", label: "REST APIs built" },
+  { value: "99.9%", label: "API uptime" },
   // { value: "$250K+/mo", label: "Payments handled" },
 ] as const;
 
 /** Grouped skills, mirrored from the resume's SKILLS section. */
 export const SKILLS = {
+  "Backend & Database": [
+    "Node.js",
+    "Express.js",
+    "RESTful APIs",
+    "Microservices",
+    "MongoDB",
+    "Mongoose",
+    "MySQL",
+    "Sequelize",
+    "Redis",
+    "Socket.io",
+    "JWT Auth",
+  ],
   Frontend: [
     "React.js",
     "JavaScript",
@@ -31,17 +44,6 @@ export const SKILLS = {
     "Bootstrap",
     "HTML5",
     "CSS3",
-  ],
-  "Backend & Database": [
-    "Node.js",
-    "Express.js",
-    "MongoDB",
-    "Mongoose",
-    "MySQL",
-    "Sequelize",
-    "RESTful APIs",
-    "JWT Auth",
-    "Microservices",
   ],
   "Tools & Workflow": [
     "Git",
@@ -72,11 +74,11 @@ export const EXPERIENCE: Experience[] = [
     end: "Present",
     location: "Pune, Maharashtra, IN",
     bullets: [
-      "Led the front-end team building responsive React.js + Redux interfaces for a platform with 100K+ active users, lifting user satisfaction ~20% across desktop, tablet, and mobile.",
-      "Integrated analytics (Google Analytics, Mouseflow, custom events) across 500K+ monthly sessions, refining core flows and improving conversion ~15%.",
+      "Architected and maintained RESTful APIs and microservices in Node.js/Express at <200ms response and 99.9% uptime, serving a platform with 100K+ active users and lifting cross-team efficiency ~30%.",
+      "Introduced Redis caching and MongoDB/MySQL query tuning on hot paths, cutting average API latency ~35% and database load ~25% under peak traffic.",
       "Implemented secure Stripe payment workflows handling $250K+/month with full PCI-DSS coverage, cutting payment support tickets ~40%.",
-      "Partnered with backend teams on RESTful APIs at <200ms response and 99.9% uptime, improving cross-team efficiency ~30%.",
-      "Drove performance work (code splitting, lazy loading), improving TTI from 4.5s to 3.1s (~30%) and Lighthouse from 60 to 80.",
+      "Hardened API security with JWT auth, rate limiting, and input validation, and instrumented services with logging/analytics across 500K+ monthly sessions.",
+      "Led the front-end team building responsive React.js + Redux interfaces, lifting user satisfaction ~20% and improving TTI from 4.5s to 3.1s (~30%).",
       "Refactored legacy code and mentored juniors — cutting duplication ~35%, reducing delivery time ~25%, with a 95% sprint completion rate.",
     ],
   },
@@ -87,10 +89,11 @@ export const EXPERIENCE: Experience[] = [
     end: "Jan 2023",
     location: "Ahmedabad, Gujarat, IN",
     bullets: [
-      "Led the MERN team to deliver 10+ full-stack features, translating wireframes into production-ready modules and speeding delivery ~30%.",
-      "Built 15+ secure RESTful APIs with JWT auth and full CRUD, maintaining 99.9% uptime for 50K+ users.",
-      "Directed internal admin tooling that streamlined content moderation — cutting manual effort ~50% and improving moderation speed ~35%.",
+      "Built 15+ secure RESTful APIs in Node.js/Express with JWT auth and full CRUD, maintaining 99.9% uptime and sub-200ms responses for 50K+ users.",
+      "Modeled and optimized MongoDB schemas and indexes powering core services, keeping queries fast as data volume grew.",
       "Managed CI/CD pipelines enabling automated, zero-downtime deploys across dev/staging/prod, cutting deployment time ~70%.",
+      "Directed internal admin tooling and content-moderation APIs — cutting manual effort ~50% and improving moderation speed ~35%.",
+      "Led the MERN team to deliver 10+ full-stack features, translating wireframes into production-ready modules and speeding delivery ~30%.",
       "Championed quality through 100+ code reviews and Agile ceremonies.",
     ],
   },
@@ -101,11 +104,11 @@ export const EXPERIENCE: Experience[] = [
     end: "Aug 2022",
     location: "Ahmedabad, Gujarat, IN",
     bullets: [
-      "Grew from intern to Full Stack Developer, contributing to end-to-end apps supporting 100K+ monthly users while reducing technical debt ~30%.",
-      "Delivered 50+ React.js projects at 99.8% cross-browser compatibility, raising mobile engagement ~20%.",
-      "Built secure Node.js/Express REST APIs with 99.9% uptime and sub-200ms responses.",
+      "Built secure Node.js/Express REST APIs powering end-to-end apps for 100K+ monthly users at 99.9% uptime and sub-200ms responses.",
       "Added Redis caching and optimized MongoDB queries, cutting API response ~40% and server load ~25%.",
-      "Integrated Stripe, SendGrid, and Google Analytics, improving efficiency ~15% and reducing manual work ~25%.",
+      "Integrated third-party services (Stripe, SendGrid, Google Analytics) via resilient server-side workflows, improving efficiency ~15% and reducing manual work ~25%.",
+      "Grew from intern to Full Stack Developer across the MERN stack while reducing technical debt ~30%.",
+      "Delivered 50+ React.js projects at 99.8% cross-browser compatibility, raising mobile engagement ~20%.",
     ],
   },
 ];
@@ -121,57 +124,57 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    name: "Water Taker",
+    description:
+      "50+ REST APIs in Node.js/Express/Sequelize (MySQL) at sub-300ms and 99.9% uptime, with geolocation-based dynamic pricing (+45% query speed), live 10s order tracking (98% delivery success), and English/Arabic localization (+30% retention in Dubai).",
+    tech: ["Node.js", "Express", "MySQL"],
+    impact: "50+ APIs · +45% query speed",
+  },
+  {
+    name: "Trading App",
+    description:
+      "Real-time trading back-end (Investor/Consultant/Admin roles) for 5,000+ users with a Socket.io engine (1000+ concurrent, <200ms), Zerodha + TradingView integration, Twitter sentiment analysis (10K+ tweets/day), and Razorpay subscription billing.",
+    tech: ["Node.js", "Socket.io", "MongoDB", "React"],
+    impact: "1000+ concurrent · <200ms",
+  },
+  {
     name: "Time2Enter",
     description:
-      "Scalable React.js event platform for 100K+ users with 99.9% uptime — Rabbit Bank-integrated data entry (−60% manual input), PCI-compliant Stripe payments (+45% membership revenue), and event modules (Control Sheet, Breed Assignment, Judging).",
-    tech: ["React", "Node.js", "MongoDB", "Stripe"],
+      "Scalable event platform for 100K+ users at 99.9% uptime — Node.js services with Rabbit Bank-integrated data entry (−60% manual input), PCI-compliant Stripe payments (+45% membership revenue), and event modules (Control Sheet, Breed Assignment, Judging) behind a React UI.",
+    tech: ["Node.js", "MongoDB", "Stripe", "React"],
     url: "https://time2enter.net",
     impact: "100K+ users · +45% revenue",
   },
   {
     name: "EV India",
     description:
-      "Fast, SEO-friendly Next.js platform serving 10,000+ monthly visitors (−40% load time, +25% organic traffic). Built a side-by-side EV comparison tool, layered filters, and a React Master Admin Panel (−50% admin task time) over 35+ Node/Express APIs.",
-    tech: ["Next.js", "React", "Node.js", "Express", "MongoDB"],
+      "35+ Node/Express APIs powering a fast, SEO-friendly Next.js platform for 10,000+ monthly visitors (−40% load time, +25% organic traffic), with a side-by-side EV comparison engine, layered filters, and a React Master Admin Panel (−50% admin task time).",
+    tech: ["Node.js", "Express", "MongoDB", "Next.js", "React"],
     url: "https://evindia.online",
-    impact: "−40% load · +25% traffic",
+    impact: "35+ APIs · +25% traffic",
+  },
+  {
+    name: "Inter Academy",
+    description:
+      "Full-stack course platform to sell and manage 30+ courses — 15+ Node/Express APIs backed by Sequelize with complete admin control (−40% content management effort), digital course-book sharing, and a dynamic React UI.",
+    tech: ["Node.js", "Express", "MySQL", "React"],
+    impact: "−40% content effort",
   },
   {
     name: "Elumat",
     description:
-      "Interactive K–8 math-learning platform with gamified experiences. Dynamic adaptive question engine across 5+ topics (+25% quiz accuracy), PDFMake worksheets, and batch export of 1,000+ reports saving educators 6+ hours weekly.",
-    tech: ["React", "Node.js", "MongoDB"],
+      "Interactive K–8 math-learning platform with gamified experiences. Node.js services drive a dynamic adaptive question engine across 5+ topics (+25% quiz accuracy), PDFMake worksheets, and batch export of 1,000+ reports saving educators 6+ hours weekly.",
+    tech: ["Node.js", "MongoDB", "React"],
     url: "https://elumat.com",
     impact: "+25% accuracy · 6+ hrs saved/wk",
   },
   {
     name: "Lystigardar (P.M.S)",
     description:
-      "Property management system with reusable React.js/Reactstrap/CoreUI components (+40% dev speed), full English/Icelandic i18n, and modular architecture — 100% cross-browser compatibility across 6+ browsers.",
-    tech: ["React", "Bootstrap", "Node.js"],
+      "Property management system on a modular Node.js back-end with reusable React.js/Reactstrap/CoreUI components (+40% dev speed), full English/Icelandic i18n, and 100% cross-browser compatibility across 6+ browsers.",
+    tech: ["Node.js", "React", "Bootstrap"],
     url: "https://vinna.lystigardar.is",
     impact: "+40% dev speed",
-  },
-  {
-    name: "Trading App",
-    description:
-      "Real-time trading platform (Investor/Consultant/Admin roles) for 5,000+ users with Socket.io chat (1000+ concurrent, <200ms), Zerodha + TradingView integration, Twitter sentiment analysis (10K+ tweets/day), and Razorpay subscription billing.",
-    tech: ["React", "Node.js", "MongoDB"],
-    impact: "1000+ concurrent · <200ms",
-  },
-  {
-    name: "Water Taker",
-    description:
-      "50+ REST APIs in Node.js/Express/Sequelize (MySQL) at sub-300ms and 99.9% uptime, with geolocation-based dynamic pricing (+45% query speed), live 10s order tracking (98% delivery success), and English/Arabic localization (+30% retention in Dubai).",
-    tech: ["Node.js", "Express", "MySQL"],
-    impact: "+45% query speed · +30% retention",
-  },
-  {
-    name: "Inter Academy",
-    description:
-      "Full-stack course management platform to sell and manage 30+ courses with complete admin control (−40% content management effort), a dynamic React UI, digital course-book sharing, and 15+ Node/Express APIs backed by Sequelize.",
-    tech: ["React", "Node.js", "Express", "MySQL"],
-    impact: "−40% content effort",
   },
 ];
 
@@ -204,7 +207,7 @@ export const EDUCATION: Education[] = [
 export const QUICK_FACTS = [
   { label: "Experience", value: "5+ years" },
   { label: "Role", value: "Full Stack Developer" },
-  { label: "Core stack", value: "React · Next.js · Node" },
+  { label: "Core stack", value: "Node · Express · Redis · React" },
   { label: "Location", value: "Ahmedabad, India" },
   { label: "Status", value: "Not actively looking" },
   { label: "Open to", value: "Networking & advice" },
@@ -247,16 +250,16 @@ export const TESTIMONIALS: Testimonial[] = [
  * `components/TechIcon.tsx` so a brand SVG renders.
  */
 export const TECH = [
-  "JavaScript",
-  "TypeScript",
-  "React",
-  "Next.js",
   "Node.js",
   "Express",
   "MongoDB",
   "MySQL",
+  "Redis",
+  "Socket.io",
+  "JavaScript",
+  "TypeScript",
+  "React",
+  "Next.js",
   "Redux",
-  "Tailwind",
   "Git",
-  "Stripe",
 ] as const;

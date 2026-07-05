@@ -5,7 +5,7 @@ import {
   ActivitySection,
   ActivitySectionSkeleton,
 } from "@/components/ActivitySection";
-import { TechBadge } from "@/components/TechGrid";
+import { SkillBadge } from "@/components/SkillBadge";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { JsonLd } from "@/components/JsonLd";
@@ -85,7 +85,7 @@ export default function AboutPage() {
             </h3>
             <ul className="mt-3 flex flex-wrap gap-2.5">
               {items.map((name) => (
-                <TechBadge key={name} name={name} />
+                <SkillBadge key={name} name={name} />
               ))}
             </ul>
           </div>

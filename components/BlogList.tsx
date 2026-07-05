@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { FaTag, FaLayerGroup } from "react-icons/fa6";
 import { type Pagination, type PostMeta, blogPath } from "@/lib/types";
 import { PostCard } from "@/components/PostCard";
 import { FeaturedPost } from "@/components/FeaturedPost";
 
 const chipBase =
-  "inline-flex h-9 items-center rounded-full border px-3 font-mono text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+  "inline-flex h-9 items-center gap-1.5 rounded-full border px-3 font-mono text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 const chipActive = "border-accent bg-accent/10 text-accent";
 const chipIdle = "border-border bg-surface text-muted hover:text-foreground";
 
@@ -40,6 +41,11 @@ export function BlogList({
               aria-current={selected ? "true" : undefined}
               className={`${chipBase} ${selected ? chipActive : chipIdle}`}
             >
+              {tag === null ? (
+                <FaLayerGroup size={11} aria-hidden="true" />
+              ) : (
+                <FaTag size={10} aria-hidden="true" />
+              )}
               {tag ?? "all"}
             </Link>
           );

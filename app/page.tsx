@@ -45,7 +45,8 @@ export default function Home() {
             </p>
             <h1 className="font-display reveal reveal-2 mt-4 text-4xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-5xl">
               Hi, I&apos;m Satish — I build{" "}
-              <span className="text-accent">fast, scalable</span> web apps.
+              <span className="text-accent">fast, scalable</span> back-ends &amp;
+              APIs.
             </h1>
             <p className="reveal reveal-3 mt-6 max-w-xl text-lg leading-relaxed text-muted">
               {SUMMARY}
