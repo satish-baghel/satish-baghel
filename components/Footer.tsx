@@ -19,7 +19,7 @@ export function Footer() {
               href="/"
               className="font-display text-lg font-semibold tracking-tight text-foreground transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
             >
-              satish<span className="text-accent">.dev</span>
+              Satish <span className="text-accent">Baghel</span>
             </Link>
             <p className="mt-3 text-sm leading-relaxed text-muted">
               {site.jobTitle} building fast, scalable web apps.

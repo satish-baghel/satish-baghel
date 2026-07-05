@@ -37,7 +37,7 @@ export function Header() {
             />
           </span>
           <span className="hidden sm:inline">
-            satish<span className="text-accent">.dev</span>
+            Satish <span className="text-accent">Baghel</span>
           </span>
         </Link>
         <ul className="flex items-center gap-0.5">
