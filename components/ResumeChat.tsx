@@ -91,7 +91,7 @@ export function ResumeChat() {
             </div>
           ) : (
             <div key={i} className="flex items-start justify-end gap-3">
-              <div className="max-w-[85%] whitespace-pre-line rounded-2xl rounded-tr-sm bg-accent px-4 py-3 text-sm leading-relaxed text-white">
+              <div className="max-w-[85%] whitespace-pre-line rounded-2xl rounded-tr-sm bg-accent-solid px-4 py-3 text-sm leading-relaxed text-white">
                 {m.content}
               </div>
             </div>
@@ -144,7 +144,7 @@ export function ResumeChat() {
           type="submit"
           disabled={loading || !input.trim()}
           aria-label="Send message"
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent text-white transition-colors hover:bg-accent-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent-solid text-white transition-colors hover:bg-accent-solid-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50"
         >
           <SendIcon />
         </button>

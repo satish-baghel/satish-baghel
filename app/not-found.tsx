@@ -44,7 +44,7 @@ export default function NotFound() {
 
       <Link
         href="/"
-        className="mt-10 inline-flex h-11 items-center gap-1.5 rounded-lg bg-accent px-4 font-mono text-sm font-medium text-white transition-colors hover:bg-accent-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="mt-10 inline-flex h-11 items-center gap-1.5 rounded-lg bg-accent-solid px-4 font-mono text-sm font-medium text-white transition-colors hover:bg-accent-solid-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         Back home
         <span aria-hidden="true">→</span>
