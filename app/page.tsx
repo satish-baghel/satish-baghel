@@ -116,8 +116,8 @@ export default function Home() {
 
       {/* Quick facts — recruiter TL;DR, scannable at a glance */}
       <section className="border-t border-border py-10 sm:py-12">
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">
-          At a glance
+        <p className="font-mono text-xs tracking-wide text-muted">
+          <span className="text-accent">$</span> at a glance
         </p>
         <div className="reveal mt-5">
           <QuickFacts />
@@ -126,8 +126,8 @@ export default function Home() {
 
       {/* Tech stack strip */}
       <section className="border-t border-border py-14 sm:py-16">
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">
-          Toolkit
+        <p className="font-mono text-xs tracking-wide text-muted">
+          <span className="text-accent">$</span> cat stack.txt
         </p>
         <h2 className="font-display mt-1.5 text-xl font-semibold tracking-tight sm:text-2xl">
           Tech I work with
@@ -224,8 +224,8 @@ export default function Home() {
       {/* Get in touch */}
       <section className="border-t border-border py-14 sm:py-16">
         <div className="cta-panel reveal px-6 py-10 sm:px-10 sm:py-12">
-          <p className="font-mono text-xs uppercase tracking-widest text-accent">
-            Contact
+          <p className="font-mono text-xs tracking-wide text-muted">
+            <span className="text-accent">$</span> ./contact.sh
           </p>
           <h2 className="font-display mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
             Let&apos;s build something.
@@ -261,8 +261,8 @@ function SectionHeader({
   return (
     <div className="flex items-end justify-between gap-4">
       <div>
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">
-          {eyebrow}
+        <p className="font-mono text-xs tracking-wide text-muted">
+          <span className="text-accent">$</span> {eyebrow.toLowerCase()}
         </p>
         <h2 className="font-display mt-1.5 text-xl font-semibold tracking-tight sm:text-2xl">
           {title}
@@ -271,7 +271,7 @@ function SectionHeader({
       {href && linkText && (
         <Link
           href={href}
-          className="shrink-0 font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+          className="shrink-0 font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {linkText} →
         </Link>
