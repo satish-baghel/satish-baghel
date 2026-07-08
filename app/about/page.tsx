@@ -101,12 +101,12 @@ export default function AboutPage() {
       </div>
 
       {/* Recommendations */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
+      {/* <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
         What people say
       </h2>
       <div className="mt-6">
         <Testimonials />
-      </div>
+      </div> */}
 
       {/* Coding activity — GitHub + LeetCode, past year */}
       <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">

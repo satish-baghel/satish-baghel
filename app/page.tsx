@@ -186,7 +186,7 @@ export default function Home() {
       )}
 
       {/* Recommendations — social proof from managers & peers */}
-      <section className="border-t border-border py-14 sm:py-16">
+      {/* <section className="border-t border-border py-14 sm:py-16">
         <SectionHeader
           eyebrow="Recommendations"
           title="What people say"
@@ -194,7 +194,7 @@ export default function Home() {
         <div className="reveal mt-6">
           <Testimonials />
         </div>
-      </section>
+      </section> */}
 
       {/* Coding activity — GitHub + LeetCode, past year */}
       <section className="border-t border-border py-14 sm:py-16">

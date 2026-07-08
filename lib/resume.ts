@@ -108,7 +108,7 @@ export const EXPERIENCE: Experience[] = [
       "Added Redis caching and optimized MongoDB queries, cutting API response ~40% and server load ~25%.",
       "Integrated third-party services (Stripe, SendGrid, Google Analytics) via resilient server-side workflows, improving efficiency ~15% and reducing manual work ~25%.",
       "Grew from intern to Full Stack Developer across the MERN stack while reducing technical debt ~30%.",
-      "Delivered 50+ React.js projects at 99.8% cross-browser compatibility, raising mobile engagement ~20%.",
+      // "Delivered 50+ React.js projects at 99.8% cross-browser compatibility, raising mobile engagement ~20%.",
     ],
   },
 ];
@@ -123,20 +123,6 @@ export type Project = {
 };
 
 export const PROJECTS: Project[] = [
-  {
-    name: "Water Taker",
-    description:
-      "50+ REST APIs in Node.js/Express/Sequelize (MySQL) at sub-300ms and 99.9% uptime, with geolocation-based dynamic pricing (+45% query speed), live 10s order tracking (98% delivery success), and English/Arabic localization (+30% retention in Dubai).",
-    tech: ["Node.js", "Express", "MySQL"],
-    impact: "50+ APIs · +45% query speed",
-  },
-  {
-    name: "Trading App",
-    description:
-      "Real-time trading back-end (Investor/Consultant/Admin roles) for 5,000+ users with a Socket.io engine (1000+ concurrent, <200ms), Zerodha + TradingView integration, Twitter sentiment analysis (10K+ tweets/day), and Razorpay subscription billing.",
-    tech: ["Node.js", "Socket.io", "MongoDB", "React"],
-    impact: "1000+ concurrent · <200ms",
-  },
   {
     name: "Time2Enter",
     description:
@@ -154,13 +140,6 @@ export const PROJECTS: Project[] = [
     impact: "35+ APIs · +25% traffic",
   },
   {
-    name: "Inter Academy",
-    description:
-      "Full-stack course platform to sell and manage 30+ courses — 15+ Node/Express APIs backed by Sequelize with complete admin control (−40% content management effort), digital course-book sharing, and a dynamic React UI.",
-    tech: ["Node.js", "Express", "MySQL", "React"],
-    impact: "−40% content effort",
-  },
-  {
     name: "Elumat",
     description:
       "Interactive K–8 math-learning platform with gamified experiences. Node.js services drive a dynamic adaptive question engine across 5+ topics (+25% quiz accuracy), PDFMake worksheets, and batch export of 1,000+ reports saving educators 6+ hours weekly.",
@@ -175,6 +154,27 @@ export const PROJECTS: Project[] = [
     tech: ["Node.js", "React", "Bootstrap"],
     url: "https://vinna.lystigardar.is",
     impact: "+40% dev speed",
+  },
+  {
+    name: "Water Taker",
+    description:
+      "50+ REST APIs in Node.js/Express/Sequelize (MySQL) at sub-300ms and 99.9% uptime, with geolocation-based dynamic pricing (+45% query speed), live 10s order tracking (98% delivery success), and English/Arabic localization (+30% retention in Dubai).",
+    tech: ["Node.js", "Express", "MySQL"],
+    impact: "50+ APIs · +45% query speed",
+  },
+  {
+    name: "Trading App",
+    description:
+      "Real-time trading back-end (Investor/Consultant/Admin roles) for 5,000+ users with a Socket.io engine (1000+ concurrent, <200ms), Zerodha + TradingView integration, Twitter sentiment analysis (10K+ tweets/day), and Razorpay subscription billing.",
+    tech: ["Node.js", "Socket.io", "MongoDB", "React"],
+    impact: "1000+ concurrent · <200ms",
+  },
+  {
+    name: "Inter Academy",
+    description:
+      "Full-stack course platform to sell and manage 30+ courses — 15+ Node/Express APIs backed by Sequelize with complete admin control (−40% content management effort), digital course-book sharing, and a dynamic React UI.",
+    tech: ["Node.js", "Express", "MySQL", "React"],
+    impact: "−40% content effort",
   },
 ];
 

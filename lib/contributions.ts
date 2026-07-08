@@ -7,11 +7,15 @@
  *               JSON string mapping a day-start UNIX timestamp → submission count.
  *
  * Both functions resolve to `null` on any failure so callers can hide the
- * section rather than crash the page. Fetches are uncached (`no-store`) so the
- * heatmaps reflect live data on every request; the pages that use them stream
+ * section rather than crash the page. Responses are cached in Next.js' data
+ * cache for one day (`next.revalidate`), so the heatmaps are served from cache
+ * and only re-fetched after the interval lapses; the pages that use them stream
  * this in behind <Suspense> and render on demand.
  */
 import { site } from "@/lib/site";
+
+/** Data-cache lifetime for the activity fetches: one day, in seconds. */
+const ONE_DAY_SECONDS = 60 * 60 * 24;
 
 /** One cell of a heatmap. `level` is a 0–4 intensity bucket. */
 export type ContributionDay = {
@@ -102,7 +106,7 @@ export async function getGithubContributions(): Promise<ActivityCalendar | null>
   try {
     const res = await fetch(
       `https://github-contributions-api.jogruber.de/v4/${site.githubUsername}?y=last`,
-      { cache: "no-store" },
+      { next: { revalidate: ONE_DAY_SECONDS } },
     );
     if (!res.ok) return null;
 
@@ -144,7 +148,7 @@ export async function getLeetCodeContributions(): Promise<ActivityCalendar | nul
         }`,
         variables: { username: site.leetcodeUsername },
       }),
-      cache: "no-store",
+      next: { revalidate: ONE_DAY_SECONDS },
     });
     if (!res.ok) return null;
 
