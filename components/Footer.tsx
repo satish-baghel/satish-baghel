@@ -24,12 +24,13 @@ export function Footer() {
             <p className="mt-3 text-sm leading-relaxed text-muted">
               {site.jobTitle} building fast, scalable web apps.
             </p>
+            {/* Mirrors the hero status badge — keep the two in sync. */}
             <p className="mt-4 inline-flex items-center gap-2 font-mono text-xs text-muted">
               <span
-                className="h-1.5 w-1.5 rounded-full bg-[#22c55e]"
+                className="h-1.5 w-1.5 rounded-full bg-[#94a3b8]"
                 aria-hidden="true"
               />
-              Available for work
+              Not actively looking · open to networking
             </p>
           </div>
 

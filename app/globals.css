@@ -1,69 +1,69 @@
 @import "tailwindcss";
 
 /*
- * Terminal-Brutalist palette — near-black terminal canvas, PHOSPHOR-GREEN
- * primary, AMBER highlight (retained brand). Green reads as system/prompt
- * (links, borders, focus, structure); amber stays the "look here" highlight
- * for metrics + the primary CTA so achievements "glow".
+ * Ice-Terminal palette — deep blue-black terminal canvas, ELECTRIC-CYAN
+ * primary, warm ORANGE highlight. Cyan reads as system/prompt (links,
+ * borders, focus, structure); orange is the "look here" highlight for
+ * metrics + the primary CTA so achievements "glow".
  * Every value maps to a Tailwind color so the system stays predictable.
  * :root is the DARK default. [data-theme="light"] overrides it.
  * An inline script in layout.tsx sets data-theme before paint (no FOUC).
  */
 :root {
-  --background: #0a0e14; /* near-black, faint blue bias — terminal ground */
-  --surface: #0f141c; /* elevated card surface */
-  --surface-muted: #131a24; /* subtle fills, chips */
-  --border: #223041; /* cool hairline divider, visible on the ground */
-  --foreground: #c9d5e0; /* soft terminal off-white — ~11:1 on bg */
-  --muted: #7c8a9c; /* secondary text, ≥4.5:1 on bg */
+  --background: #0a0f16; /* near-black, faint blue bias — terminal ground */
+  --surface: #0e1620; /* elevated card surface */
+  --surface-muted: #121c28; /* subtle fills, chips */
+  --border: #1f3242; /* cool hairline divider, visible on the ground */
+  --foreground: #cdd6e0; /* soft terminal off-white — ~11:1 on bg */
+  --muted: #7e8fa0; /* secondary text, ≥4.5:1 on bg */
 
-  /* Phosphor green — primary accent for links, borders, focus, structure. */
-  --accent: #4ade80; /* green-400 — accent TEXT/links/prompt, ≥8:1 on bg */
-  --accent-strong: #86efac; /* green-300 — hover brightens on dark */
-  --accent-solid: #15803d; /* green-700 — solid fill, white text ≥5:1 */
-  --accent-solid-hover: #166534; /* green-800 — button hover */
+  /* Electric cyan — primary accent for links, borders, focus, structure. */
+  --accent: #22d3ee; /* cyan-400 — accent TEXT/links/prompt, ≥8:1 on bg */
+  --accent-strong: #67e8f9; /* cyan-300 — hover brightens on dark */
+  --accent-solid: #0e7490; /* cyan-700 — solid fill, white text ≥5:1 */
+  --accent-solid-hover: #155e75; /* cyan-800 — button hover */
 
-  /* Amber — the "look here" highlight for metrics + the primary CTA. */
-  --highlight: #fbbf24; /* amber-400 — number/emphasis text on dark */
-  --highlight-strong: #fcd34d; /* amber-300 — hover */
-  --highlight-solid: #fbbf24; /* amber-400 — CTA fill (dark ink on top) */
-  --highlight-solid-hover: #fcd34d; /* amber-300 — CTA hover */
-  --highlight-ink: #1c1917; /* stone-900 — text on top of amber fill */
+  /* Orange — the "look here" highlight for metrics + the primary CTA. */
+  --highlight: #fb923c; /* orange-400 — number/emphasis text on dark */
+  --highlight-strong: #fdba74; /* orange-300 — hover */
+  --highlight-solid: #fb923c; /* orange-400 — CTA fill (dark ink on top) */
+  --highlight-solid-hover: #fdba74; /* orange-300 — CTA hover */
+  --highlight-ink: #1c1410; /* near-black warm ink on top of orange fill */
 
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5),
     0 10px 28px -14px rgba(0, 0, 0, 0.85);
-  --shadow-card-hover: 0 2px 6px rgba(74, 222, 128, 0.14),
-    0 18px 40px -16px rgba(21, 128, 61, 0.4);
-  --shadow-glow-amber: 0 10px 30px -12px rgba(245, 158, 11, 0.55);
+  --shadow-card-hover: 0 2px 6px rgba(34, 211, 238, 0.14),
+    0 18px 40px -16px rgba(14, 116, 144, 0.4);
+  --shadow-glow-highlight: 0 10px 30px -12px rgba(249, 115, 22, 0.55);
 }
 
 :root[data-theme="light"] {
-  /* Paper terminal — a calm cool off-white canvas so the green/amber accents
+  /* Paper terminal — a calm cool off-white canvas so the cyan/orange accents
    * read cleanly. Surface still sits lighter than the background so cards keep
    * their elevation even with the sharp brutalist corners. */
-  --background: #e8ebef; /* soft cool off-white canvas */
-  --surface: #f6f8fa; /* off-white card — never pure #fff */
-  --surface-muted: #e3e7ee; /* subtle fills, chips */
-  --border: #c4ccd6; /* divider, visible on the softer canvas */
-  --foreground: #0e1621; /* near-black ink (~15:1 on canvas) */
-  --muted: #566472; /* slate — ≥4.5:1 on all surfaces */
+  --background: #e9edf1; /* soft cool off-white canvas */
+  --surface: #f5f8fa; /* off-white card — never pure #fff */
+  --surface-muted: #e2e8ee; /* subtle fills, chips */
+  --border: #c3ccd6; /* divider, visible on the softer canvas */
+  --foreground: #0d1520; /* near-black ink (~15:1 on canvas) */
+  --muted: #55636f; /* slate — ≥4.5:1 on all surfaces */
 
-  --accent: #15803d; /* green-700 — AA on paper (~5:1) */
-  --accent-strong: #166534; /* green-800 — hover / active */
-  --accent-solid: #15803d; /* solid fill — white text passes (~5:1) */
-  --accent-solid-hover: #166534; /* button hover */
+  --accent: #0e7490; /* cyan-700 — AA on paper (~5:1) */
+  --accent-strong: #155e75; /* cyan-800 — hover / active */
+  --accent-solid: #0e7490; /* solid fill — white text passes (~5:1) */
+  --accent-solid-hover: #155e75; /* button hover */
 
-  --highlight: #b45309; /* amber-700 — emphasis text, AA on white */
-  --highlight-strong: #92400e; /* amber-800 — hover */
-  --highlight-solid: #f59e0b; /* amber-500 — CTA fill (dark ink on top) */
-  --highlight-solid-hover: #d97706; /* amber-600 — CTA hover */
-  --highlight-ink: #1c1917; /* dark ink on amber — high contrast both modes */
+  --highlight: #c2410c; /* orange-700 — emphasis text, AA on white */
+  --highlight-strong: #9a3412; /* orange-800 — hover */
+  --highlight-solid: #f97316; /* orange-500 — CTA fill (dark ink on top) */
+  --highlight-solid-hover: #ea580c; /* orange-600 — CTA hover */
+  --highlight-ink: #1c1410; /* dark ink on orange — high contrast both modes */
 
   --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
     0 8px 24px -12px rgba(15, 23, 42, 0.12);
-  --shadow-card-hover: 0 2px 4px rgba(21, 128, 61, 0.12),
-    0 16px 36px -14px rgba(21, 128, 61, 0.22);
-  --shadow-glow-amber: 0 10px 30px -12px rgba(217, 119, 6, 0.35);
+  --shadow-card-hover: 0 2px 4px rgba(14, 116, 144, 0.12),
+    0 16px 36px -14px rgba(14, 116, 144, 0.22);
+  --shadow-glow-highlight: 0 10px 30px -12px rgba(234, 88, 12, 0.35);
 }
 
 @theme inline {
@@ -125,7 +125,6 @@ body {
     ),
     var(--background);
   background-size: 100% 3px, 28px 28px, 28px 28px, auto;
-  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -284,7 +283,7 @@ body {
 .cta-panel {
   position: relative;
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: 0;
   border: 1px solid var(--border);
   background:
     radial-gradient(
@@ -370,7 +369,7 @@ body {
   font-size: 0.875em;
   background: var(--surface-muted);
   border: 1px solid var(--border);
-  border-radius: 0.375rem;
+  border-radius: 0;
   padding: 0.15em 0.4em;
   color: var(--accent-strong);
 }
@@ -381,7 +380,7 @@ body {
   line-height: 1.6;
   background: #0b1120; /* deep slate */
   border: 1px solid #1f2937; /* slate-800 */
-  border-radius: 0.75rem;
+  border-radius: 0;
   padding: 1rem 1.25rem;
   overflow-x: auto;
 }
@@ -409,7 +408,7 @@ body {
  */
 .code-card {
   border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  border-radius: 0;
   overflow: hidden;
   background: #0b1120;
   box-shadow: var(--shadow-card);
@@ -451,7 +450,7 @@ body {
   gap: 0.3rem;
   color: #94a3b8;
   border: 1px solid #1f2937;
-  border-radius: 0.375rem;
+  border-radius: 0;
   padding: 0.15rem 0.5rem;
   background: transparent;
   cursor: pointer;
@@ -479,7 +478,7 @@ body {
  */
 .terminal {
   border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  border-radius: 0;
   overflow: hidden;
   background: #0b1120;
   box-shadow: var(--shadow-card);
@@ -617,41 +616,41 @@ body {
 }
 
 /*
- * Amber primary CTA ("Hire me" / "Download résumé"). Reserved for the single
- * most important action per view — dark ink on a warm amber fill reads as
- * confident and premium, and stands apart from the indigo secondary buttons.
+ * Highlight primary CTA ("Hire me" / "Download résumé"). Reserved for the
+ * single most important action per view — dark ink on a warm orange fill
+ * reads as confident and premium, and stands apart from secondary buttons.
  */
-.btn-amber {
+.btn-highlight {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   height: 2.75rem;
-  border-radius: 0.5rem;
+  border-radius: 0;
   padding: 0 1.1rem;
   font-weight: 600;
   font-size: 0.875rem;
   color: var(--highlight-ink);
   background: var(--highlight-solid);
-  box-shadow: var(--shadow-glow-amber);
+  box-shadow: var(--shadow-glow-highlight);
   transition: background-color 0.2s ease, transform 0.2s ease,
     box-shadow 0.2s ease;
 }
-.btn-amber:hover {
+.btn-highlight:hover {
   background: var(--highlight-solid-hover);
   transform: translateY(-1px);
 }
-.btn-amber:focus-visible {
+.btn-highlight:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--highlight-solid);
 }
 
 /*
  * Quick-facts strip — a row of at-a-glance recruiter facts (location, notice,
- * experience, stack). Each tile is a calm surface with an amber label dot.
+ * experience, stack). Each tile is a calm surface on the terminal ground.
  */
 .fact-tile {
   border: 1px solid var(--border);
-  border-radius: 0.85rem;
+  border-radius: 0;
   background: var(--surface);
   padding: 0.9rem 1rem;
   box-shadow: var(--shadow-card);
@@ -663,14 +662,14 @@ body {
 }
 
 /*
- * Testimonial card — a quote surface with a large decorative amber quote mark.
+ * Testimonial card — a quote surface with a large decorative orange quote mark.
  * Replace the placeholder quotes in lib/resume.ts with real recommendations.
  */
 .quote-card {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 1rem;
+  border-radius: 0;
   background:
     radial-gradient(
       120% 130% at 0% 0%,
@@ -700,7 +699,7 @@ body {
   pointer-events: none;
 }
 
-/* Impact badge — the headline result on a project card, amber-tinted. */
+/* Impact badge — the headline result on a project card, highlight-tinted. */
 .impact-badge {
   display: inline-flex;
   align-items: center;
