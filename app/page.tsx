@@ -15,11 +15,27 @@ import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { ResumeChat } from "@/components/ResumeChat";
 import { QuickFacts } from "@/components/QuickFacts";
-import { Testimonials } from "@/components/Testimonials";
 import { ResumeButton } from "@/components/ResumeButton";
+import { Services } from "@/components/Services";
+import { SkillsBreakdown } from "@/components/SkillsBreakdown";
+import { ImpactStats } from "@/components/ImpactStats";
+import { CaseStudies } from "@/components/CaseStudies";
+import { Achievements } from "@/components/Achievements";
+import { EducationCerts } from "@/components/EducationCerts";
+import { NowSection } from "@/components/NowSection";
+import { HowIWork } from "@/components/HowIWork";
+import { Faq } from "@/components/Faq";
+import { Newsletter } from "@/components/Newsletter";
 import { site } from "@/lib/site";
 import { SUMMARY, METRICS, TECH, EXPERIENCE, PROJECTS } from "@/lib/resume";
 
+/*
+ * Section order follows the portfolio-grid conversion pattern: pitch → proof.
+ * Hero, quick facts, and services make the pitch; work, experience, and
+ * impact prove it; everything after is depth for readers who want more.
+ * Placeholder-driven sections (Testimonials, OpenSource) stay off the page
+ * until lib/resume.ts holds real data.
+ */
 export default function Home() {
   const posts = getAllPosts();
   const [featured, ...rest] = posts;
@@ -52,7 +68,7 @@ export default function Home() {
               {SUMMARY}
             </p>
 
-            {/* Credibility metrics — amber numbers draw the recruiter's eye. */}
+            {/* Credibility metrics — highlight numbers draw the recruiter's eye. */}
             <dl className="reveal reveal-3 mt-8 grid grid-cols-3 gap-3">
               {METRICS.map((m) => (
                 <div
@@ -116,24 +132,36 @@ export default function Home() {
 
       {/* Quick facts — recruiter TL;DR, scannable at a glance */}
       <section className="border-t border-border py-10 sm:py-12">
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">
-          At a glance
+        <p className="font-mono text-xs tracking-wide text-muted">
+          <span className="text-accent">$</span> at a glance
         </p>
         <div className="reveal mt-5">
           <QuickFacts />
         </div>
       </section>
 
-      {/* Tech stack strip */}
+      {/* Services — what I can do for you */}
       <section className="border-t border-border py-14 sm:py-16">
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">
-          Toolkit
-        </p>
-        <h2 className="font-display mt-1.5 text-xl font-semibold tracking-tight sm:text-2xl">
-          Tech I work with
-        </h2>
+        <SectionHeader eyebrow="Services" title="What I do" />
+        <div className="reveal mt-8">
+          <Services />
+        </div>
+      </section>
+
+      {/* Selected work — case studies (deep dives) + project grid, right after
+          the pitch so proof lands before the reader scrolls away */}
+      <section className="border-t border-border py-14 sm:py-16">
+        <SectionHeader
+          eyebrow="Work"
+          title="Selected work"
+          href="/about"
+          linkText="All projects"
+        />
         <div className="reveal mt-6">
-          <TechGrid items={TECH} />
+          <CaseStudies />
+        </div>
+        <div className="reveal mt-6">
+          <ProjectGrid projects={PROJECTS.slice(0, 4)} />
         </div>
       </section>
 
@@ -150,16 +178,49 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured projects */}
+      {/* Impact — quantified outcomes + narrative career wins in one place */}
       <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader
-          eyebrow="Work"
-          title="Selected projects"
-          href="/about"
-          linkText="All projects"
-        />
+        <SectionHeader eyebrow="Impact" title="By the numbers" />
         <div className="reveal mt-6">
-          <ProjectGrid projects={PROJECTS.slice(0, 4)} />
+          <ImpactStats />
+        </div>
+        <div className="reveal mt-4">
+          <Achievements />
+        </div>
+      </section>
+
+      {/* Stack & skills — the tech strip and the grouped inventory together */}
+      <section className="border-t border-border py-14 sm:py-16">
+        <SectionHeader eyebrow="Stack" title="Tech I work with" />
+        <div className="reveal mt-6">
+          <TechGrid items={TECH} />
+        </div>
+        <div className="reveal mt-8">
+          <SkillsBreakdown />
+        </div>
+      </section>
+
+      {/* How I work — process from problem to production */}
+      <section className="border-t border-border py-14 sm:py-16">
+        <SectionHeader eyebrow="Process" title="How I work" />
+        <div className="reveal mt-6">
+          <HowIWork />
+        </div>
+      </section>
+
+      {/* Education & certifications */}
+      <section className="border-t border-border py-14 sm:py-16">
+        <SectionHeader eyebrow="Credentials" title="Education & certifications" />
+        <div className="reveal mt-8">
+          <EducationCerts />
+        </div>
+      </section>
+
+      {/* Now — what I'm currently focused on */}
+      <section className="border-t border-border py-14 sm:py-16">
+        <SectionHeader eyebrow="Now" title="What I'm focused on" />
+        <div className="reveal mt-6">
+          <NowSection />
         </div>
       </section>
 
@@ -185,18 +246,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* Recommendations — social proof from managers & peers */}
-      <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader
-          eyebrow="Recommendations"
-          title="What people say"
-        />
-        <div className="reveal mt-6">
-          <Testimonials />
-        </div>
-      </section>
-
-      {/* Coding activity — GitHub + LeetCode, past year */}
+      {/* Coding activity — GitHub + LeetCode */}
       <section className="border-t border-border py-14 sm:py-16">
         <SectionHeader
           eyebrow="Activity"
@@ -209,23 +259,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Ask my resume — AI chat */}
+      {/* Questions — static FAQ answers plus the AI resume chat for the rest */}
       <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader eyebrow="AI assistant" title="Ask my resume" />
-        <p className="mt-3 max-w-xl text-muted">
-          Curious about my experience, skills, or projects? Ask the assistant
-          below — it answers straight from my resume.
-        </p>
+        <SectionHeader eyebrow="FAQ" title="Common questions" />
         <div className="reveal mt-6">
+          <Faq />
+        </div>
+        <h3 className="font-display mt-10 text-lg font-semibold tracking-tight">
+          Something else? Ask my resume
+        </h3>
+        <p className="mt-2 max-w-xl text-sm text-muted">
+          The assistant below answers straight from my resume — experience,
+          skills, projects, anything.
+        </p>
+        <div className="reveal mt-4">
           <ResumeChat />
         </div>
       </section>
 
-      {/* Get in touch */}
+      {/* Get in touch — contact panel + newsletter in one closing beat */}
       <section className="border-t border-border py-14 sm:py-16">
         <div className="cta-panel reveal px-6 py-10 sm:px-10 sm:py-12">
-          <p className="font-mono text-xs uppercase tracking-widest text-accent">
-            Contact
+          <p className="font-mono text-xs tracking-wide text-muted">
+            <span className="text-accent">$</span> ./contact.sh
           </p>
           <h2 className="font-display mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
             Let&apos;s build something.
@@ -240,6 +296,9 @@ export default function Home() {
             <ResumeButton />
             <SocialLinks />
           </div>
+        </div>
+        <div className="reveal mt-8">
+          <Newsletter />
         </div>
       </section>
     </div>
@@ -261,8 +320,8 @@ function SectionHeader({
   return (
     <div className="flex items-end justify-between gap-4">
       <div>
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">
-          {eyebrow}
+        <p className="font-mono text-xs tracking-wide text-muted">
+          <span className="text-accent">$</span> {eyebrow.toLowerCase()}
         </p>
         <h2 className="font-display mt-1.5 text-xl font-semibold tracking-tight sm:text-2xl">
           {title}
@@ -271,7 +330,7 @@ function SectionHeader({
       {href && linkText && (
         <Link
           href={href}
-          className="shrink-0 font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+          className="shrink-0 font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {linkText} →
         </Link>

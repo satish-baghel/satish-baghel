@@ -1,9 +1,9 @@
 import { site } from "@/lib/site";
 
 /**
- * Amber "Download résumé" CTA. Opens the PDF at public/resume.pdf in a new tab
+ * "Download résumé" CTA. Opens the PDF at public/resume.pdf in a new tab
  * with a download hint. This is the primary conversion action for recruiters,
- * so it uses the reserved amber highlight styling (.btn-amber).
+ * so it uses the reserved highlight styling (.btn-highlight).
  */
 export function ResumeButton({ className = "" }: { className?: string }) {
   return (
@@ -12,7 +12,7 @@ export function ResumeButton({ className = "" }: { className?: string }) {
       target="_blank"
       rel="noopener noreferrer"
       download
-      className={`btn-amber font-mono focus-visible:outline-none ${className}`}
+      className={`btn-highlight font-mono focus-visible:outline-none ${className}`}
     >
       <DownloadIcon />
       Download résumé
