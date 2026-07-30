@@ -25,9 +25,10 @@ export function Header() {
       >
         <Link
           href="/"
-          className="group flex items-center gap-2.5 rounded-full font-display text-lg font-semibold tracking-tight text-foreground transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="group flex items-center gap-2.5 rounded-sm text-foreground transition-transform hover:-rotate-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          <span className="relative h-9 w-9 overflow-hidden rounded-full border border-accent/40 bg-surface ring-2 ring-background transition-transform duration-200 group-hover:scale-105">
+          {/* Avatar pinned up like a little photo. */}
+          <span className="relative h-9 w-9 rotate-[-4deg] overflow-hidden rounded-[3px] border-2 border-white/80 bg-surface shadow-[var(--shadow-card)] transition-transform duration-200 group-hover:rotate-0">
             <Image
               src="/me.png"
               alt="Satish Baghel"
@@ -36,7 +37,7 @@ export function Header() {
               className="object-cover"
             />
           </span>
-          <span className="hidden sm:inline">
+          <span className="font-hand hidden text-2xl leading-none sm:inline">
             Satish <span className="text-accent">Baghel</span>
           </span>
         </Link>
@@ -46,9 +47,9 @@ export function Header() {
               <Link
                 href={item.href}
                 aria-current={isActive(item.href) ? "page" : undefined}
-                className={`inline-flex h-11 items-center rounded-lg px-3.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                className={`font-hand inline-flex h-9 items-center rounded-sm px-3.5 text-xl leading-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                   isActive(item.href)
-                    ? "bg-accent/10 text-accent"
+                    ? "bg-highlight-solid text-highlight-ink shadow-[var(--shadow-card)]"
                     : "text-muted hover:bg-surface-muted hover:text-foreground"
                 }`}
               >

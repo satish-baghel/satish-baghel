@@ -46,10 +46,12 @@ export function BlogList({
         })}
       </div>
 
-      <div className="mt-8 flex flex-col gap-4">
+      <div className="mt-10 flex flex-col gap-9 pt-3">
         {featured && <FeaturedPost post={featured} />}
         {posts.length > 0 ? (
-          posts.map((post) => <PostCard key={post.slug} post={post} />)
+          posts.map((post, i) => (
+            <PostCard key={post.slug} post={post} index={featured ? i + 1 : i} />
+          ))
         ) : (
           !featured && <p className="text-muted">No posts match this filter.</p>
         )}

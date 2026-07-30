@@ -1,65 +1,89 @@
 @import "tailwindcss";
 
 /*
- * Premium engineer palette — deep slate canvas, INDIGO primary, AMBER highlight.
- * Indigo reads as trusted + technical; amber is reserved for the things a
- * recruiter should see first (CTAs, impact metrics) so achievements "glow".
- * Every value maps to a Tailwind color so the system stays predictable.
- * :root is the DARK default. [data-theme="light"] overrides it.
+ * ─────────────────────────────────────────────────────────────────────────
+ * STICKY-NOTES ON A CORKBOARD
+ * ─────────────────────────────────────────────────────────────────────────
+ * The whole site is a pinboard: content lives on physical-looking Post-it
+ * notes tacked to a cork desk. The canvas (cork) is themed; the NOTES keep
+ * fixed pastel paper colours with dark ink in BOTH themes — real paper doesn't
+ * invert — which is exactly what sells the skeuomorphism.
+ *
+ * Token model (per theme):
+ *   --background / cork* : the corkboard behind everything
+ *   --surface*          : "kraft/paper" panels for non-note UI (chat, terminal)
+ *   --foreground/--muted: text that sits directly on the cork
+ *   --accent*           : marker ink for links & interactive bits on the cork
+ *   --highlight*        : the classic Post-it amber, kept for the primary CTA
+ *
+ * :root is the DARK (espresso desk) default. [data-theme="light"] = tan cork.
  * An inline script in layout.tsx sets data-theme before paint (no FOUC).
  */
 :root {
-  --background: #020617; /* slate-950 — deeper, more premium canvas */
-  --surface: #0f172a; /* slate-900 — elevated card surface */
-  --surface-muted: #1e293b; /* slate-800 — subtle fills, chips */
-  --border: #243049; /* cool divider, visible on slate-950 */
-  --foreground: #f8fafc; /* slate-50 — primary text */
-  --muted: #94a3b8; /* slate-400 — secondary text, ≥4.5:1 on bg */
+  /* Cork desk — espresso, warm and deep so the notes pop. */
+  --cork-base: #4a3520;
+  --cork-spot-dark: rgba(0, 0, 0, 0.24);
+  --cork-spot-light: rgba(255, 224, 178, 0.06);
+  --cork-vignette: rgba(0, 0, 0, 0.32);
 
-  /* Indigo — primary accent for links, borders, focus, structure. */
-  --accent: #818cf8; /* indigo-400 — accent TEXT/links, ≥7:1 on bg */
-  --accent-strong: #a5b4fc; /* indigo-300 — hover brightens on dark */
-  --accent-solid: #4f46e5; /* indigo-600 — solid fill, white text ≥5:1 */
-  --accent-solid-hover: #6366f1; /* indigo-500 — button hover */
+  --background: #4a3520; /* = cork base, used by header/focus offsets */
+  --surface: #2c1f13; /* dark kraft panel — cream text is readable on it */
+  --surface-muted: #3a2a1a; /* slightly lifted kraft */
+  --border: rgba(247, 232, 208, 0.16); /* hairline that reads on espresso */
+  --foreground: #f5ecd9; /* chalky cream — primary text on cork */
+  --muted: #d3bd9c; /* warm tan — secondary text, ≥4.5:1 on cork */
 
-  /* Amber — the "look here" highlight for metrics + the primary CTA. */
-  --highlight: #fbbf24; /* amber-400 — number/emphasis text on dark */
-  --highlight-strong: #fcd34d; /* amber-300 — hover */
-  --highlight-solid: #fbbf24; /* amber-400 — CTA fill (dark ink on top) */
-  --highlight-solid-hover: #fcd34d; /* amber-300 — CTA hover */
-  --highlight-ink: #1c1917; /* stone-900 — text on top of amber fill */
+  /* Marker ink — links / interactive on the cork. Post-it amber pops on brown. */
+  --accent: #fcd34d; /* amber-300 marker */
+  --accent-strong: #fde68a; /* brighter on hover */
+  --accent-solid: #d97706; /* amber-600 solid fill, white text passes */
+  --accent-solid-hover: #b45309; /* amber-700 button hover */
 
-  --shadow-card: 0 1px 2px rgba(2, 6, 23, 0.5),
-    0 10px 28px -14px rgba(2, 6, 23, 0.8);
-  --shadow-card-hover: 0 2px 6px rgba(99, 102, 241, 0.16),
-    0 18px 40px -16px rgba(79, 70, 229, 0.45);
-  --shadow-glow-amber: 0 10px 30px -12px rgba(245, 158, 11, 0.55);
+  /* Highlight — reserved for the primary CTA + emphasis numbers. */
+  --highlight: #fcd34d;
+  --highlight-strong: #fde68a;
+  --highlight-solid: #facc15; /* yellow-400 CTA fill (dark ink on top) */
+  --highlight-solid-hover: #fde047; /* yellow-300 hover */
+  --highlight-ink: #422006; /* espresso ink on the yellow CTA */
+
+  /* Notes cast a real drop shadow; the desk gives a soft ambient one. */
+  --shadow-card: 2px 3px 8px -3px rgba(0, 0, 0, 0.45),
+    5px 9px 20px -8px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 3px 6px 14px -4px rgba(0, 0, 0, 0.5),
+    10px 18px 34px -10px rgba(0, 0, 0, 0.55);
+  --shadow-glow-amber: 3px 5px 16px -6px rgba(0, 0, 0, 0.5);
 }
 
 :root[data-theme="light"] {
-  --background: #f8fafc; /* slate-50 — paper */
-  --surface: #ffffff;
-  --surface-muted: #f1f5f9; /* slate-100 */
-  --border: #e2e8f0; /* slate-200 */
-  --foreground: #0f172a; /* slate-900 — primary ink */
-  --muted: #475569; /* slate-600 — ≥4.5:1 on white */
+  /* Tan corkboard — brighter, classic bulletin-board. */
+  --cork-base: #c9a578;
+  --cork-spot-dark: rgba(92, 58, 22, 0.26);
+  --cork-spot-light: rgba(255, 250, 235, 0.22);
+  --cork-vignette: rgba(70, 45, 18, 0.16);
 
-  --accent: #4f46e5; /* indigo-600 — AA on white (~5.8:1) */
-  --accent-strong: #4338ca; /* indigo-700 — hover / active */
-  --accent-solid: #4f46e5; /* solid fill — white text passes on white bg */
-  --accent-solid-hover: #4338ca; /* button hover */
+  --background: #c9a578;
+  --surface: #fffaf0; /* cream paper panel */
+  --surface-muted: #f2e6d1; /* kraft fill */
+  --border: rgba(74, 48, 20, 0.2);
+  --foreground: #3a2818; /* espresso ink on the tan desk */
+  --muted: #6d5638; /* ≥4.5:1 on tan */
 
-  --highlight: #b45309; /* amber-700 — emphasis text, AA on white */
-  --highlight-strong: #92400e; /* amber-800 — hover */
-  --highlight-solid: #f59e0b; /* amber-500 — CTA fill (dark ink on top) */
-  --highlight-solid-hover: #d97706; /* amber-600 — CTA hover */
-  --highlight-ink: #1c1917; /* dark ink on amber — high contrast both modes */
+  --accent: #9a3412; /* burnt-orange marker, AA on tan */
+  --accent-strong: #7c2d12;
+  --accent-solid: #b45309;
+  --accent-solid-hover: #92400e;
 
-  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
-    0 8px 24px -12px rgba(15, 23, 42, 0.12);
-  --shadow-card-hover: 0 2px 4px rgba(79, 70, 229, 0.1),
-    0 16px 36px -14px rgba(79, 70, 229, 0.24);
-  --shadow-glow-amber: 0 10px 30px -12px rgba(217, 119, 6, 0.35);
+  --highlight: #92400e;
+  --highlight-strong: #7c2d12;
+  --highlight-solid: #facc15;
+  --highlight-solid-hover: #eab308;
+  --highlight-ink: #422006;
+
+  --shadow-card: 2px 3px 7px -3px rgba(60, 40, 15, 0.3),
+    5px 9px 18px -8px rgba(60, 40, 15, 0.28);
+  --shadow-card-hover: 3px 6px 13px -4px rgba(60, 40, 15, 0.34),
+    10px 18px 30px -10px rgba(60, 40, 15, 0.3);
+  --shadow-glow-amber: 3px 5px 14px -6px rgba(60, 40, 15, 0.3);
 }
 
 @theme inline {
@@ -80,58 +104,232 @@
   --color-highlight-ink: var(--highlight-ink);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-hand: var(--font-caveat);
 }
 
 html {
   color-scheme: light dark;
 }
 
+/*
+ * The corkboard. A layered radial-dot pattern fakes cork granules; a fixed
+ * vignette darkens the edges so the board feels like a real, lit surface.
+ */
 body {
-  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  background-color: var(--cork-base);
+  background-image:
+    radial-gradient(var(--cork-vignette), transparent 75%),
+    radial-gradient(circle at center, var(--cork-spot-dark) 0.5px, transparent 1.4px),
+    radial-gradient(circle at center, var(--cork-spot-light) 0.5px, transparent 1.3px),
+    radial-gradient(circle at center, var(--cork-spot-dark) 0.5px, transparent 1px);
+  background-size:
+    100% 100%,
+    14px 14px,
+    19px 19px,
+    9px 9px;
+  background-position:
+    center,
+    0 0,
+    6px 8px,
+    3px 4px;
+  background-attachment: fixed, scroll, scroll, scroll;
 }
 
 ::selection {
-  background: var(--accent-solid);
-  color: #ffffff;
+  background: var(--highlight-solid);
+  color: var(--highlight-ink);
 }
 
-/* Display headings use a tight, clean sans (Inter) for a technical feel. */
+/* Handwritten marker — headings, labels, branding. Bundled via next/font. */
+.font-hand {
+  font-family: var(--font-hand), "Comic Sans MS", cursive;
+  letter-spacing: 0;
+}
 .font-display {
   font-family: var(--font-sans), system-ui, sans-serif;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 /*
- * Decorative hero backdrop: a faint dot grid with an accent glow, masked to
- * fade at the edges. Static (no animation) so it stays calm + reduced-motion-safe.
+ * A "scribbled" eyebrow/label: handwritten marker ink with a rough underline,
+ * used in place of the old mono uppercase kickers.
  */
-.hero-grid {
-  background-image:
-    radial-gradient(
-      55% 45% at 12% -5%,
-      color-mix(in srgb, var(--accent) 26%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      45% 40% at 88% 6%,
-      color-mix(in srgb, var(--accent-strong) 20%, transparent),
-      transparent 65%
-    ),
-    radial-gradient(currentColor 1px, transparent 1px);
-  background-size:
-    auto,
-    auto,
-    22px 22px;
-  color: var(--border);
-  -webkit-mask-image: radial-gradient(
-    120% 90% at 50% 0%,
-    #000 35%,
-    transparent 80%
+.scribble {
+  font-family: var(--font-hand), cursive;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--accent);
+  transform: rotate(-1.5deg);
+  display: inline-block;
+}
+/* On a coloured note, the scribble uses the note's ink instead of cork ink. */
+.note .scribble {
+  color: color-mix(in srgb, var(--note-ink) 82%, transparent);
+}
+
+/* ───────────────────────────────── NOTES ─────────────────────────────── */
+
+/*
+ * .note — a single Post-it. Colour + ink come from a modifier (or default
+ * yellow). `--rot` (set inline, see lib/notes.ts) gives each note a hand-placed
+ * tilt; hovering straightens and lifts it toward the viewer.
+ */
+.note {
+  --note-bg: #fde68a;
+  --note-bg-2: #fcd34d;
+  --note-ink: #4b3a0a;
+  --note-pin: #ef4444;
+  position: relative;
+  background:
+    linear-gradient(160deg, var(--note-bg) 0%, var(--note-bg-2) 140%);
+  color: var(--note-ink);
+  border-radius: 2px;
+  box-shadow: var(--shadow-card);
+  transform: rotate(var(--rot, -1.4deg));
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.28s ease;
+}
+/* Faint paper grain + a soft "peel" sheen in the bottom corner. */
+.note::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 100% at 100% 100%, rgba(0, 0, 0, 0.07), transparent 42%),
+    radial-gradient(80% 60% at 0 0, rgba(255, 255, 255, 0.28), transparent 55%);
+}
+.note:hover {
+  transform: rotate(0deg) translateY(-4px) scale(1.015);
+  box-shadow: var(--shadow-card-hover);
+  z-index: 5;
+}
+
+/* Colour modifiers — pastel paper, dark ink (AA in both themes). */
+.note--yellow {
+  --note-bg: #fde68a;
+  --note-bg-2: #fcd34d;
+  --note-ink: #4b3a0a;
+  --note-pin: #ef4444;
+}
+.note--pink {
+  --note-bg: #fbcfe8;
+  --note-bg-2: #f9a8d4;
+  --note-ink: #831843;
+  --note-pin: #db2777;
+}
+.note--blue {
+  --note-bg: #bae6fd;
+  --note-bg-2: #7dd3fc;
+  --note-ink: #0c4a6e;
+  --note-pin: #2563eb;
+}
+.note--green {
+  --note-bg: #bbf7d0;
+  --note-bg-2: #86efac;
+  --note-ink: #14532d;
+  --note-pin: #16a34a;
+}
+.note--orange {
+  --note-bg: #fed7aa;
+  --note-bg-2: #fdba74;
+  --note-ink: #7c2d12;
+  --note-pin: #ea580c;
+}
+
+/* Secondary text inside a note — the ink, softened. Utility for components. */
+.note-ink {
+  color: var(--note-ink);
+}
+.note-ink-soft {
+  color: color-mix(in srgb, var(--note-ink) 68%, transparent);
+}
+.note-hand {
+  font-family: var(--font-hand), cursive;
+  color: var(--note-ink);
+}
+
+/* A push-pin tacked to the top of a note. */
+.pin {
+  position: absolute;
+  top: -0.7rem;
+  left: 50%;
+  width: 1.15rem;
+  height: 1.15rem;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.9), transparent 42%),
+    radial-gradient(circle at 60% 65%, rgba(0, 0, 0, 0.28), transparent 55%),
+    var(--note-pin, #ef4444);
+  box-shadow: 0 0.28rem 0.4rem rgba(0, 0, 0, 0.4);
+  z-index: 3;
+}
+.pin::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  width: 0.16rem;
+  height: 0.5rem;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 0 0 2px 2px;
+}
+
+/* A strip of translucent washi/masking tape across a corner. */
+.tape {
+  position: absolute;
+  top: -0.55rem;
+  left: 50%;
+  width: 5.5rem;
+  height: 1.55rem;
+  transform: translateX(-50%) rotate(-3.5deg);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.42) 0 3px,
+    rgba(255, 255, 255, 0.28) 3px 6px
   );
-  mask-image: radial-gradient(120% 90% at 50% 0%, #000 35%, transparent 80%);
+  box-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, 0.18);
+  z-index: 3;
+  /* torn/soft ends */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.tape--tr {
+  left: auto;
+  right: -0.9rem;
+  top: 0.9rem;
+  transform: rotate(38deg);
+  width: 4.5rem;
+}
+.tape--tl {
+  left: -0.9rem;
+  top: 0.9rem;
+  transform: rotate(-38deg);
+  width: 4.5rem;
+}
+
+/* Folded / dog-eared bottom-right corner. */
+.note--folded::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    transparent 50%,
+    color-mix(in srgb, var(--note-ink) 12%, var(--note-bg)) 50%
+  );
+  border-top-left-radius: 3px;
+  box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.12);
+  z-index: 2;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -143,18 +341,20 @@ body {
     animation-delay: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+  /* Keep the hand-placed tilt even when motion is reduced. */
+  .note {
+    transform: rotate(var(--rot, -1.4deg));
+  }
 }
 
 /*
- * Subtle entrance: fade + rise. Uses transform/opacity only with an ease-out
- * curve. `animation-fill-mode: both` holds the final (visible) state, and the
- * reduced-motion block above collapses both duration AND delay — so motion-averse
- * users land on the finished layout instantly (nothing stuck at opacity 0).
+ * Subtle entrance: notes are "pinned up" — a small drop + settle. Uses
+ * transform/opacity only; reduced-motion collapses it to the finished state.
  */
-@keyframes fade-up {
+@keyframes pin-up {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(-14px) rotate(0deg) scale(0.98);
   }
   to {
     opacity: 1;
@@ -163,7 +363,7 @@ body {
 }
 
 .reveal {
-  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: pin-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .reveal-1 {
   animation-delay: 0.05s;
@@ -181,14 +381,14 @@ body {
   animation-delay: 0.33s;
 }
 
-/* "Available for work" status pill — green dot is paired with text, not color-only. */
+/* "Not actively looking" status pill — reads as a little paper tag. */
 .status-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   border-radius: 9999px;
   border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
   padding: 0.375rem 0.75rem 0.375rem 0.625rem;
   font-size: 0.8125rem;
   color: var(--foreground);
@@ -199,7 +399,7 @@ body {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 9999px;
-  background: #22c55e; /* green-500 */
+  background: #22c55e;
 }
 .status-dot::after {
   content: "";
@@ -209,9 +409,8 @@ body {
   background: #22c55e;
   animation: ping 1.9s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
-/* Idle variant — steady slate dot, no pulse. Signals "not actively looking". */
 .status-dot--idle {
-  background: #94a3b8; /* slate-400 */
+  background: #eab308;
 }
 .status-dot--idle::after {
   display: none;
@@ -224,7 +423,7 @@ body {
   }
 }
 
-/* Soft accent glow behind the hero avatar for a premium, lifted feel (static). */
+/* Soft warm glow behind the hero avatar (photo pinned to the board). */
 .avatar-glow::after {
   content: "";
   position: absolute;
@@ -233,34 +432,116 @@ body {
   border-radius: 9999px;
   background: radial-gradient(
     closest-side,
-    color-mix(in srgb, var(--accent) 42%, transparent),
+    color-mix(in srgb, var(--highlight) 40%, transparent),
     transparent 72%
   );
   filter: blur(30px);
-  opacity: 0.75;
+  opacity: 0.6;
   pointer-events: none;
 }
 
-/* Premium contact panel — surface with a corner accent wash. */
-.cta-panel {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1rem;
-  border: 1px solid var(--border);
-  background:
-    radial-gradient(
-      120% 140% at 100% 0%,
-      color-mix(in srgb, var(--accent) 16%, transparent),
-      transparent 55%
-    ),
-    var(--surface);
-  box-shadow: var(--shadow-card);
+/* A hero backdrop kept for compatibility — a very faint pinboard sheen. */
+.hero-grid {
+  background-image: radial-gradient(
+    60% 45% at 50% -5%,
+    rgba(255, 255, 255, 0.05),
+    transparent 70%
+  );
 }
 
 /*
- * Prose styles for server-rendered Markdown (lib/markdown.ts output).
- * Hand-rolled to avoid adding @tailwindcss/typography as a dependency.
+ * The primary CTA ("Download résumé") — a bright yellow sticky tab with dark
+ * ink and a little peel. Reserved for the single most important action.
  */
+.btn-amber {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.75rem;
+  border-radius: 3px;
+  padding: 0 1.1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--highlight-ink);
+  background: linear-gradient(160deg, var(--highlight-solid), var(--highlight-solid-hover));
+  box-shadow: var(--shadow-card);
+  transform: rotate(-1.5deg);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-amber:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+.btn-amber:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--highlight-solid);
+}
+
+/* Quick-facts tiles — small pastel notes (colour set per-tile in JSX). */
+.fact-tile {
+  padding: 0.9rem 1rem 1rem;
+}
+
+/* Testimonial card — a note with a big handwritten quote mark. */
+.quote-card {
+  position: relative;
+  padding: 1.5rem 1.5rem 1.4rem;
+}
+.quote-card::before {
+  content: "\201C";
+  position: absolute;
+  right: 1rem;
+  top: 0.4rem;
+  font-family: var(--font-hand), Georgia, serif;
+  font-size: 4.5rem;
+  line-height: 1;
+  color: color-mix(in srgb, var(--note-ink) 22%, transparent);
+  pointer-events: none;
+}
+
+/* Contact panel — a large note tacked to the board. */
+.cta-panel {
+  position: relative;
+  overflow: visible;
+  padding: 2.5rem;
+}
+
+/* Impact badge on a project note — dashed ink pill, reads on any paper colour. */
+.impact-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  border: 1px dashed color-mix(in srgb, var(--note-ink) 45%, transparent);
+  background: color-mix(in srgb, var(--note-ink) 8%, transparent);
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--note-ink);
+}
+
+/* ───────────────────────── PROSE (markdown posts) ─────────────────────── */
+/* Article bodies render on a cream "sheet of paper" (.paper-sheet wrapper). */
+/*
+ * A printed sheet pinned to the board. It redefines the theme vars LOCALLY so
+ * any prose inside reads as dark ink on cream paper in BOTH themes — real paper
+ * doesn't invert. Code blocks keep their deep-slate look and stay legible.
+ */
+.paper-sheet {
+  background: #fffaf0;
+  color: #33251a;
+  --foreground: #33251a;
+  --muted: #6b5640;
+  --surface: #f4e9d6;
+  --surface-muted: #f4e9d6;
+  --border: rgba(74, 48, 20, 0.18);
+  --accent: #9a3412;
+  --accent-strong: #7c2d12;
+  border-radius: 3px;
+  box-shadow: var(--shadow-card);
+}
+
 .prose {
   color: var(--foreground);
   line-height: 1.75;
@@ -272,19 +553,20 @@ body {
 .prose h2 {
   margin-top: 2.25em;
   margin-bottom: 0.75em;
-  font-size: 1.6rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0;
   scroll-margin-top: 6rem;
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-hand), cursive;
+  color: var(--accent);
 }
 .prose h3 {
   margin-top: 1.75em;
   margin-bottom: 0.5em;
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.45rem;
+  font-weight: 700;
   scroll-margin-top: 6rem;
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-hand), cursive;
 }
 .prose p,
 .prose ul,
@@ -295,7 +577,8 @@ body {
 .prose a {
   color: var(--accent);
   text-decoration: underline;
-  text-decoration-thickness: 1px;
+  text-decoration-thickness: 2px;
+  text-decoration-style: wavy;
   text-underline-offset: 2px;
 }
 .prose a:hover {
@@ -303,7 +586,7 @@ body {
 }
 .prose strong {
   color: var(--foreground);
-  font-weight: 600;
+  font-weight: 700;
 }
 .prose ul,
 .prose ol {
@@ -319,29 +602,27 @@ body {
   margin-top: 0.4em;
 }
 .prose blockquote {
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--highlight-solid);
   padding-left: 1rem;
   color: var(--muted);
   font-style: italic;
 }
-/* Inline code — tinted on a subtle surface for the light canvas. */
 .prose :not(pre) > code {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875em;
-  background: var(--surface-muted);
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
   border: 1px solid var(--border);
   border-radius: 0.375rem;
   padding: 0.15em 0.4em;
   color: var(--accent-strong);
 }
-/* Fenced code blocks — cool slate, a distinct surface in both themes. */
 .prose pre {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875rem;
   line-height: 1.6;
-  background: #0b1120; /* deep slate */
-  border: 1px solid #1f2937; /* slate-800 */
-  border-radius: 0.75rem;
+  background: #0b1120;
+  border: 1px solid #1f2937;
+  border-radius: 0.5rem;
   padding: 1rem 1.25rem;
   overflow-x: auto;
 }
@@ -349,7 +630,7 @@ body {
   background: none;
   border: none;
   padding: 0;
-  color: #e2e8f0; /* slate-200 */
+  color: #e2e8f0;
 }
 .prose figure.code {
   margin-top: 1.5em;
@@ -362,14 +643,13 @@ body {
 }
 
 /*
- * Code block chrome (components/CodeBlock.tsx). A rounded card with a header bar
- * holding a filename + language tab + copy button, wrapping the highlighted body.
- * Colors come from theme vars so it adapts to the light/dark toggle; the code
- * surface itself stays a deep slate in both themes for legibility.
+ * Code block chrome + terminal — kept as a deep-slate "index card" so code
+ * stays legible; a strip of tape ties it to the pinboard.
  */
 .code-card {
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  position: relative;
+  border: 1px solid #1f2937;
+  border-radius: 0.5rem;
   overflow: hidden;
   background: #0b1120;
   box-shadow: var(--shadow-card);
@@ -403,7 +683,7 @@ body {
   border: 1px solid #1f2937;
   border-radius: 9999px;
   padding: 0.1rem 0.5rem;
-  background: rgba(99, 102, 241, 0.12);
+  background: rgba(250, 204, 21, 0.12);
 }
 .code-copy {
   display: inline-flex;
@@ -425,7 +705,6 @@ body {
   outline: none;
   box-shadow: 0 0 0 2px var(--accent);
 }
-/* react-syntax-highlighter renders its own <pre>; reset prose spacing/border. */
 .code-card pre {
   margin: 0 !important;
   border: 0 !important;
@@ -433,18 +712,22 @@ body {
   background: transparent !important;
 }
 
-/*
- * Terminal command card (components/Terminal.tsx) — the "npm i satish-baghel"
- * flex on the home page. Same deep-slate surface as code cards.
- */
+/* Terminal command card — pinned index card with taped top edge. */
 .terminal {
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  position: relative;
+  border: 1px solid #1f2937;
+  border-radius: 0.5rem;
   overflow: hidden;
   background: #0b1120;
   box-shadow: var(--shadow-card);
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.8125rem;
+  transform: rotate(1.2deg);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.terminal:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
 }
 .terminal-head {
   display: flex;
@@ -453,7 +736,7 @@ body {
   padding: 0.5rem 0.75rem;
   border-bottom: 1px solid #1f2937;
   background: #0d1526;
-  color: #818ea3; /* slate — ≥4.5:1 on the deep-slate head */
+  color: #818ea3;
   font-size: 0.7rem;
 }
 .terminal-body {
@@ -465,13 +748,11 @@ body {
   color: var(--accent-strong);
 }
 .terminal-body .comment {
-  color: #818ea3; /* slate — ≥4.5:1 on the terminal body */
+  color: #818ea3;
 }
 .terminal-body .ok {
   color: #34d399;
 }
-/* Give the window controls real macOS "traffic light" colors (scoped to the
- * terminal so code cards keep their neutral dots). */
 .terminal .code-dots span:nth-child(1) {
   background: #ff5f57;
 }
@@ -481,30 +762,6 @@ body {
 .terminal .code-dots span:nth-child(3) {
   background: #28c840;
 }
-/* Faint inner top sheen + a gentle accent lift on hover — makes the card feel
- * like glass, not a flat box. Interaction is decorative, so it stays subtle. */
-.terminal {
-  position: relative;
-  transition: box-shadow 0.25s ease, border-color 0.25s ease;
-}
-.terminal::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.08),
-    transparent
-  );
-  pointer-events: none;
-}
-.terminal:hover {
-  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
-  box-shadow: var(--shadow-card-hover);
-}
-/* Blinking block caret replaces the static ▎ glyph for a "live" terminal feel. */
 .terminal .caret {
   display: inline-block;
   width: 0.55ch;
@@ -526,150 +783,31 @@ body {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  /* Hold the caret solid instead of letting the global reset freeze it hidden. */
   .terminal .caret {
     animation: none;
     opacity: 1;
   }
 }
 
-/* Header: hairline accent glow under the sticky bar when it separates content. */
+/* Header — a wooden batten across the top of the board. */
 .site-header {
-  background: color-mix(in srgb, var(--background) 82%, transparent);
-}
-.site-header::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 -1px 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    color-mix(in srgb, var(--accent) 45%, transparent),
-    transparent
-  );
-  opacity: 0.6;
-  pointer-events: none;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
 }
 
-/* Footer: a soft accent wash rising from the bottom edge + a top accent hairline
- * so the page closes with intent rather than a bare divider. */
+/* Footer — a length of parcel string / bottom batten. */
 .site-footer {
   position: relative;
-  background: linear-gradient(
-    to top,
-    color-mix(in srgb, var(--accent) 6%, transparent),
-    transparent 55%
-  );
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
 }
 .site-footer::before {
   content: "";
   position: absolute;
   inset: -1px 0 auto 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    color-mix(in srgb, var(--accent) 40%, transparent),
-    transparent
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--foreground) 30%, transparent) 0 6px,
+    transparent 6px 12px
   );
   pointer-events: none;
-}
-
-/*
- * Amber primary CTA ("Hire me" / "Download résumé"). Reserved for the single
- * most important action per view — dark ink on a warm amber fill reads as
- * confident and premium, and stands apart from the indigo secondary buttons.
- */
-.btn-amber {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  height: 2.75rem;
-  border-radius: 0.5rem;
-  padding: 0 1.1rem;
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: var(--highlight-ink);
-  background: var(--highlight-solid);
-  box-shadow: var(--shadow-glow-amber);
-  transition: background-color 0.2s ease, transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.btn-amber:hover {
-  background: var(--highlight-solid-hover);
-  transform: translateY(-1px);
-}
-.btn-amber:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--highlight-solid);
-}
-
-/*
- * Quick-facts strip — a row of at-a-glance recruiter facts (location, notice,
- * experience, stack). Each tile is a calm surface with an amber label dot.
- */
-.fact-tile {
-  border: 1px solid var(--border);
-  border-radius: 0.85rem;
-  background: var(--surface);
-  padding: 0.9rem 1rem;
-  box-shadow: var(--shadow-card);
-  transition: border-color 0.2s ease, transform 0.2s ease;
-}
-.fact-tile:hover {
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
-  transform: translateY(-1px);
-}
-
-/*
- * Testimonial card — a quote surface with a large decorative amber quote mark.
- * Replace the placeholder quotes in lib/resume.ts with real recommendations.
- */
-.quote-card {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  background:
-    radial-gradient(
-      120% 130% at 0% 0%,
-      color-mix(in srgb, var(--accent) 9%, transparent),
-      transparent 55%
-    ),
-    var(--surface);
-  padding: 1.5rem 1.5rem 1.4rem;
-  box-shadow: var(--shadow-card);
-  transition: border-color 0.2s ease, transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.quote-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-card-hover);
-}
-.quote-card::before {
-  content: "\201C";
-  position: absolute;
-  right: 1rem;
-  top: 0.1rem;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 5rem;
-  line-height: 1;
-  color: color-mix(in srgb, var(--highlight) 26%, transparent);
-  pointer-events: none;
-}
-
-/* Impact badge — the headline result on a project card, amber-tinted. */
-.impact-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, var(--highlight) 35%, var(--border));
-  background: color-mix(in srgb, var(--highlight) 12%, transparent);
-  padding: 0.2rem 0.6rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--highlight);
 }

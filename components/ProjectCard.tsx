@@ -1,15 +1,16 @@
 import { TechIcon } from "@/components/TechIcon";
 import type { Project } from "@/lib/resume";
+import { noteColorClass, noteStyle } from "@/lib/notes";
 
 /** How many tech pills to render before collapsing the rest into "+N". */
 const MAX_VISIBLE_TECH = 4;
 
 /**
- * Project preview card — "indexed" variant.
+ * Project preview card — rendered as a colored sticky note taped to the board.
  *
- * A faint monospace ordinal watermarks each card and ignites to accent on
- * hover, echoing the terminal/dev feel used across the site. Pass `featured`
- * to render the wider two-column hero layout (see ProjectGrid).
+ * A faint handwritten ordinal watermarks each note; a strip of tape holds it up.
+ * Pass `featured` to render the wider two-column hero layout (see ProjectGrid).
+ * `index` drives both the paper colour and the hand-placed tilt.
  */
 export function ProjectCard({
   project,
@@ -28,27 +29,20 @@ export function ProjectCard({
   return (
     <article
       className={[
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-[var(--shadow-card)]",
-        "transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-card-hover)]",
-        featured ? "p-7 sm:p-8" : "p-6",
+        "note note--folded group flex h-full flex-col",
+        noteColorClass(index),
+        featured ? "p-7 sm:p-9" : "p-6",
       ].join(" ")}
+      style={noteStyle(index)}
     >
-      {/* Gradient top edge that draws in on hover. */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 transition-all duration-300 group-hover:scale-x-100 group-hover:opacity-100"
-      />
-      {/* Corner accent wash that blooms on hover for a premium, lifted feel. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full bg-accent/15 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
-      />
-      {/* Large faint ordinal watermark. */}
+      <span className="tape" aria-hidden="true" />
+
+      {/* Large faint handwritten ordinal watermark. */}
       <span
         aria-hidden="true"
         className={[
-          "pointer-events-none absolute right-5 top-4 font-mono font-semibold leading-none text-foreground/[0.06] transition-colors duration-300 group-hover:text-accent/25",
-          featured ? "text-6xl sm:text-7xl" : "text-5xl",
+          "note-hand pointer-events-none absolute right-4 top-2 leading-none opacity-25",
+          featured ? "text-7xl sm:text-8xl" : "text-6xl",
         ].join(" ")}
       >
         {ordinal}
@@ -65,15 +59,15 @@ export function ProjectCard({
         <div className={featured ? "" : "flex flex-1 flex-col"}>
           <div className="relative flex items-center gap-2">
             {external ? (
-              <span className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-accent">
+              <span className="note-hand inline-flex items-center gap-1.5 text-base leading-none">
                 <span
                   aria-hidden="true"
-                  className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_0_3px_color-mix(in_srgb,var(--accent)_20%,transparent)]"
+                  className="h-2 w-2 rounded-full bg-[var(--note-pin)]"
                 />
                 Live
               </span>
             ) : (
-              <span className="font-mono text-[11px] uppercase tracking-wide text-muted">
+              <span className="note-hand text-base leading-none note-ink-soft">
                 Case study
               </span>
             )}
@@ -81,8 +75,8 @@ export function ProjectCard({
 
           <h3
             className={[
-              "font-display mt-2 font-semibold tracking-tight",
-              featured ? "text-2xl sm:text-3xl" : "text-lg",
+              "note-hand mt-2 font-bold leading-tight",
+              featured ? "text-3xl sm:text-4xl" : "text-2xl",
             ].join(" ")}
           >
             {external ? (
@@ -90,20 +84,15 @@ export function ProjectCard({
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                // Stretched link: makes the whole card a click target while
-                // keeping a single semantic link for accessibility.
-                className="inline-flex items-center gap-1.5 rounded text-foreground transition-colors after:absolute after:inset-0 group-hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="inline-flex items-center gap-1.5 rounded note-ink transition-transform after:absolute after:inset-0 hover:-rotate-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--note-ink)]"
               >
                 {project.name}
-                <span
-                  aria-hidden="true"
-                  className="text-muted transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
-                >
+                <span aria-hidden="true" className="note-ink-soft">
                   ↗
                 </span>
               </a>
             ) : (
-              <span className="text-foreground">{project.name}</span>
+              <span className="note-ink">{project.name}</span>
             )}
           </h3>
 
@@ -115,10 +104,9 @@ export function ProjectCard({
             </p>
           )}
 
-          {/* In the compact card, description + tech live in this column. */}
           {!featured && (
             <>
-              <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-muted">
+              <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed note-ink-soft">
                 {project.description}
               </p>
               <TechList
@@ -130,10 +118,9 @@ export function ProjectCard({
           )}
         </div>
 
-        {/* Featured cards keep description + tech in the second column. */}
         {featured && (
           <div>
-            <p className="line-clamp-4 text-[15px] leading-relaxed text-muted sm:line-clamp-none">
+            <p className="text-[15px] leading-relaxed note-ink-soft">
               {project.description}
             </p>
             <TechList
@@ -168,7 +155,7 @@ function ImpactIcon() {
   );
 }
 
-/** Row of tech pills with a "+N" overflow chip. */
+/** Row of tech pills (little paper tabs) with a "+N" overflow chip. */
 function TechList({
   visible,
   overflow,
@@ -183,14 +170,14 @@ function TechList({
       {visible.map((name) => (
         <li
           key={name}
-          className="font-mono inline-flex items-center gap-1.5 rounded-full border border-border bg-surface-muted px-2.5 py-1 text-xs text-muted transition-colors group-hover:border-accent/25"
+          className="font-mono inline-flex items-center gap-1.5 rounded-sm border border-[color-mix(in_srgb,var(--note-ink)_25%,transparent)] bg-white/40 px-2.5 py-1 text-xs note-ink"
         >
           <TechIcon name={name} size={14} />
           {name}
         </li>
       ))}
       {overflow > 0 && (
-        <li className="font-mono inline-flex items-center rounded-full border border-border bg-surface-muted px-2.5 py-1 text-xs text-muted">
+        <li className="font-mono inline-flex items-center rounded-sm border border-[color-mix(in_srgb,var(--note-ink)_25%,transparent)] bg-white/40 px-2.5 py-1 text-xs note-ink">
           +{overflow}
         </li>
       )}

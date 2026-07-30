@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -17,6 +17,14 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Handwritten marker for headings, labels, and branding — the "hand-written
+// sticky note" voice. Variable font, so no explicit weight needed.
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
   display: "swap",
 });
@@ -50,8 +58,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: "light dark",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#020617" },
+    { media: "(prefers-color-scheme: light)", color: "#c9a578" },
+    { media: "(prefers-color-scheme: dark)", color: "#4a3520" },
   ],
 };
 
@@ -116,7 +124,7 @@ export default function RootLayout({
       // this element's attributes (one level deep only). See Next.js "Preventing
       // flash before hydration" guide.
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

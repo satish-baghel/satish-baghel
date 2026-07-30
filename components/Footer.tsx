@@ -17,7 +17,7 @@ export function Footer() {
           <div className="max-w-xs">
             <Link
               href="/"
-              className="font-display text-lg font-semibold tracking-tight text-foreground transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+              className="font-hand text-3xl leading-none text-foreground transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
             >
               Satish <span className="text-accent">Baghel</span>
             </Link>
@@ -35,7 +35,7 @@ export function Footer() {
 
           <div className="flex flex-col gap-6 sm:flex-row sm:gap-16">
             <nav aria-label="Footer">
-              <p className="font-mono text-xs uppercase tracking-widest text-muted">
+              <p className="font-hand text-xl leading-none text-accent">
                 Site
               </p>
               <ul className="mt-3 space-y-2">
@@ -53,7 +53,7 @@ export function Footer() {
             </nav>
 
             <div>
-              <p className="font-mono text-xs uppercase tracking-widest text-muted">
+              <p className="font-hand text-xl leading-none text-accent">
                 Connect
               </p>
               <div className="mt-3 flex items-center gap-2">

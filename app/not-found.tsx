@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-6 py-24 text-center sm:py-32">
-      <p className="font-mono text-sm font-medium text-accent">404</p>
-      <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+      <p className="scribble text-2xl">404</p>
+      <h1 className="font-hand mt-2 text-5xl font-bold leading-none tracking-tight sm:text-6xl">
         Page not found
       </h1>
       <p className="mt-4 max-w-md text-lg leading-relaxed text-muted">
@@ -44,7 +44,7 @@ export default function NotFound() {
 
       <Link
         href="/"
-        className="mt-10 inline-flex h-11 items-center gap-1.5 rounded-lg bg-accent-solid px-4 font-mono text-sm font-medium text-white transition-colors hover:bg-accent-solid-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="btn-amber mt-10 font-mono"
       >
         Back home
         <span aria-hidden="true">→</span>

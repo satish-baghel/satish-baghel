@@ -39,8 +39,8 @@ export function BlogListing({
     <div className="mx-auto w-full max-w-3xl px-6 py-16">
       {prevUrl && <link rel="prev" href={prevUrl} />}
       {nextUrl && <link rel="next" href={nextUrl} />}
-      <p className="font-mono text-sm font-medium text-accent">Writing</p>
-      <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight">
+      <p className="scribble text-2xl">Writing</p>
+      <h1 className="font-hand mt-2 text-5xl font-bold leading-none tracking-tight sm:text-6xl">
         All posts
       </h1>
       <p className="mt-3 text-muted">

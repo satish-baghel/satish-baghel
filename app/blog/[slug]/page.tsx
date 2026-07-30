@@ -140,16 +140,23 @@ export default async function PostPage({
 
       <Link
         href="/blog"
-        className="font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+        className="font-hand text-lg text-foreground transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
       >
         ← Back to blog
       </Link>
 
-      <header className="mt-6 border-b border-border pb-8">
-        <p className="font-mono text-sm font-medium text-accent">
+      <div className="paper-sheet relative mt-6 px-6 py-10 sm:px-12 sm:py-12">
+        <span
+          className="pin"
+          style={{ ["--note-pin"]: "#ef4444" } as React.CSSProperties}
+          aria-hidden="true"
+        />
+
+      <header className="border-b border-border pb-8">
+        <p className="scribble text-xl">
           {post.type === "howto" ? "Guide" : "Article"}
         </p>
-        <h1 className="font-display mt-3 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+        <h1 className="font-hand mt-2 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
           {post.title}
         </h1>
         <div className="mt-4 flex flex-wrap items-center gap-2 font-mono text-xs text-muted">
@@ -197,11 +204,12 @@ export default async function PostPage({
         </p>
         <Link
           href="/blog"
-          className="font-mono inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3.5 py-2 text-sm text-muted transition-colors hover:border-accent/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="font-mono inline-flex items-center gap-1.5 rounded-sm border border-border bg-surface px-3.5 py-2 text-sm text-muted transition-colors hover:border-accent/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           <span aria-hidden="true">←</span> All posts
         </Link>
       </footer>
+      </div>
     </article>
   );
 }

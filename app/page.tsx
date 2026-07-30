@@ -19,6 +19,7 @@ import { Testimonials } from "@/components/Testimonials";
 import { ResumeButton } from "@/components/ResumeButton";
 import { site } from "@/lib/site";
 import { SUMMARY, METRICS, TECH, EXPERIENCE, PROJECTS } from "@/lib/resume";
+import { noteColorClass, noteStyle } from "@/lib/notes";
 
 export default function Home() {
   const posts = getAllPosts();
@@ -40,28 +41,33 @@ export default function Home() {
               <span className="status-dot status-dot--idle" aria-hidden="true" />
               Not actively looking
             </span>
-            <p className="reveal reveal-2 mt-5 font-mono text-sm font-medium text-accent">
+            <p className="scribble reveal reveal-2 mt-5 block text-2xl">
               {site.tagline}
             </p>
-            <h1 className="font-display reveal reveal-2 mt-4 text-4xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-5xl">
+            <h1 className="font-hand reveal reveal-2 mt-3 text-5xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-6xl">
               Hi, I&apos;m Satish — I build{" "}
-              <span className="text-accent">fast, scalable</span> web apps.
+              <span className="rounded-sm bg-highlight-solid px-1.5 text-highlight-ink">
+                fast, scalable
+              </span>{" "}
+              web apps.
             </h1>
             <p className="reveal reveal-3 mt-6 max-w-xl text-lg leading-relaxed text-muted">
               {SUMMARY}
             </p>
 
-            {/* Credibility metrics — amber numbers draw the recruiter's eye. */}
-            <dl className="reveal reveal-3 mt-8 grid grid-cols-3 gap-3">
-              {METRICS.map((m) => (
+            {/* Credibility metrics — little pinned notes, numbers scream first. */}
+            <dl className="reveal reveal-3 mt-9 grid grid-cols-3 gap-x-4 gap-y-6 pt-3">
+              {METRICS.map((m, i) => (
                 <div
                   key={m.label}
-                  className="rounded-xl border border-border bg-surface px-3 py-2.5 transition-colors hover:border-highlight/50"
+                  className={`note px-3 py-2.5 ${noteColorClass(i)}`}
+                  style={noteStyle(i)}
                 >
-                  <dt className="font-display text-lg font-semibold tracking-tight text-highlight sm:text-xl">
+                  <span className="pin" aria-hidden="true" />
+                  <dt className="note-hand text-2xl font-bold leading-none">
                     {m.value}
                   </dt>
-                  <dd className="mt-0.5 font-mono text-[11px] uppercase tracking-wide text-muted">
+                  <dd className="mt-1 font-mono text-[11px] uppercase tracking-wide note-ink-soft">
                     {m.label}
                   </dd>
                 </div>
@@ -86,25 +92,23 @@ export default function Home() {
             <SocialLinks className="reveal reveal-4 mt-4" />
           </div>
 
-          {/* Right: circular caricature avatar + terminal */}
-          <div className="reveal reveal-3 flex flex-col items-center gap-6">
-            <div className="avatar-glow relative">
-              <div
-                className="relative aspect-square w-60 overflow-hidden rounded-full border-2 border-accent/40 bg-surface shadow-[var(--shadow-card-hover)] ring-4 ring-background sm:w-72"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(100% 100% at 50% 15%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 65%)",
-                }}
-              >
+          {/* Right: photo pinned up like a polaroid + terminal index card */}
+          <div className="reveal reveal-3 flex flex-col items-center gap-8">
+            <div className="avatar-glow group relative rotate-[3deg] rounded-[3px] bg-white p-3 pb-12 shadow-[var(--shadow-card-hover)] transition-transform duration-300 hover:rotate-0">
+              <span className="pin" style={{ ["--note-pin"]: "#ef4444" } as React.CSSProperties} aria-hidden="true" />
+              <div className="relative aspect-square w-56 overflow-hidden bg-[#e8e0d0] sm:w-64">
                 <Image
                   src="/me.png"
                   alt="Satish Baghel"
                   fill
-                  sizes="(max-width: 640px) 15rem, 18rem"
+                  sizes="(max-width: 640px) 14rem, 16rem"
                   preload
                   className="object-cover"
                 />
               </div>
+              <p className="font-hand absolute inset-x-0 bottom-2.5 text-center text-2xl leading-none text-[#3a2818]">
+                that&apos;s me &darr;
+              </p>
             </div>
             <div className="w-full">
               <Terminal command="npm i satish-baghel" />
@@ -115,9 +119,7 @@ export default function Home() {
 
       {/* Quick facts — recruiter TL;DR, scannable at a glance */}
       <section className="border-t border-border py-10 sm:py-12">
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">
-          At a glance
-        </p>
+        <p className="scribble">At a glance</p>
         <div className="reveal mt-5">
           <QuickFacts />
         </div>
@@ -125,10 +127,8 @@ export default function Home() {
 
       {/* Tech stack strip */}
       <section className="border-t border-border py-14 sm:py-16">
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">
-          Toolkit
-        </p>
-        <h2 className="font-display mt-1.5 text-xl font-semibold tracking-tight sm:text-2xl">
+        <p className="scribble">Toolkit</p>
+        <h2 className="font-hand mt-1 text-3xl font-bold leading-none tracking-tight sm:text-4xl">
           Tech I work with
         </h2>
         <div className="reveal mt-6">
@@ -175,9 +175,9 @@ export default function Home() {
             <FeaturedPost post={featured} />
           </div>
           {recent.length > 0 && (
-            <div className="reveal mt-4 grid gap-4 sm:grid-cols-3">
-              {recent.map((post) => (
-                <PostCard key={post.slug} post={post} />
+            <div className="reveal mt-6 grid gap-x-5 gap-y-9 pt-3 sm:grid-cols-3">
+              {recent.map((post, i) => (
+                <PostCard key={post.slug} post={post} index={i} />
               ))}
             </div>
           )}
@@ -222,14 +222,16 @@ export default function Home() {
 
       {/* Get in touch */}
       <section className="border-t border-border py-14 sm:py-16">
-        <div className="cta-panel reveal px-6 py-10 sm:px-10 sm:py-12">
-          <p className="font-mono text-xs uppercase tracking-widest text-accent">
-            Contact
-          </p>
-          <h2 className="font-display mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+        <div
+          className="cta-panel note note--blue note--folded"
+          style={{ ["--rot"]: "-1deg" } as React.CSSProperties}
+        >
+          <span className="tape" aria-hidden="true" />
+          <p className="scribble">Contact</p>
+          <h2 className="font-hand mt-1 text-4xl font-bold leading-none sm:text-5xl note-ink">
             Let&apos;s build something.
           </h2>
-          <p className="mt-3 max-w-xl text-muted">
+          <p className="mt-4 max-w-xl note-ink-soft">
             I&apos;m not actively job-hunting right now, but I&apos;m always
             happy to talk shop, swap ideas, or help on an interesting problem.
             Email is the fastest way to reach me — I read everything and reply
@@ -260,17 +262,15 @@ function SectionHeader({
   return (
     <div className="flex items-end justify-between gap-4">
       <div>
-        <p className="font-mono text-xs uppercase tracking-widest text-accent">
-          {eyebrow}
-        </p>
-        <h2 className="font-display mt-1.5 text-xl font-semibold tracking-tight sm:text-2xl">
+        <p className="scribble">{eyebrow}</p>
+        <h2 className="font-hand mt-1 text-3xl font-bold leading-none tracking-tight sm:text-4xl">
           {title}
         </h2>
       </div>
       {href && linkText && (
         <Link
           href={href}
-          className="shrink-0 font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+          className="font-hand shrink-0 text-lg text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
         >
           {linkText} →
         </Link>
