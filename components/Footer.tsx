@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
+import { withUtm, outboundUtm } from "@/lib/utm";
+
+const FOOTER_UTM = outboundUtm("referral", "footer");
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -60,13 +63,13 @@ export function Footer() {
                 <IconLink href={`mailto:${site.email}`} label="Email">
                   <MailIcon />
                 </IconLink>
-                <IconLink href={site.github} label="GitHub" external>
+                <IconLink href={withUtm(site.github, FOOTER_UTM)} label="GitHub" external>
                   <GitHubIcon />
                 </IconLink>
-                <IconLink href={site.linkedin} label="LinkedIn" external>
+                <IconLink href={withUtm(site.linkedin, FOOTER_UTM)} label="LinkedIn" external>
                   <LinkedInIcon />
                 </IconLink>
-                <IconLink href={site.leetcode} label="LeetCode" external>
+                <IconLink href={withUtm(site.leetcode, FOOTER_UTM)} label="LeetCode" external>
                   <LeetCodeIcon />
                 </IconLink>
               </div>

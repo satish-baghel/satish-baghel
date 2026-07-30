@@ -1,5 +1,6 @@
 import { TechIcon } from "@/components/TechIcon";
 import type { Project } from "@/lib/resume";
+import { withUtm, outboundUtm } from "@/lib/utm";
 
 /** How many tech pills to render before collapsing the rest into "+N". */
 const MAX_VISIBLE_TECH = 4;
@@ -87,7 +88,7 @@ export function ProjectCard({
           >
             {external ? (
               <a
-                href={project.url}
+                href={withUtm(project.url!, outboundUtm("referral", "project"))}
                 target="_blank"
                 rel="noopener noreferrer"
                 // Stretched link: makes the whole card a click target while

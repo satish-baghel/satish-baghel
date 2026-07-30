@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
+import { Analytics } from "@/components/Analytics";
+import { UtmTracker } from "@/components/UtmTracker";
 import { site } from "@/lib/site";
 
 // Technical pairing: Geist (UI + headings) + Geist Mono (code).
@@ -129,6 +132,13 @@ export default function RootLayout({
           Skip to content
         </a>
         <JsonLd data={websiteSchema} />
+        <Analytics />
+        {/* Captures inbound utm_* params. Suspense is required around
+            useSearchParams so static pages still prerender (only this
+            null-rendering subtree is client-rendered). */}
+        <Suspense fallback={null}>
+          <UtmTracker />
+        </Suspense>
         <Header />
         <main id="main" className="flex-1">
           {children}

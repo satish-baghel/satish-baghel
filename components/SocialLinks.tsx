@@ -3,8 +3,10 @@
  * identity stays single-sourced. Add a new entry by extending the array below.
  */
 import { site } from "@/lib/site";
+import { withUtm, outboundUtm } from "@/lib/utm";
 
 export function SocialLinks({ className = "" }: { className?: string }) {
+  const utm = outboundUtm("social", "social_links");
   return (
     <div className={`flex flex-wrap items-center gap-3 ${className}`}>
       <a
@@ -15,7 +17,7 @@ export function SocialLinks({ className = "" }: { className?: string }) {
         Email
       </a>
       <a
-        href={site.github}
+        href={withUtm(site.github, utm)}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub"
@@ -24,7 +26,7 @@ export function SocialLinks({ className = "" }: { className?: string }) {
         <GitHubIcon />
       </a>
       <a
-        href={site.linkedin}
+        href={withUtm(site.linkedin, utm)}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn"
