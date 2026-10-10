@@ -10,7 +10,6 @@ import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { JsonLd } from "@/components/JsonLd";
 import { QuickFacts } from "@/components/QuickFacts";
-import { Testimonials } from "@/components/Testimonials";
 import { ResumeButton } from "@/components/ResumeButton";
 import { site } from "@/lib/site";
 import { SUMMARY, SKILLS, EXPERIENCE, PROJECTS, EDUCATION } from "@/lib/resume";

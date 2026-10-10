@@ -1,26 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 type Theme = "dark" | "light";
 
+// <html data-theme> is the source of truth; re-render whenever it changes.
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  return () => observer.disconnect();
+}
+
+function getSnapshot(): Theme {
+  return document.documentElement.getAttribute("data-theme") === "light"
+    ? "light"
+    : "dark";
+}
+
+// No theme is known during SSR; null renders the same markup as before mount.
+function getServerSnapshot(): Theme | null {
+  return null;
+}
+
 /**
  * Dark/light toggle. The current theme is set on <html data-theme> before paint
- * by an inline script in app/layout.tsx; this component reads that attribute on
- * mount, then flips it and persists the choice to localStorage. Dark-first.
+ * by an inline script in app/layout.tsx; this component reads that attribute,
+ * then flips it and persists the choice to localStorage. Dark-first.
  */
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const current =
-      document.documentElement.getAttribute("data-theme") === "light"
-        ? "light"
-        : "dark";
-    setTheme(current);
-    setMounted(true);
-  }, []);
+  const current = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
+  const mounted = current !== null;
+  const theme: Theme = current ?? "dark";
 
   const toggle = () => {
     const next: Theme = theme === "dark" ? "light" : "dark";
@@ -30,7 +47,6 @@ export function ThemeToggle() {
     } catch {
       /* ignore storage errors (private mode, etc.) */
     }
-    setTheme(next);
   };
 
   const isDark = theme === "dark";
