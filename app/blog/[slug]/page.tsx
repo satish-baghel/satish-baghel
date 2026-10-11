@@ -3,9 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug, formatDate, type Post } from "@/lib/posts";
 import { parseMarkdown, slugify } from "@/lib/markdown";
-import { JsonLd } from "@/components/JsonLd";
-import { CodeBlock } from "@/components/CodeBlock";
-import { TagChip } from "@/components/TagChip";
+import { JsonLd } from "@/components/shared/JsonLd";
+import { CodeBlock } from "@/components/blog/CodeBlock";
+import { TagChip } from "@/components/blog/TagChip";
+import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
 
 type Params = { slug: string };
@@ -140,19 +141,19 @@ export default async function PostPage({
 
       <Link
         href="/blog"
-        className="font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+        className="font-mono text-sm text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
       >
         ← Back to blog
       </Link>
 
       <header className="mt-6 border-b border-border pb-8">
-        <p className="font-mono text-sm font-medium text-accent">
+        <p className="font-mono text-sm font-medium text-primary">
           {post.type === "howto" ? "Guide" : "Article"}
         </p>
         <h1 className="font-display mt-3 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
           {post.title}
         </h1>
-        <div className="mt-4 flex flex-wrap items-center gap-2 font-mono text-xs text-muted">
+        <div className="mt-4 flex flex-wrap items-center gap-2 font-mono text-xs text-muted-foreground">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           {post.updated && post.updated !== post.date && (
             <>
@@ -192,15 +193,19 @@ export default async function PostPage({
       </div>
 
       <footer className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-8">
-        <p className="text-sm text-muted">
+        <p className="text-sm text-muted-foreground">
           Written by <span className="text-foreground">{site.name}</span>
         </p>
-        <Link
-          href="/blog"
-          className="font-mono inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3.5 py-2 text-sm text-muted transition-colors hover:border-accent/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        <Button
+          asChild
+          variant="outline"
+          size="sm"
+          className="px-3.5 font-mono font-normal text-muted-foreground hover:border-primary/60"
         >
-          <span aria-hidden="true">←</span> All posts
-        </Link>
+          <Link href="/blog">
+            <span aria-hidden="true">←</span> All posts
+          </Link>
+        </Button>
       </footer>
     </article>
   );

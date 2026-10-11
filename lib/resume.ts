@@ -230,7 +230,7 @@ export const TESTIMONIALS: Testimonial[] = [];
 /**
  * Services / "what I do" — the concrete offerings a recruiter or client scans
  * to decide if I fit their need. `icon` keys map to react-icons/fa6 glyphs in
- * components/Services.tsx.
+ * components/sections/Services.tsx.
  */
 export type Service = {
   icon: string;
@@ -470,7 +470,7 @@ export const FAQS = [
 
 /**
  * Icon keys for the home-page tech strip. Each string MUST match a case in
- * `components/TechIcon.tsx` so a brand SVG renders.
+ * `components/shared/TechIcon.tsx` so a brand SVG renders.
  */
 export const TECH = [
   "Node.js",

@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+/* shadcn/ui `dark:` variant follows the site's data-theme attribute (dark is
+ * the default, so anything not explicitly light counts as dark). */
+@custom-variant dark (&:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *));
 
 /*
  * Ice-Terminal palette — deep blue-black terminal canvas, ELECTRIC-CYAN
@@ -11,17 +16,17 @@
  */
 :root {
   --background: #0a0f16; /* near-black, faint blue bias — terminal ground */
-  --surface: #0e1620; /* elevated card surface */
-  --surface-muted: #121c28; /* subtle fills, chips */
+  --card: #0e1620; /* elevated card surface */
+  --muted: #121c28; /* subtle fills, chips */
   --border: #1f3242; /* cool hairline divider, visible on the ground */
   --foreground: #cdd6e0; /* soft terminal off-white — ~11:1 on bg */
-  --muted: #7e8fa0; /* secondary text, ≥4.5:1 on bg */
+  --muted-foreground: #7e8fa0; /* secondary text, ≥4.5:1 on bg */
 
   /* Electric cyan — primary accent for links, borders, focus, structure. */
-  --accent: #22d3ee; /* cyan-400 — accent TEXT/links/prompt, ≥8:1 on bg */
-  --accent-strong: #67e8f9; /* cyan-300 — hover brightens on dark */
-  --accent-solid: #0e7490; /* cyan-700 — solid fill, white text ≥5:1 */
-  --accent-solid-hover: #155e75; /* cyan-800 — button hover */
+  --primary: #22d3ee; /* cyan-400 — accent TEXT/links/prompt, ≥8:1 on bg */
+  --primary-strong: #67e8f9; /* cyan-300 — hover brightens on dark */
+  --primary-solid: #0e7490; /* cyan-700 — solid fill, white text ≥5:1 */
+  --primary-solid-hover: #155e75; /* cyan-800 — button hover */
 
   /* Orange — the "look here" highlight for metrics + the primary CTA. */
   --highlight: #fb923c; /* orange-400 — number/emphasis text on dark */
@@ -35,6 +40,20 @@
   --shadow-card-hover: 0 2px 6px rgba(34, 211, 238, 0.14),
     0 18px 40px -16px rgba(14, 116, 144, 0.4);
   --shadow-glow-highlight: 0 10px 30px -12px rgba(249, 115, 22, 0.55);
+
+  /* shadcn/ui semantic tokens, mapped onto the Ice-Terminal palette. */
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary-foreground: #0a0f16; /* dark ink on the bright cyan */
+  --secondary: var(--muted);
+  --secondary-foreground: var(--foreground);
+  --accent: var(--muted); /* shadcn hover fill (ghost/outline) */
+  --accent-foreground: var(--foreground);
+  --destructive: #f87171;
+  --input: var(--border);
+  --ring: var(--primary);
+  --radius: 0rem;
 }
 
 :root[data-theme="light"] {
@@ -42,16 +61,16 @@
    * read cleanly. Surface still sits lighter than the background so cards keep
    * their elevation even with the sharp brutalist corners. */
   --background: #e9edf1; /* soft cool off-white canvas */
-  --surface: #f5f8fa; /* off-white card — never pure #fff */
-  --surface-muted: #e2e8ee; /* subtle fills, chips */
+  --card: #f5f8fa; /* off-white card — never pure #fff */
+  --muted: #e2e8ee; /* subtle fills, chips */
   --border: #c3ccd6; /* divider, visible on the softer canvas */
   --foreground: #0d1520; /* near-black ink (~15:1 on canvas) */
-  --muted: #55636f; /* slate — ≥4.5:1 on all surfaces */
+  --muted-foreground: #55636f; /* slate — ≥4.5:1 on all surfaces */
 
-  --accent: #0e7490; /* cyan-700 — AA on paper (~5:1) */
-  --accent-strong: #155e75; /* cyan-800 — hover / active */
-  --accent-solid: #0e7490; /* solid fill — white text passes (~5:1) */
-  --accent-solid-hover: #155e75; /* button hover */
+  --primary: #0e7490; /* cyan-700 — AA on paper (~5:1) */
+  --primary-strong: #155e75; /* cyan-800 — hover / active */
+  --primary-solid: #0e7490; /* solid fill — white text passes (~5:1) */
+  --primary-solid-hover: #155e75; /* button hover */
 
   --highlight: #c2410c; /* orange-700 — emphasis text, AA on white */
   --highlight-strong: #9a3412; /* orange-800 — hover */
@@ -64,19 +83,33 @@
   --shadow-card-hover: 0 2px 4px rgba(14, 116, 144, 0.12),
     0 16px 36px -14px rgba(14, 116, 144, 0.22);
   --shadow-glow-highlight: 0 10px 30px -12px rgba(234, 88, 12, 0.35);
+
+  --primary-foreground: #ffffff;
+  --destructive: #dc2626;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-surface-muted: var(--surface-muted);
-  --color-border: var(--border);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-strong: var(--primary-strong);
+  --color-primary-solid: var(--primary-solid);
+  --color-primary-solid-hover: var(--primary-solid-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
-  --color-accent-strong: var(--accent-strong);
-  --color-accent-solid: var(--accent-solid);
-  --color-accent-solid-hover: var(--accent-solid-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --color-highlight: var(--highlight);
   --color-highlight-strong: var(--highlight-strong);
   --color-highlight-solid: var(--highlight-solid);
@@ -131,7 +164,7 @@ body {
 }
 
 ::selection {
-  background: var(--accent);
+  background: var(--primary);
   color: var(--background);
 }
 
@@ -150,12 +183,12 @@ body {
   background-image:
     radial-gradient(
       55% 45% at 12% -5%,
-      color-mix(in srgb, var(--accent) 26%, transparent),
+      color-mix(in srgb, var(--primary) 26%, transparent),
       transparent 70%
     ),
     radial-gradient(
       45% 40% at 88% 6%,
-      color-mix(in srgb, var(--accent-strong) 20%, transparent),
+      color-mix(in srgb, var(--primary-strong) 20%, transparent),
       transparent 65%
     ),
     radial-gradient(currentColor 1px, transparent 1px);
@@ -226,7 +259,7 @@ body {
   gap: 0.5rem;
   border-radius: 9999px;
   border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  background: color-mix(in srgb, var(--card) 80%, transparent);
   padding: 0.375rem 0.75rem 0.375rem 0.625rem;
   font-size: 0.8125rem;
   color: var(--foreground);
@@ -271,7 +304,7 @@ body {
   border-radius: 9999px;
   background: radial-gradient(
     closest-side,
-    color-mix(in srgb, var(--accent) 42%, transparent),
+    color-mix(in srgb, var(--primary) 42%, transparent),
     transparent 72%
   );
   filter: blur(30px);
@@ -288,10 +321,10 @@ body {
   background:
     radial-gradient(
       120% 140% at 100% 0%,
-      color-mix(in srgb, var(--accent) 16%, transparent),
+      color-mix(in srgb, var(--primary) 16%, transparent),
       transparent 55%
     ),
-    var(--surface);
+    var(--card);
   box-shadow: var(--shadow-card);
 }
 
@@ -332,13 +365,13 @@ body {
   color: var(--foreground);
 }
 .prose a {
-  color: var(--accent);
+  color: var(--primary);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 .prose a:hover {
-  color: var(--accent-strong);
+  color: var(--primary-strong);
 }
 .prose strong {
   color: var(--foreground);
@@ -358,20 +391,20 @@ body {
   margin-top: 0.4em;
 }
 .prose blockquote {
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--primary);
   padding-left: 1rem;
-  color: var(--muted);
+  color: var(--muted-foreground);
   font-style: italic;
 }
 /* Inline code — tinted on a subtle surface for the light canvas. */
 .prose :not(pre) > code {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875em;
-  background: var(--surface-muted);
+  background: var(--muted);
   border: 1px solid var(--border);
   border-radius: 0;
   padding: 0.15em 0.4em;
-  color: var(--accent-strong);
+  color: var(--primary-strong);
 }
 /* Fenced code blocks — cool slate, a distinct surface in both themes. */
 .prose pre {
@@ -396,12 +429,12 @@ body {
 .prose figure.code figcaption {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--muted-foreground);
   margin-bottom: 0.4rem;
 }
 
 /*
- * Code block chrome (components/CodeBlock.tsx). A rounded card with a header bar
+ * Code block chrome (components/blog/CodeBlock.tsx). A rounded card with a header bar
  * holding a filename + language tab + copy button, wrapping the highlighted body.
  * Colors come from theme vars so it adapts to the light/dark toggle; the code
  * surface itself stays a deep slate in both themes for legibility.
@@ -438,7 +471,7 @@ body {
 }
 .code-lang {
   margin-left: auto;
-  color: var(--accent-strong);
+  color: var(--primary-strong);
   border: 1px solid #1f2937;
   border-radius: 9999px;
   padding: 0.1rem 0.5rem;
@@ -457,12 +490,12 @@ body {
   transition: color 0.15s, border-color 0.15s;
 }
 .code-copy:hover {
-  color: var(--accent-strong);
-  border-color: var(--accent);
+  color: var(--primary-strong);
+  border-color: var(--primary);
 }
 .code-copy:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--accent);
+  box-shadow: 0 0 0 2px var(--primary);
 }
 /* react-syntax-highlighter renders its own <pre>; reset prose spacing/border. */
 .code-card pre {
@@ -473,7 +506,7 @@ body {
 }
 
 /*
- * Terminal command card (components/Terminal.tsx) — the "npm i satish-baghel"
+ * Terminal command card (components/shared/Terminal.tsx) — the "npm i satish-baghel"
  * flex on the home page. Same deep-slate surface as code cards.
  */
 .terminal {
@@ -501,7 +534,7 @@ body {
   color: #e2e8f0;
 }
 .terminal-body .prompt {
-  color: var(--accent-strong);
+  color: var(--primary-strong);
 }
 .terminal-body .comment {
   color: #818ea3; /* slate — ≥4.5:1 on the terminal body */
@@ -540,7 +573,7 @@ body {
   pointer-events: none;
 }
 .terminal:hover {
-  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
   box-shadow: var(--shadow-card-hover);
 }
 /* Blinking block caret replaces the static ▎ glyph for a "live" terminal feel. */
@@ -551,7 +584,7 @@ body {
   margin-left: 0.12rem;
   vertical-align: -0.18em;
   border-radius: 1px;
-  background: var(--accent-strong);
+  background: var(--primary-strong);
   animation: caret-blink 1.15s steps(1, end) infinite;
 }
 @keyframes caret-blink {
@@ -584,7 +617,7 @@ body {
   background: linear-gradient(
     to right,
     transparent,
-    color-mix(in srgb, var(--accent) 45%, transparent),
+    color-mix(in srgb, var(--primary) 45%, transparent),
     transparent
   );
   opacity: 0.6;
@@ -597,7 +630,7 @@ body {
   position: relative;
   background: linear-gradient(
     to top,
-    color-mix(in srgb, var(--accent) 6%, transparent),
+    color-mix(in srgb, var(--primary) 6%, transparent),
     transparent 55%
   );
 }
@@ -609,39 +642,10 @@ body {
   background: linear-gradient(
     to right,
     transparent,
-    color-mix(in srgb, var(--accent) 40%, transparent),
+    color-mix(in srgb, var(--primary) 40%, transparent),
     transparent
   );
   pointer-events: none;
-}
-
-/*
- * Highlight primary CTA ("Hire me" / "Download résumé"). Reserved for the
- * single most important action per view — dark ink on a warm orange fill
- * reads as confident and premium, and stands apart from secondary buttons.
- */
-.btn-highlight {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  height: 2.75rem;
-  border-radius: 0;
-  padding: 0 1.1rem;
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: var(--highlight-ink);
-  background: var(--highlight-solid);
-  box-shadow: var(--shadow-glow-highlight);
-  transition: background-color 0.2s ease, transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.btn-highlight:hover {
-  background: var(--highlight-solid-hover);
-  transform: translateY(-1px);
-}
-.btn-highlight:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--highlight-solid);
 }
 
 /*
@@ -651,13 +655,13 @@ body {
 .fact-tile {
   border: 1px solid var(--border);
   border-radius: 0;
-  background: var(--surface);
+  background: var(--card);
   padding: 0.9rem 1rem;
   box-shadow: var(--shadow-card);
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
 .fact-tile:hover {
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
   transform: translateY(-1px);
 }
 
@@ -673,17 +677,17 @@ body {
   background:
     radial-gradient(
       120% 130% at 0% 0%,
-      color-mix(in srgb, var(--accent) 9%, transparent),
+      color-mix(in srgb, var(--primary) 9%, transparent),
       transparent 55%
     ),
-    var(--surface);
+    var(--card);
   padding: 1.5rem 1.5rem 1.4rem;
   box-shadow: var(--shadow-card);
   transition: border-color 0.2s ease, transform 0.2s ease,
     box-shadow 0.2s ease;
 }
 .quote-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
   transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
 }
@@ -697,18 +701,4 @@ body {
   line-height: 1;
   color: color-mix(in srgb, var(--highlight) 26%, transparent);
   pointer-events: none;
-}
-
-/* Impact badge — the headline result on a project card, highlight-tinted. */
-.impact-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, var(--highlight) 35%, var(--border));
-  background: color-mix(in srgb, var(--highlight) 12%, transparent);
-  padding: 0.2rem 0.6rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--highlight);
 }
