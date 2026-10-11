@@ -5,9 +5,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
- * shadcn/ui Button, tuned to the Ice-Terminal palette: 44px default height for
- * comfortable tap targets, a solid-cyan default, and a `highlight` variant for
- * the one orange CTA per view (e.g. "Download résumé").
+ * shadcn/ui Button, tuned to the Ink & Claret palette: 44px default height for
+ * comfortable tap targets, a solid deep-blue default, and a `highlight` variant
+ * for the one claret CTA per view (e.g. "Download résumé").
  */
 const buttonVariants = cva(
   "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
@@ -17,7 +17,7 @@ const buttonVariants = cva(
         default:
           "bg-primary-solid font-semibold text-white hover:bg-primary-solid-hover",
         highlight:
-          "bg-highlight-solid font-semibold text-highlight-ink shadow-[var(--shadow-glow-highlight)] hover:-translate-y-px hover:bg-highlight-solid-hover focus-visible:ring-highlight-solid",
+          "bg-highlight-solid font-semibold text-highlight-ink hover:bg-highlight-solid-hover focus-visible:ring-highlight-solid",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive",
         outline:

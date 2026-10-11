@@ -1,90 +1,55 @@
 import type { ReactNode } from "react";
 import type { Experience } from "@/lib/resume";
-import { Card } from "@/components/ui/card";
 
-/** Vertical timeline of roles. Server component — pure data → markup. */
+/** Full role history for the About page. Server component: data → markup. */
 export function ExperienceTimeline({ items }: { items: Experience[] }) {
   return (
-    <ol className="relative space-y-5 border-l border-border pl-6">
+    <ol className="space-y-10">
       {items.map((job) => {
         const isCurrent = job.end === "Present";
         const tenure = formatTenure(job.start, job.end);
         return (
-          <li key={`${job.company}-${job.start}`} className="relative">
-            {/* Timeline node on the spine — filled + pulsing for the current role. */}
-            <span className="absolute -left-[1.9rem] top-7 z-10 flex h-3 w-3 items-center justify-center">
-              {isCurrent && (
-                <span
-                  aria-hidden="true"
-                  className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping"
-                />
-              )}
-              <span
-                aria-hidden="true"
-                className={`relative h-3 w-3 rounded-full border-2 transition-colors ${
-                  isCurrent
-                    ? "border-primary bg-primary ring-4 ring-primary/15"
-                    : "border-primary/70 bg-background group-hover:border-primary"
-                }`}
-              />
-            </span>
-
-            <Card asChild>
-              <article className="group p-5 transition-all duration-200 hover:border-primary/60 hover:shadow-[var(--shadow-card-hover)]">
-                <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1.5">
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-                      <h3 className="font-display text-lg font-semibold tracking-tight text-foreground">
-                        {job.role}
-                      </h3>
-                      {isCurrent && (
-                        <span className="font-mono inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[0.65rem] font-medium uppercase tracking-wider text-primary">
-                          <span
-                            aria-hidden="true"
-                            className="h-1.5 w-1.5 rounded-full bg-primary"
-                          />
-                          Current
-                        </span>
-                      )}
-                    </div>
-                    <p className="mt-1 text-sm font-medium text-primary">
-                      {job.company}
-                    </p>
-                  </div>
-
-                  <div className="flex shrink-0 flex-col gap-0.5 sm:items-end">
-                    <span className="font-mono text-xs tabular-nums text-muted-foreground">
-                      {job.start} — {job.end}
-                    </span>
-                    {tenure && (
-                      <span className="font-mono text-[0.7rem] tabular-nums text-muted-foreground/80">
-                        {tenure}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <p className="mt-1.5 flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
-                  <PinIcon />
-                  {job.location}
+          <li
+            key={`${job.company}-${job.start}`}
+            className="grid gap-4 border-t border-border pt-6 md:grid-cols-[13rem_1fr] md:gap-10"
+          >
+            <div>
+              <p className="text-sm font-semibold text-highlight">
+                {job.start} to {isCurrent ? "now" : job.end}
+              </p>
+              {tenure && (
+                <p className="mt-0.5 text-xs tabular-nums text-muted-foreground">
+                  {tenure}
                 </p>
+              )}
+              <p className="mt-2 flex items-center gap-1.5 text-xs text-muted-foreground">
+                <PinIcon />
+                {job.location}
+              </p>
+            </div>
 
-                <ul className="mt-4 space-y-2">
-                  {job.bullets.map((bullet, i) => (
-                    <li
-                      key={i}
-                      className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="mt-[0.55rem] h-1 w-1 flex-shrink-0 rounded-full bg-primary"
-                      />
-                      <span>{highlightMetrics(bullet)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </Card>
+            <article>
+              <h3 className="font-display text-xl font-medium text-foreground">
+                {job.role}
+              </h3>
+              <p className="mt-0.5 text-sm font-medium text-primary">
+                {job.company}
+              </p>
+              <ul className="mt-4 space-y-2.5">
+                {job.bullets.map((bullet, i) => (
+                  <li
+                    key={i}
+                    className="flex gap-3 text-[15px] leading-relaxed text-muted-foreground"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-[0.65rem] h-px w-3 flex-shrink-0 bg-highlight-solid"
+                    />
+                    <span>{highlightMetrics(bullet)}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
           </li>
         );
       })}
@@ -92,7 +57,7 @@ export function ExperienceTimeline({ items }: { items: Experience[] }) {
   );
 }
 
-/** Small location marker, matched to the mono/muted meta line. */
+/** Small location marker for the meta line. */
 function PinIcon() {
   return (
     <svg

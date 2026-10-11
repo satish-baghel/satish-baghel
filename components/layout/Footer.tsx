@@ -4,93 +4,58 @@ import { site } from "@/lib/site";
 
 const NAV = [
   { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
+  { href: "/blog", label: "Writing" },
 ];
 
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="site-footer mt-8 border-t border-border">
-      <div className="mx-auto w-full max-w-5xl px-6 py-12">
-        {/* Top: brand + status on the left, nav + socials on the right */}
-        <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
-          <div className="max-w-xs">
-            <Link
-              href="/"
-              className="font-display text-lg font-semibold tracking-tight text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-            >
-              Satish <span className="text-primary">Baghel</span>
-            </Link>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              {site.jobTitle} building fast, scalable web apps.
-            </p>
-            {/* Mirrors the hero status badge — keep the two in sync. */}
-            <p className="mt-4 inline-flex items-center gap-2 font-mono text-xs text-muted-foreground">
-              <span
-                className="h-1.5 w-1.5 rounded-full bg-[#94a3b8]"
-                aria-hidden="true"
-              />
-              Not actively looking · open to networking
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-6 sm:flex-row sm:gap-16">
-            <nav aria-label="Footer">
-              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                Site
-              </p>
-              <ul className="mt-3 space-y-2">
-                {NAV.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <div>
-              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                Connect
-              </p>
-              <div className="mt-3 flex items-center gap-2">
-                <IconLink href={`mailto:${site.email}`} label="Email">
-                  <MailIcon />
-                </IconLink>
-                <IconLink href={site.github} label="GitHub" external>
-                  <GitHubIcon />
-                </IconLink>
-                <IconLink href={site.linkedin} label="LinkedIn" external>
-                  <LinkedInIcon />
-                </IconLink>
-                <IconLink href={site.leetcode} label="LeetCode" external>
-                  <LeetCodeIcon />
-                </IconLink>
-              </div>
-            </div>
-          </div>
+    <footer className="mt-16 border-t border-border">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <Link
+            href="/"
+            className="font-display text-lg font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+          >
+            Satish Baghel
+          </Link>
+          <p className="mt-1 text-sm text-muted-foreground">
+            © {year} · {site.location}
+          </p>
         </div>
 
-        {/* Bottom bar: copyright + colophon + back to top */}
-        <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {year} {site.name} · {site.location}
-          </p>
-          <div className="flex items-center gap-4 font-mono">
-            <span>Built with Next.js &amp; Tailwind</span>
-            <a
-              href="#top"
-              className="inline-flex items-center gap-1 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+        <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          {NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
             >
-              Back to top
-              <span aria-hidden="true">↑</span>
-            </a>
-          </div>
+              {item.label}
+            </Link>
+          ))}
+          <a
+            href="/llms.txt"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+          >
+            llms.txt
+          </a>
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <IconLink href={`mailto:${site.email}`} label="Email">
+            <MailIcon />
+          </IconLink>
+          <IconLink href={site.github} label="GitHub" external>
+            <GitHubIcon />
+          </IconLink>
+          <IconLink href={site.linkedin} label="LinkedIn" external>
+            <LinkedInIcon />
+          </IconLink>
+          <IconLink href={site.leetcode} label="LeetCode" external>
+            <LeetCodeIcon />
+          </IconLink>
         </div>
       </div>
     </footer>

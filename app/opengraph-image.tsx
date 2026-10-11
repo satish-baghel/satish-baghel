@@ -16,12 +16,12 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "#020617",
-          color: "#f8fafc",
+          background: "#0d1324", borderLeft: "24px solid #8f2647",
+          color: "#ece8e1",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", fontSize: 28, color: "#818cf8" }}>
+        <div style={{ display: "flex", fontSize: 28, color: "#9db8ff" }}>
           {new URL(site.url).hostname}
         </div>
         <div
@@ -35,8 +35,8 @@ export default function Image() {
         >
           {site.name}
         </div>
-        <div style={{ display: "flex", fontSize: 34, color: "#94a3b8", marginTop: 16 }}>
-          {site.jobTitle} · Next.js, React & TypeScript
+        <div style={{ display: "flex", fontSize: 34, color: "#a4aabb", marginTop: 16 }}>
+          {site.jobTitle} · Node.js, React & Next.js · {site.location}
         </div>
       </div>
     ),

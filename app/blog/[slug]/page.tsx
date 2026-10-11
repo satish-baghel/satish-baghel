@@ -141,19 +141,19 @@ export default async function PostPage({
 
       <Link
         href="/blog"
-        className="font-mono text-sm text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+        className="text-sm text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
       >
         ← Back to blog
       </Link>
 
       <header className="mt-6 border-b border-border pb-8">
-        <p className="font-mono text-sm font-medium text-primary">
+        <p className="text-sm font-medium text-primary">
           {post.type === "howto" ? "Guide" : "Article"}
         </p>
         <h1 className="font-display mt-3 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
           {post.title}
         </h1>
-        <div className="mt-4 flex flex-wrap items-center gap-2 font-mono text-xs text-muted-foreground">
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           {post.updated && post.updated !== post.date && (
             <>
@@ -200,7 +200,7 @@ export default async function PostPage({
           asChild
           variant="outline"
           size="sm"
-          className="px-3.5 font-mono font-normal text-muted-foreground hover:border-primary/60"
+          className="px-3.5 font-normal text-muted-foreground hover:border-primary/60"
         >
           <Link href="/blog">
             <span aria-hidden="true">←</span> All posts

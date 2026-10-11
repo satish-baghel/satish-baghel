@@ -1,12 +1,19 @@
+/** First paid role (SaturnCube, as an intern). Experience is counted from here. */
+const CAREER_START = new Date(2020, 6, 1);
+
+/** Whole years since CAREER_START, worked out at build time so copy never goes stale. */
+export const yearsOfExperience = Math.floor(
+  (Date.now() - CAREER_START.getTime()) / (365.25 * 24 * 60 * 60 * 1000),
+);
+
 /** Single source of truth for site-wide identity and SEO constants. */
 export const site = {
   name: "Satish Baghel",
-  title: "Satish Baghel — Full Stack Developer",
-  description:
-    "Full Stack Developer with 5+ years building and scaling REST APIs and microservices in Node.js, Express, MongoDB, MySQL, and Redis — and shipping the React and Next.js front-ends on top. Portfolio, projects, and writing.",
+  title: "Satish Baghel | Software Engineer (Node.js, React)",
+  description: `Satish Baghel is a software engineer in Ahmedabad, India with ${yearsOfExperience}+ years of full-stack experience: REST APIs in Node.js and Express, MongoDB and MySQL databases, Stripe payments, and React or Next.js front ends for products used by 100K+ people.`,
   url: "https://satishbaghel.com",
-  jobTitle: "Full Stack Developer",
-  tagline: "Full Stack Developer · APIs & scalable back-ends · 5+ yrs · Ahmedabad, India",
+  jobTitle: "Software Engineer",
+  tagline: "Software engineer · Ahmedabad, India",
   location: "Ahmedabad, India",
   email: "satish769843@gmail.com",
   phone: "+91 8238394388",

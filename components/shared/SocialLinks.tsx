@@ -1,5 +1,5 @@
 /**
- * Contact / social links — email, GitHub, LinkedIn. Driven by lib/site.ts so
+ * Contact / social links: email, GitHub, LinkedIn. Driven by lib/site.ts so
  * identity stays single-sourced. Add a new entry by extending the array below.
  */
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 export function SocialLinks({ className }: { className?: string }) {
   return (
     <div className={cn("flex flex-wrap items-center gap-3", className)}>
-      <Button asChild variant="outline" className="font-mono font-normal">
+      <Button asChild variant="outline" className="font-normal">
         <a href={`mailto:${site.email}`}>
           <MailIcon />
           Email

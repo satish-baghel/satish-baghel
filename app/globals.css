@@ -1,91 +1,80 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* shadcn/ui `dark:` variant follows the site's data-theme attribute (dark is
- * the default, so anything not explicitly light counts as dark). */
-@custom-variant dark (&:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *));
+/* shadcn/ui `dark:` variant follows the site's data-theme attribute. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
- * Ice-Terminal palette — deep blue-black terminal canvas, ELECTRIC-CYAN
- * primary, warm ORANGE highlight. Cyan reads as system/prompt (links,
- * borders, focus, structure); orange is the "look here" highlight for
- * metrics + the primary CTA so achievements "glow".
- * Every value maps to a Tailwind color so the system stays predictable.
- * :root is the DARK default. [data-theme="light"] overrides it.
- * An inline script in layout.tsx sets data-theme before paint (no FOUC).
+ * Ink & Claret palette. Deep blue carries structure (links, focus, rules)
+ * and claret, a burgundy red, is kept for the one thing per view that should
+ * catch the eye: the résumé button, numbers, the active marker.
+ * :root is the LIGHT "paper" theme; [data-theme="dark"] is midnight navy.
+ * An inline script in layout.tsx sets data-theme before paint (no flash).
  */
 :root {
-  --background: #0a0f16; /* near-black, faint blue bias — terminal ground */
-  --card: #0e1620; /* elevated card surface */
-  --muted: #121c28; /* subtle fills, chips */
-  --border: #1f3242; /* cool hairline divider, visible on the ground */
-  --foreground: #cdd6e0; /* soft terminal off-white — ~11:1 on bg */
-  --muted-foreground: #7e8fa0; /* secondary text, ≥4.5:1 on bg */
+  --background: #f6f3ee; /* warm paper */
+  --card: #fffcf7; /* lifted sheet */
+  --muted: #ede8e0; /* chips, subtle fills */
+  --border: #ddd5c8; /* hairline */
+  --foreground: #1a1f2e; /* navy ink, ~15:1 on paper */
+  --muted-foreground: #585e6e; /* secondary text, >=5.5:1 */
 
-  /* Electric cyan — primary accent for links, borders, focus, structure. */
-  --primary: #22d3ee; /* cyan-400 — accent TEXT/links/prompt, ≥8:1 on bg */
-  --primary-strong: #67e8f9; /* cyan-300 — hover brightens on dark */
-  --primary-solid: #0e7490; /* cyan-700 — solid fill, white text ≥5:1 */
-  --primary-solid-hover: #155e75; /* cyan-800 — button hover */
+  --primary: #1f3a8a; /* deep blue text/links, ~9:1 */
+  --primary-strong: #162b69;
+  --primary-solid: #1f3a8a;
+  --primary-solid-hover: #162b69;
 
-  /* Orange — the "look here" highlight for metrics + the primary CTA. */
-  --highlight: #fb923c; /* orange-400 — number/emphasis text on dark */
-  --highlight-strong: #fdba74; /* orange-300 — hover */
-  --highlight-solid: #fb923c; /* orange-400 — CTA fill (dark ink on top) */
-  --highlight-solid-hover: #fdba74; /* orange-300 — CTA hover */
-  --highlight-ink: #1c1410; /* near-black warm ink on top of orange fill */
+  --highlight: #7c1d3a; /* claret text, ~9:1 */
+  --highlight-strong: #5f142b;
+  --highlight-solid: #7c1d3a;
+  --highlight-solid-hover: #64162f;
+  --highlight-ink: #ffffff;
 
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5),
-    0 10px 28px -14px rgba(0, 0, 0, 0.85);
-  --shadow-card-hover: 0 2px 6px rgba(34, 211, 238, 0.14),
-    0 18px 40px -16px rgba(14, 116, 144, 0.4);
-  --shadow-glow-highlight: 0 10px 30px -12px rgba(249, 115, 22, 0.55);
+  --shadow-card: 0 1px 0 rgba(26, 31, 46, 0.04),
+    0 6px 20px -14px rgba(26, 31, 46, 0.18);
+  --shadow-card-hover: 0 1px 0 rgba(26, 31, 46, 0.05),
+    0 14px 30px -16px rgba(31, 58, 138, 0.28);
+  --shadow-glow-highlight: none;
 
-  /* shadcn/ui semantic tokens, mapped onto the Ice-Terminal palette. */
   --card-foreground: var(--foreground);
   --popover: var(--card);
   --popover-foreground: var(--foreground);
-  --primary-foreground: #0a0f16; /* dark ink on the bright cyan */
+  --primary-foreground: #ffffff;
   --secondary: var(--muted);
   --secondary-foreground: var(--foreground);
-  --accent: var(--muted); /* shadcn hover fill (ghost/outline) */
+  --accent: var(--muted);
   --accent-foreground: var(--foreground);
-  --destructive: #f87171;
+  --destructive: #b42318;
   --input: var(--border);
   --ring: var(--primary);
-  --radius: 0rem;
+  --radius: 0.5rem;
 }
 
-:root[data-theme="light"] {
-  /* Paper terminal — a calm cool off-white canvas so the cyan/orange accents
-   * read cleanly. Surface still sits lighter than the background so cards keep
-   * their elevation even with the sharp brutalist corners. */
-  --background: #e9edf1; /* soft cool off-white canvas */
-  --card: #f5f8fa; /* off-white card — never pure #fff */
-  --muted: #e2e8ee; /* subtle fills, chips */
-  --border: #c3ccd6; /* divider, visible on the softer canvas */
-  --foreground: #0d1520; /* near-black ink (~15:1 on canvas) */
-  --muted-foreground: #55636f; /* slate — ≥4.5:1 on all surfaces */
+:root[data-theme="dark"] {
+  --background: #0d1324; /* midnight navy */
+  --card: #141b30;
+  --muted: #1b2339;
+  --border: #29324f;
+  --foreground: #ece8e1; /* warm off-white */
+  --muted-foreground: #a4aabb;
 
-  --primary: #0e7490; /* cyan-700 — AA on paper (~5:1) */
-  --primary-strong: #155e75; /* cyan-800 — hover / active */
-  --primary-solid: #0e7490; /* solid fill — white text passes (~5:1) */
-  --primary-solid-hover: #155e75; /* button hover */
+  --primary: #9db8ff; /* light blue on navy, ~9:1 */
+  --primary-strong: #c0d1ff;
+  --primary-solid: #2f4fb5; /* white text ~6:1 */
+  --primary-solid-hover: #3b5dc8;
 
-  --highlight: #c2410c; /* orange-700 — emphasis text, AA on white */
-  --highlight-strong: #9a3412; /* orange-800 — hover */
-  --highlight-solid: #f97316; /* orange-500 — CTA fill (dark ink on top) */
-  --highlight-solid-hover: #ea580c; /* orange-600 — CTA hover */
-  --highlight-ink: #1c1410; /* dark ink on orange — high contrast both modes */
+  --highlight: #eea3b9; /* claret tint readable on navy */
+  --highlight-strong: #f6c3d2;
+  --highlight-solid: #8f2647; /* white text ~7.5:1 */
+  --highlight-solid-hover: #a52f54;
+  --highlight-ink: #ffffff;
 
-  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
-    0 8px 24px -12px rgba(15, 23, 42, 0.12);
-  --shadow-card-hover: 0 2px 4px rgba(14, 116, 144, 0.12),
-    0 16px 36px -14px rgba(14, 116, 144, 0.22);
-  --shadow-glow-highlight: 0 10px 30px -12px rgba(234, 88, 12, 0.35);
+  --shadow-card: 0 1px 0 rgba(0, 0, 0, 0.3), 0 10px 26px -16px rgba(0, 0, 0, 0.7);
+  --shadow-card-hover: 0 1px 0 rgba(0, 0, 0, 0.3),
+    0 16px 34px -16px rgba(47, 79, 181, 0.45);
 
-  --primary-foreground: #ffffff;
-  --destructive: #dc2626;
+  --primary-foreground: #0d1324;
+  --destructive: #f97066;
 }
 
 @theme inline {
@@ -117,92 +106,40 @@
   --color-highlight-ink: var(--highlight-ink);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-fraunces);
 
-  /* Terminal-Brutalist: sharp corners everywhere. Every finite radius collapses
-   * to 0 so cards, buttons, inputs and code chrome read as hard-edged panels;
-   * only --radius-full is left untouched so status dots, pills and the avatar
-   * stay round. This is the single global lever for the brutalist silhouette. */
-  --radius-xs: 0px;
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-3xl: 0px;
-  --radius-4xl: 0px;
+  /* Small, consistent corners: paper cards, not app tiles. */
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 10px;
 }
 
 html {
-  color-scheme: light dark;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }
 
-/*
- * Terminal ground: a faint hairline grid + a barely-there scanline over the
- * canvas colour, fixed so it reads as the "screen" the whole site sits on.
- * The grid uses --border at low strength via color-mix so it adapts per theme.
- */
 body {
-  background:
-    linear-gradient(
-      color-mix(in srgb, var(--foreground) 2%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--border) 45%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      color-mix(in srgb, var(--border) 45%, transparent) 1px,
-      transparent 1px
-    ),
-    var(--background);
-  background-size: 100% 3px, 28px 28px, 28px 28px, auto;
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: var(--primary);
-  color: var(--background);
+  background: var(--highlight-solid);
+  color: #fff;
 }
 
-/* Display headings run in the mono face — the raw brutalist voice that carries
- * the whole identity. Tight tracking keeps large sizes from feeling loose. */
+/* Headings run in Fraunces, a soft old-style serif, for an editorial voice. */
 .font-display {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  letter-spacing: -0.02em;
-}
-
-/*
- * Decorative hero backdrop: a faint dot grid with an accent glow, masked to
- * fade at the edges. Static (no animation) so it stays calm + reduced-motion-safe.
- */
-.hero-grid {
-  background-image:
-    radial-gradient(
-      55% 45% at 12% -5%,
-      color-mix(in srgb, var(--primary) 26%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      45% 40% at 88% 6%,
-      color-mix(in srgb, var(--primary-strong) 20%, transparent),
-      transparent 65%
-    ),
-    radial-gradient(currentColor 1px, transparent 1px);
-  background-size:
-    auto,
-    auto,
-    22px 22px;
-  color: var(--border);
-  -webkit-mask-image: radial-gradient(
-    120% 90% at 50% 0%,
-    #000 35%,
-    transparent 80%
-  );
-  mask-image: radial-gradient(120% 90% at 50% 0%, #000 35%, transparent 80%);
+  font-family: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.015em;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -216,116 +153,87 @@ body {
   }
 }
 
-/*
- * Subtle entrance: fade + rise. Uses transform/opacity only with an ease-out
- * curve. `animation-fill-mode: both` holds the final (visible) state, and the
- * reduced-motion block above collapses both duration AND delay — so motion-averse
- * users land on the finished layout instantly (nothing stuck at opacity 0).
- */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.reveal {
-  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-.reveal-1 {
-  animation-delay: 0.05s;
-}
-.reveal-2 {
-  animation-delay: 0.12s;
-}
-.reveal-3 {
-  animation-delay: 0.19s;
-}
-.reveal-4 {
-  animation-delay: 0.26s;
-}
-.reveal-5 {
-  animation-delay: 0.33s;
-}
-
-/* "Available for work" status pill — green dot is paired with text, not color-only. */
-.status-badge {
+/* Section label: small caps in claret with a short blue rule in front. */
+.section-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--card) 80%, transparent);
-  padding: 0.375rem 0.75rem 0.375rem 0.625rem;
-  font-size: 0.8125rem;
-  color: var(--foreground);
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--highlight);
 }
-.status-dot {
+.section-label::before {
+  content: "";
+  width: 1.75rem;
+  height: 2px;
+  background: var(--primary);
+}
+
+/*
+ * Portrait: the photo sits in a plain frame with a solid claret block offset
+ * behind it, like a print layout. No glows, no gradients.
+ */
+.portrait {
   position: relative;
-  display: inline-block;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 9999px;
-  background: #22c55e; /* green-500 */
+  isolation: isolate;
 }
-.status-dot::after {
+.portrait::before {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: #22c55e;
-  animation: ping 1.9s cubic-bezier(0, 0, 0.2, 1) infinite;
+  inset: 0.9rem -0.9rem -0.9rem 0.9rem;
+  z-index: -1;
+  border-radius: var(--radius-lg);
+  background: var(--highlight-solid);
 }
-/* Idle variant — steady slate dot, no pulse. Signals "not actively looking". */
-.status-dot--idle {
-  background: #94a3b8; /* slate-400 */
+.portrait-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--muted);
 }
-.status-dot--idle::after {
-  display: none;
+
+/* Fact sheet rows: label column + value, ruled like a printed form. */
+.fact-row {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 34%) 1fr;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px dashed var(--border);
 }
-@keyframes ping {
-  75%,
-  100% {
-    transform: scale(2.6);
-    opacity: 0;
+.fact-row:last-child {
+  border-bottom: 0;
+}
+
+/* Career line: a horizontal rail on wide screens, vertical on phones. */
+.career-rail {
+  position: relative;
+}
+.career-rail::before {
+  content: "";
+  position: absolute;
+  left: 0.3rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 2px;
+  background: linear-gradient(var(--primary), var(--highlight-solid));
+}
+@media (min-width: 768px) {
+  .career-rail::before {
+    left: 0;
+    right: 0;
+    top: 0.3rem;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--highlight-solid));
   }
 }
 
-/* Soft accent glow behind the hero avatar for a premium, lifted feel (static). */
-.avatar-glow::after {
-  content: "";
-  position: absolute;
-  inset: -14%;
-  z-index: -1;
-  border-radius: 9999px;
-  background: radial-gradient(
-    closest-side,
-    color-mix(in srgb, var(--primary) 42%, transparent),
-    transparent 72%
-  );
-  filter: blur(30px);
-  opacity: 0.75;
-  pointer-events: none;
-}
-
-/* Premium contact panel — surface with a corner accent wash. */
-.cta-panel {
-  position: relative;
-  overflow: hidden;
-  border-radius: 0;
-  border: 1px solid var(--border);
-  background:
-    radial-gradient(
-      120% 140% at 100% 0%,
-      color-mix(in srgb, var(--primary) 16%, transparent),
-      transparent 55%
-    ),
-    var(--card);
-  box-shadow: var(--shadow-card);
+.site-header {
+  background: color-mix(in srgb, var(--background) 88%, transparent);
 }
 
 /*
@@ -347,7 +255,7 @@ body {
   font-weight: 600;
   letter-spacing: -0.02em;
   scroll-margin-top: 6rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
+  font-family: var(--font-fraunces), Georgia, serif;
 }
 .prose h3 {
   margin-top: 1.75em;
@@ -356,7 +264,7 @@ body {
   font-weight: 600;
   letter-spacing: -0.02em;
   scroll-margin-top: 6rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
+  font-family: var(--font-fraunces), Georgia, serif;
 }
 .prose p,
 .prose ul,
@@ -402,7 +310,7 @@ body {
   font-size: 0.875em;
   background: var(--muted);
   border: 1px solid var(--border);
-  border-radius: 0;
+  border-radius: var(--radius-md);
   padding: 0.15em 0.4em;
   color: var(--primary-strong);
 }
@@ -411,9 +319,9 @@ body {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875rem;
   line-height: 1.6;
-  background: #0b1120; /* deep slate */
+  background: #0f1528; /* deep slate */
   border: 1px solid #1f2937; /* slate-800 */
-  border-radius: 0;
+  border-radius: var(--radius-md);
   padding: 1rem 1.25rem;
   overflow-x: auto;
 }
@@ -441,9 +349,9 @@ body {
  */
 .code-card {
   border: 1px solid var(--border);
-  border-radius: 0;
+  border-radius: var(--radius-md);
   overflow: hidden;
-  background: #0b1120;
+  background: #0f1528;
   box-shadow: var(--shadow-card);
 }
 .code-head {
@@ -471,11 +379,11 @@ body {
 }
 .code-lang {
   margin-left: auto;
-  color: var(--primary-strong);
+  color: #c0d1ff;
   border: 1px solid #1f2937;
   border-radius: 9999px;
   padding: 0.1rem 0.5rem;
-  background: rgba(74, 222, 128, 0.12);
+  background: rgba(157, 184, 255, 0.12);
 }
 .code-copy {
   display: inline-flex;
@@ -483,15 +391,15 @@ body {
   gap: 0.3rem;
   color: #94a3b8;
   border: 1px solid #1f2937;
-  border-radius: 0;
+  border-radius: var(--radius-md);
   padding: 0.15rem 0.5rem;
   background: transparent;
   cursor: pointer;
   transition: color 0.15s, border-color 0.15s;
 }
 .code-copy:hover {
-  color: var(--primary-strong);
-  border-color: var(--primary);
+  color: #c0d1ff;
+  border-color: #9db8ff;
 }
 .code-copy:focus-visible {
   outline: none;
@@ -505,200 +413,3 @@ body {
   background: transparent !important;
 }
 
-/*
- * Terminal command card (components/shared/Terminal.tsx) — the "npm i satish-baghel"
- * flex on the home page. Same deep-slate surface as code cards.
- */
-.terminal {
-  border: 1px solid var(--border);
-  border-radius: 0;
-  overflow: hidden;
-  background: #0b1120;
-  box-shadow: var(--shadow-card);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.8125rem;
-}
-.terminal-head {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid #1f2937;
-  background: #0d1526;
-  color: #818ea3; /* slate — ≥4.5:1 on the deep-slate head */
-  font-size: 0.7rem;
-}
-.terminal-body {
-  padding: 0.9rem 1rem;
-  line-height: 1.7;
-  color: #e2e8f0;
-}
-.terminal-body .prompt {
-  color: var(--primary-strong);
-}
-.terminal-body .comment {
-  color: #818ea3; /* slate — ≥4.5:1 on the terminal body */
-}
-.terminal-body .ok {
-  color: #34d399;
-}
-/* Give the window controls real macOS "traffic light" colors (scoped to the
- * terminal so code cards keep their neutral dots). */
-.terminal .code-dots span:nth-child(1) {
-  background: #ff5f57;
-}
-.terminal .code-dots span:nth-child(2) {
-  background: #febc2e;
-}
-.terminal .code-dots span:nth-child(3) {
-  background: #28c840;
-}
-/* Faint inner top sheen + a gentle accent lift on hover — makes the card feel
- * like glass, not a flat box. Interaction is decorative, so it stays subtle. */
-.terminal {
-  position: relative;
-  transition: box-shadow 0.25s ease, border-color 0.25s ease;
-}
-.terminal::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.08),
-    transparent
-  );
-  pointer-events: none;
-}
-.terminal:hover {
-  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
-  box-shadow: var(--shadow-card-hover);
-}
-/* Blinking block caret replaces the static ▎ glyph for a "live" terminal feel. */
-.terminal .caret {
-  display: inline-block;
-  width: 0.55ch;
-  height: 1.05em;
-  margin-left: 0.12rem;
-  vertical-align: -0.18em;
-  border-radius: 1px;
-  background: var(--primary-strong);
-  animation: caret-blink 1.15s steps(1, end) infinite;
-}
-@keyframes caret-blink {
-  0%,
-  50% {
-    opacity: 1;
-  }
-  50.01%,
-  100% {
-    opacity: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  /* Hold the caret solid instead of letting the global reset freeze it hidden. */
-  .terminal .caret {
-    animation: none;
-    opacity: 1;
-  }
-}
-
-/* Header: hairline accent glow under the sticky bar when it separates content. */
-.site-header {
-  background: color-mix(in srgb, var(--background) 82%, transparent);
-}
-.site-header::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 -1px 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    color-mix(in srgb, var(--primary) 45%, transparent),
-    transparent
-  );
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-/* Footer: a soft accent wash rising from the bottom edge + a top accent hairline
- * so the page closes with intent rather than a bare divider. */
-.site-footer {
-  position: relative;
-  background: linear-gradient(
-    to top,
-    color-mix(in srgb, var(--primary) 6%, transparent),
-    transparent 55%
-  );
-}
-.site-footer::before {
-  content: "";
-  position: absolute;
-  inset: -1px 0 auto 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    color-mix(in srgb, var(--primary) 40%, transparent),
-    transparent
-  );
-  pointer-events: none;
-}
-
-/*
- * Quick-facts strip — a row of at-a-glance recruiter facts (location, notice,
- * experience, stack). Each tile is a calm surface on the terminal ground.
- */
-.fact-tile {
-  border: 1px solid var(--border);
-  border-radius: 0;
-  background: var(--card);
-  padding: 0.9rem 1rem;
-  box-shadow: var(--shadow-card);
-  transition: border-color 0.2s ease, transform 0.2s ease;
-}
-.fact-tile:hover {
-  border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
-  transform: translateY(-1px);
-}
-
-/*
- * Testimonial card — a quote surface with a large decorative orange quote mark.
- * Replace the placeholder quotes in lib/resume.ts with real recommendations.
- */
-.quote-card {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 0;
-  background:
-    radial-gradient(
-      120% 130% at 0% 0%,
-      color-mix(in srgb, var(--primary) 9%, transparent),
-      transparent 55%
-    ),
-    var(--card);
-  padding: 1.5rem 1.5rem 1.4rem;
-  box-shadow: var(--shadow-card);
-  transition: border-color 0.2s ease, transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.quote-card:hover {
-  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-card-hover);
-}
-.quote-card::before {
-  content: "\201C";
-  position: absolute;
-  right: 1rem;
-  top: 0.1rem;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 5rem;
-  line-height: 1;
-  color: color-mix(in srgb, var(--highlight) 26%, transparent);
-  pointer-events: none;
-}

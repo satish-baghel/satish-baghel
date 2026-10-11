@@ -1,22 +1,19 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Suspense } from "react";
-import { SocialLinks } from "@/components/shared/SocialLinks";
 import {
   ActivitySection,
   ActivitySectionSkeleton,
 } from "@/components/sections/ActivitySection";
-import { SkillBadge } from "@/components/shared/SkillBadge";
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
-import { ProjectGrid } from "@/components/sections/ProjectGrid";
+import { MoreProjects } from "@/components/sections/MoreProjects";
+import { SectionHeader } from "@/components/shared/SectionHeader";
 import { JsonLd } from "@/components/shared/JsonLd";
-import { QuickFacts } from "@/components/sections/QuickFacts";
 import { ResumeButton } from "@/components/shared/ResumeButton";
-import { site } from "@/lib/site";
-import { SUMMARY, SKILLS, EXPERIENCE, PROJECTS, EDUCATION } from "@/lib/resume";
-import { Card } from "@/components/ui/card";
+import { site, yearsOfExperience } from "@/lib/site";
+import { EXPERIENCE } from "@/lib/resume";
 
-const description =
-  "Satish Baghel is a Full Stack Developer with 5+ years building scalable web apps with React, Next.js, Node.js, MongoDB, and MySQL.";
+const description = `How Satish Baghel went from intern to software engineer: ${yearsOfExperience}+ years of Node.js, React and database work, every role in detail, and more projects.`;
 
 export const metadata: Metadata = {
   title: "About",
@@ -30,136 +27,98 @@ export const metadata: Metadata = {
   },
 };
 
+// The Person itself is defined once in app/layout.tsx; this page points at it.
 const profileSchema = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
-  mainEntity: {
-    "@type": "Person",
-    "@id": `${site.url}/#person`,
-    name: site.name,
-    jobTitle: site.jobTitle,
-    email: `mailto:${site.email}`,
-    url: site.url,
-    image: `${site.url}/me.png`,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Ahmedabad",
-      addressCountry: "IN",
-    },
-    sameAs: [site.github, site.linkedin, site.leetcode],
-  },
+  url: `${site.url}/about`,
+  mainEntity: { "@id": `${site.url}/#person` },
 };
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-6 py-16">
+    <div className="mx-auto w-full max-w-5xl px-6 py-16 sm:py-20">
       <JsonLd data={profileSchema} />
 
-      <p className="font-mono text-sm font-medium text-primary">{site.tagline}</p>
-      <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight">
-        About me
-      </h1>
-      <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-        {SUMMARY}
+      <header className="max-w-3xl">
+        <p className="section-label">About</p>
+        <h1 className="font-display mt-5 text-5xl font-medium leading-[1.05] text-foreground">
+          The longer version
+        </h1>
+        <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted-foreground">
+          <p>
+            I studied in north Gujarat: a BSc in Visnagar, then
+            an MCA at Ganpat University. In July 2020 I walked
+            into SaturnCube Technologies in Ahmedabad as an intern. Two years
+            of client work later I was building whole features on my own,
+            front to back.
+          </p>
+          <p>
+            Since then the work has moved steadily toward the server. At Shiv
+            Technolabs I led a small MERN team and set up their release
+            pipeline. Today I&apos;m a software engineer at Software and
+            Technology Advanced Research Laboratory, working remotely with
+            the team in Pune on a platform that a lot of people depend on
+            every day.
+          </p>
+          <p>
+            What I enjoy most is the unglamorous middle of a product: the
+            database query that&apos;s quietly slowing every page, the payment
+            webhook that has to be right the first time, the release that goes
+            out without anyone noticing.
+          </p>
+        </div>
+        <div className="mt-8">
+          <ResumeButton />
+        </div>
+      </header>
+
+      <section id="experience" className="mt-20 scroll-mt-24">
+        <SectionHeader
+          label="Experience"
+          title="Every role, in detail"
+        />
+        <div className="mt-10">
+          <ExperienceTimeline items={EXPERIENCE} />
+        </div>
+      </section>
+
+      <section id="projects" className="mt-20 scroll-mt-24 border-t border-border pt-16">
+        <SectionHeader
+          label="More projects"
+          title="Other things I've built"
+          intro="The three biggest are on the home page. These are the rest."
+          href="/#work"
+          linkText="See the featured three"
+        />
+        <div className="mt-10">
+          <MoreProjects />
+        </div>
+      </section>
+
+      <section className="mt-20 border-t border-border pt-16">
+        <SectionHeader
+          label="Activity"
+          title="The last six months in code"
+          intro="Live from GitHub and LeetCode."
+        />
+        <div className="mt-10">
+          <Suspense fallback={<ActivitySectionSkeleton />}>
+            <ActivitySection />
+          </Suspense>
+        </div>
+      </section>
+
+      <p className="mt-20 border-t border-border pt-10 text-muted-foreground">
+        Want to talk?{" "}
+        <Link
+          href="/#contact"
+          className="font-medium text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary"
+        >
+          Here&apos;s how to reach me
+        </Link>
+        .
       </p>
-
-      <div className="mt-7 flex flex-wrap items-center gap-3">
-        <ResumeButton />
-        <SocialLinks />
-      </div>
-
-      {/* Quick facts — recruiter TL;DR */}
-      <div className="mt-10">
-        <QuickFacts />
-      </div>
-
-      {/* Skills */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
-        Skills
-      </h2>
-      <div className="mt-6 space-y-6">
-        {Object.entries(SKILLS).map(([group, items]) => (
-          <div key={group}>
-            <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              {group}
-            </h3>
-            <ul className="mt-3 flex flex-wrap gap-2.5">
-              {items.map((name) => (
-                <SkillBadge key={name} name={name} />
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-
-      {/* Experience */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
-        Experience
-      </h2>
-      <div className="mt-8">
-        <ExperienceTimeline items={EXPERIENCE} />
-      </div>
-
-      {/* Recommendations */}
-      {/* <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
-        What people say
-      </h2>
-      <div className="mt-6">
-        <Testimonials />
-      </div> */}
-
-      {/* Coding activity — GitHub + LeetCode, past year */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
-        Last 6 months in code
-      </h2>
-      <div className="mt-6">
-        <Suspense fallback={<ActivitySectionSkeleton />}>
-          <ActivitySection />
-        </Suspense>
-      </div>
-
-      {/* Projects */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
-        Projects
-      </h2>
-      <div className="mt-6">
-        <ProjectGrid projects={PROJECTS} />
-      </div>
-
-      {/* Education */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
-        Education
-      </h2>
-      <ul className="mt-6 space-y-4">
-        {EDUCATION.map((edu) => (
-          <Card asChild key={edu.degree}>
-            <li className="flex flex-wrap items-baseline justify-between gap-x-3 p-5">
-              <div>
-                <h3 className="font-display text-lg font-semibold tracking-tight">
-                  {edu.degree}
-                </h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {edu.institution} · {edu.location}
-                </p>
-              </div>
-              <span className="font-mono text-sm text-primary">{edu.year}</span>
-            </li>
-          </Card>
-        ))}
-      </ul>
-
-      {/* Contact */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
-        Get in touch
-      </h2>
-      <p className="mt-3 text-muted-foreground">
-        Based in {site.location}. Not actively looking right now, but always
-        open to a good conversation — email is the fastest way to reach me.
-      </p>
-      <div className="mt-5 flex flex-wrap items-center gap-3">
-        <ResumeButton />
-        <SocialLinks />
-      </div>
     </div>
   );
 }

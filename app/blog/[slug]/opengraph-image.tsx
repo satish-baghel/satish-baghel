@@ -29,12 +29,12 @@ export default async function Image({
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "80px",
-          background: "#020617",
-          color: "#f8fafc",
+          background: "#0d1324", borderLeft: "24px solid #8f2647",
+          color: "#ece8e1",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", fontSize: 28, color: "#818cf8" }}>
+        <div style={{ display: "flex", fontSize: 28, color: "#9db8ff" }}>
           {new URL(site.url).hostname} / blog
         </div>
         <div
@@ -48,7 +48,7 @@ export default async function Image({
         >
           {title}
         </div>
-        <div style={{ display: "flex", fontSize: 30, color: "#94a3b8" }}>
+        <div style={{ display: "flex", fontSize: 30, color: "#a4aabb" }}>
           {site.name}
         </div>
       </div>
