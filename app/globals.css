@@ -30,6 +30,12 @@
   --highlight-solid-hover: #64162f;
   --highlight-ink: #ffffff;
 
+  /* Icon tones. Each theme has its own shade of each, not a straight invert. */
+  --tone-blue: #1f3a8a;
+  --tone-claret: #7c1d3a;
+  --tone-teal: #0f6b66;
+  --tone-gold: #8a5a0b;
+
   --shadow-card: 0 1px 0 rgba(26, 31, 46, 0.04),
     0 6px 20px -14px rgba(26, 31, 46, 0.18);
   --shadow-card-hover: 0 1px 0 rgba(26, 31, 46, 0.05),
@@ -68,6 +74,11 @@
   --highlight-solid: #8f2647; /* white text ~7.5:1 */
   --highlight-solid-hover: #a52f54;
   --highlight-ink: #ffffff;
+
+  --tone-blue: #8fb0ff; /* periwinkle */
+  --tone-claret: #f08fae; /* rose */
+  --tone-teal: #5fd4c4; /* sea glass */
+  --tone-gold: #f0c674; /* brass */
 
   --shadow-card: 0 1px 0 rgba(0, 0, 0, 0.3), 0 10px 26px -16px rgba(0, 0, 0, 0.7);
   --shadow-card-hover: 0 1px 0 rgba(0, 0, 0, 0.3),
@@ -164,6 +175,9 @@ body {
   text-transform: uppercase;
   color: var(--highlight);
 }
+.section-label--bare::before {
+  display: none;
+}
 .section-label::before {
   content: "";
   width: 1.75rem;
@@ -198,7 +212,8 @@ body {
 /* Fact sheet rows: label column + value, ruled like a printed form. */
 .fact-row {
   display: grid;
-  grid-template-columns: minmax(7.5rem, 34%) 1fr;
+  grid-template-columns: minmax(9.5rem, 38%) 1fr;
+  align-items: center;
   gap: 1rem;
   padding: 0.8rem 0;
   border-bottom: 1px dashed var(--border);
@@ -214,9 +229,9 @@ body {
 .career-rail::before {
   content: "";
   position: absolute;
-  left: 0.3rem;
-  top: 0.4rem;
-  bottom: 0.4rem;
+  left: 0.95rem;
+  top: 1rem;
+  bottom: 1rem;
   width: 2px;
   background: linear-gradient(var(--primary), var(--highlight-solid));
 }
@@ -224,13 +239,49 @@ body {
   .career-rail::before {
     left: 0;
     right: 0;
-    top: 0.3rem;
+    top: 0.95rem;
     bottom: auto;
     width: auto;
     height: 2px;
     background: linear-gradient(90deg, var(--primary), var(--highlight-solid));
   }
 }
+
+/* Icon tiles: tinted square in the tone's colour (components/shared/IconTile). */
+.icon-tile {
+  --tone: var(--tone-blue);
+  color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 9%, transparent);
+  border-color: color-mix(in srgb, var(--tone) 24%, transparent);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.icon-tile[data-tone="claret"] {
+  --tone: var(--tone-claret);
+}
+.icon-tile[data-tone="teal"] {
+  --tone: var(--tone-teal);
+}
+.icon-tile[data-tone="gold"] {
+  --tone: var(--tone-gold);
+}
+.group:hover .icon-tile {
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--tone) 15%, transparent);
+}
+
+/* Portrait crop marks: four printer's corner ticks around the frame. */
+.crop-mark {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-color: var(--primary);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.crop-mark--tl { top: -0.6rem; left: -0.6rem; border-top: 1px solid; border-left: 1px solid; }
+.crop-mark--tr { top: -0.6rem; right: -1.5rem; border-top: 1px solid; border-right: 1px solid; }
+.crop-mark--bl { bottom: -1.5rem; left: -0.6rem; border-bottom: 1px solid; border-left: 1px solid; }
+.crop-mark--br { bottom: -1.5rem; right: -1.5rem; border-bottom: 1px solid; border-right: 1px solid; }
 
 .site-header {
   background: color-mix(in srgb, var(--background) 88%, transparent);

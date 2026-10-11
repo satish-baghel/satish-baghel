@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { LuActivity, LuBriefcaseBusiness, LuFolderOpen } from "react-icons/lu";
 import { Suspense } from "react";
 import {
   ActivitySection,
@@ -76,6 +77,7 @@ export default function AboutPage() {
       <section id="experience" className="mt-20 scroll-mt-24">
         <SectionHeader
           label="Experience"
+          icon={LuBriefcaseBusiness}
           title="Every role, in detail"
         />
         <div className="mt-10">
@@ -86,6 +88,7 @@ export default function AboutPage() {
       <section id="projects" className="mt-20 scroll-mt-24 border-t border-border pt-16">
         <SectionHeader
           label="More projects"
+          icon={LuFolderOpen}
           title="Other things I've built"
           intro="The three biggest are on the home page. These are the rest."
           href="/#work"
@@ -99,6 +102,7 @@ export default function AboutPage() {
       <section className="mt-20 border-t border-border pt-16">
         <SectionHeader
           label="Activity"
+          icon={LuActivity}
           title="The last six months in code"
           intro="Live from GitHub and LeetCode."
         />

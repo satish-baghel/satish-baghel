@@ -1,11 +1,13 @@
 import type { ReactNode } from "react";
+import { LuBriefcaseBusiness } from "react-icons/lu";
+import { IconTile, toneAt } from "@/components/shared/IconTile";
 import type { Experience } from "@/lib/resume";
 
 /** Full role history for the About page. Server component: data → markup. */
 export function ExperienceTimeline({ items }: { items: Experience[] }) {
   return (
     <ol className="space-y-10">
-      {items.map((job) => {
+      {items.map((job, idx) => {
         const isCurrent = job.end === "Present";
         const tenure = formatTenure(job.start, job.end);
         return (
@@ -29,12 +31,17 @@ export function ExperienceTimeline({ items }: { items: Experience[] }) {
             </div>
 
             <article>
-              <h3 className="font-display text-xl font-medium text-foreground">
-                {job.role}
-              </h3>
-              <p className="mt-0.5 text-sm font-medium text-primary">
-                {job.company}
-              </p>
+              <div className="flex items-start gap-4">
+                <IconTile icon={LuBriefcaseBusiness} tone={toneAt(idx)} size="lg" />
+                <div>
+                  <h3 className="font-display text-xl font-medium text-foreground">
+                    {job.role}
+                  </h3>
+                  <p className="mt-0.5 text-sm font-medium text-primary">
+                    {job.company}
+                  </p>
+                </div>
+              </div>
               <ul className="mt-4 space-y-2.5">
                 {job.bullets.map((bullet, i) => (
                   <li

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { Monogram } from "@/components/shared/Ornaments";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -26,13 +27,11 @@ export function Header() {
       >
         <Link
           href="/"
-          className="group flex items-baseline gap-1 rounded font-display text-xl font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="group flex items-center gap-2.5 rounded font-display text-xl font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          Satish Baghel
-          <span
-            aria-hidden="true"
-            className="h-1.5 w-1.5 rounded-full bg-highlight-solid transition-transform duration-200 group-hover:scale-150"
-          />
+          <Monogram className="size-9 text-primary transition-transform duration-300 group-hover:rotate-[20deg]" />
+          <span className="hidden sm:inline">Satish Baghel</span>
+          <span className="sr-only sm:hidden">Satish Baghel</span>
         </Link>
         <ul className="flex items-center gap-0.5">
           {NAV.map((item) => (
