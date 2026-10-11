@@ -12,7 +12,7 @@ export function FeaturedPost({ post }: { post: PostMeta }) {
   return (
     <Card asChild>
       <article className="group relative overflow-hidden p-7 transition-all duration-200 hover:border-primary/60 hover:shadow-[var(--shadow-card-hover)] sm:p-9">
-        <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-highlight/30 bg-highlight/10 px-2.5 py-0.5 font-medium text-highlight">
             <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-highlight" />
             Featured
@@ -41,7 +41,7 @@ export function FeaturedPost({ post }: { post: PostMeta }) {
           </div>
         )}
 
-        <span className="font-mono relative mt-6 inline-flex items-center gap-1 text-sm font-medium text-primary">
+        <span className="relative mt-6 inline-flex items-center gap-1 text-sm font-medium text-primary">
           Read article
           <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-0.5">
             →

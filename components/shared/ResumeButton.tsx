@@ -14,7 +14,6 @@ export function ResumeButton({ className }: { className?: string }) {
         target="_blank"
         rel="noopener noreferrer"
         download
-        className="font-mono"
       >
         <DownloadIcon />
         Download résumé

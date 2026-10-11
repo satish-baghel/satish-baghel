@@ -1,26 +1,105 @@
 /**
- * Portfolio content — single source of truth for the home and about pages.
- * Transcribed from the resume. Typed const arrays follow the `profile.ts`
- * convention so pages stay data-driven and easy to keep in sync.
+ * Portfolio content, transcribed from the resume. Single source of truth for
+ * the home page, the About page, /llms.txt and the JSON-LD profile.
+ *
+ * Rule for this file: every fact lives in exactly one place. The home page
+ * shows the overview (intro, fact sheet, featured work, skills), the About
+ * page shows the detail (full role history, other projects). If you add a
+ * number here, check it isn't already said somewhere else on the site.
  */
+import { site, yearsOfExperience } from "@/lib/site";
 
-export const SUMMARY =
-  "Full Stack Developer with 5+ years — most of it deep in the server layer, architecting and scaling RESTful APIs and microservices in Node.js and Express, backed by MongoDB, MySQL, and Redis caching. I design reliable, low-latency back-ends (sub-200ms responses, 99.9% uptime) for high-traffic platforms with 100K+ users, then pair them with clean React and Next.js front-ends to ship features end-to-end.";
+/** Hero intro. First person, short, no metrics (those live with the work). */
+export const INTRO = `I've spent ${yearsOfExperience} years building web products end to end. Most of that time is on the server: REST APIs in Node.js and Express, MongoDB and MySQL, Redis caching and Stripe payments. When a team needs it, I build the React and Next.js screens on top too.`;
 
 /**
- * Headline credibility metrics for the home hero — pulled from real numbers in
- * EXPERIENCE below. `value` is the eye-catching figure, `label` the context.
+ * "In plain words" paragraph for recruiters and hiring managers who don't
+ * read code. Describes the job by what it does for a business.
  */
-export const METRICS = [
-  { value: "5+", label: "Years shipping" },
-  { value: "80+", label: "REST APIs built" },
-  { value: "99.9%", label: "API uptime" },
-  // { value: "$250K+/mo", label: "Payments handled" },
+export const PLAIN_SUMMARY =
+  "Every web product has a part users never see: the server that stores the data, takes the payments and answers each click. That's my main job. I build it, keep it fast, and keep it running when traffic grows. I've done this for an event entry platform, an electric vehicle marketplace, a maths app for children, a stock trading community and a delivery app in Dubai.";
+
+/**
+ * The recruiter fact sheet. A `null` value is a PLACEHOLDER that Satish still
+ * needs to fill in; rows with `null` are hidden on the site until then.
+ */
+export type Fact = { label: string; value: string | null };
+
+export const FACTS: Fact[] = [
+  {
+    label: "Current role",
+    value:
+      "Software Engineer at Software and Technology Advanced Research Laboratory Pvt. Ltd., since January 2023",
+  },
+  {
+    label: "Experience",
+    value: `${yearsOfExperience}+ years, starting as an intern in July 2020`,
+  },
+  { label: "Based in", value: "Ahmedabad, Gujarat, India" },
+  { label: "Works", value: "Remotely, with a team based in Pune" },
+  { label: "Education", value: "MCA, Ganpat University (2022)" },
+  { label: "Job search", value: "Not actively looking, happy to talk" },
+  // PLACEHOLDER: e.g. "30 days". Shown on the site once filled in.
+  { label: "Notice period", value: null },
+  // PLACEHOLDER: e.g. "Yes, within India". Shown once filled in.
+  { label: "Open to relocation", value: null },
+  // PLACEHOLDER: e.g. "English, Hindi, Gujarati". Shown once filled in.
+  { label: "Languages", value: null },
+];
+
+/**
+ * "Jargon decoder": the technical words used across the site, explained for
+ * someone who doesn't write code. Definitions only, no claims or numbers.
+ */
+export const GLOSSARY = [
+  {
+    term: "REST API",
+    meaning:
+      "The set of rules an app's screens use to ask the server for data or send it changes.",
+  },
+  {
+    term: "Node.js and Express",
+    meaning: "The JavaScript tools I write server code with.",
+  },
+  {
+    term: "MongoDB and MySQL",
+    meaning:
+      "Two kinds of database. MongoDB keeps flexible documents, MySQL keeps neat tables.",
+  },
+  {
+    term: "Redis caching",
+    meaning:
+      "Keeping popular answers in fast memory, so the database isn't asked the same question a thousand times.",
+  },
+  {
+    term: "Microservices",
+    meaning:
+      "Splitting one big system into small services that can be changed and scaled on their own.",
+  },
+  {
+    term: "React and Next.js",
+    meaning:
+      "Tools for building the screens you see in the browser. Next.js also helps pages rank on Google.",
+  },
+  {
+    term: "PCI-DSS",
+    meaning:
+      "The security standard any system handling card payments has to meet.",
+  },
+  {
+    term: "CI/CD",
+    meaning:
+      "An automatic pipeline that tests new code and releases it, so updates ship without downtime.",
+  },
+  {
+    term: "99.9% uptime",
+    meaning: "The service is down for less than about 43 minutes a month.",
+  },
 ] as const;
 
-/** Grouped skills, mirrored from the resume's SKILLS section. */
+/** Grouped skills, from the resume's SKILLS section. Shown once, on the home page. */
 export const SKILLS = {
-  "Backend & Database": [
+  "Server and data": [
     "Node.js",
     "Express.js",
     "RESTful APIs",
@@ -33,10 +112,10 @@ export const SKILLS = {
     "Socket.io",
     "JWT Auth",
   ],
-  Frontend: [
+  "Front end": [
     "React.js",
-    "JavaScript",
     "Next.js",
+    "JavaScript",
     "Redux (Core & Toolkit)",
     "React Hooks",
     "Formik",
@@ -45,14 +124,14 @@ export const SKILLS = {
     "HTML5",
     "CSS3",
   ],
-  "Tools & Workflow": [
+  "Delivery and teamwork": [
     "Git",
     "GitHub",
     "GitLab",
-    "JIRA",
-    "Trello",
     "CI/CD",
     "GCP",
+    "JIRA",
+    "Trello",
     "Agile",
   ],
 } as const;
@@ -63,6 +142,9 @@ export type Experience = {
   start: string;
   end: string;
   location: string;
+  /** One plain sentence for the career path on the home page. */
+  summary: string;
+  /** Detail for the About page. Don't repeat the summary here. */
   bullets: string[];
 };
 
@@ -73,13 +155,14 @@ export const EXPERIENCE: Experience[] = [
     start: "Jan 2023",
     end: "Present",
     location: "Pune, Maharashtra, IN",
+    summary:
+      "Running the APIs and payments behind a platform with 100K+ active users, and leading its front-end team.",
     bullets: [
-      "Architected and maintained RESTful APIs and microservices in Node.js/Express at <200ms response and 99.9% uptime, serving a platform with 100K+ active users and lifting cross-team efficiency ~30%.",
-      "Introduced Redis caching and MongoDB/MySQL query tuning on hot paths, cutting average API latency ~35% and database load ~25% under peak traffic.",
-      "Implemented secure Stripe payment workflows handling $250K+/month with full PCI-DSS coverage, cutting payment support tickets ~40%.",
-      "Hardened API security with JWT auth, rate limiting, and input validation, and instrumented services with logging/analytics across 500K+ monthly sessions.",
-      "Led the front-end team building responsive React.js + Redux interfaces, lifting user satisfaction ~20% and improving TTI from 4.5s to 3.1s (~30%).",
-      "Refactored legacy code and mentored juniors — cutting duplication ~35%, reducing delivery time ~25%, with a 95% sprint completion rate.",
+      "Build and maintain the Node.js and Express APIs and microservices, keeping responses under 200ms and uptime at 99.9%.",
+      "Added Redis caching and tuned MongoDB and MySQL queries on the busiest endpoints. Average response time dropped about 35% and database load about 25% at peak.",
+      "Built the Stripe payment flows, now handling more than $250K a month with full PCI-DSS coverage. Payment support tickets fell about 40%.",
+      "Wired up Google Analytics, Mouseflow and custom events across 500K+ monthly sessions, which helped lift conversion about 15%.",
+      "Lead the React and Redux front-end team. User satisfaction scores went up about 20% across desktop, tablet and mobile.",
     ],
   },
   {
@@ -88,13 +171,14 @@ export const EXPERIENCE: Experience[] = [
     start: "Aug 2022",
     end: "Jan 2023",
     location: "Ahmedabad, Gujarat, IN",
+    summary:
+      "Led a small MERN team, built secure APIs and set up zero-downtime releases.",
     bullets: [
-      "Built 15+ secure RESTful APIs in Node.js/Express with JWT auth and full CRUD, maintaining 99.9% uptime and sub-200ms responses for 50K+ users.",
-      "Modeled and optimized MongoDB schemas and indexes powering core services, keeping queries fast as data volume grew.",
-      "Managed CI/CD pipelines enabling automated, zero-downtime deploys across dev/staging/prod, cutting deployment time ~70%.",
-      "Directed internal admin tooling and content-moderation APIs — cutting manual effort ~50% and improving moderation speed ~35%.",
-      "Led the MERN team to deliver 10+ full-stack features, translating wireframes into production-ready modules and speeding delivery ~30%.",
-      "Championed quality through 100+ code reviews and Agile ceremonies.",
+      "Built 15+ REST APIs with JWT login and full CRUD for 50K+ users.",
+      "Designed MongoDB schemas and indexes so core queries stayed quick as the data grew.",
+      "Set up CI/CD across dev, staging and production. Deploys became automatic, had no downtime, and took about 70% less time.",
+      "Built internal admin and content moderation tools that cut manual work in half and made moderation about 35% faster.",
+      "Led the team through 10+ full-stack features, from wireframe to production, about 30% faster than before.",
     ],
   },
   {
@@ -103,80 +187,132 @@ export const EXPERIENCE: Experience[] = [
     start: "Jul 2020",
     end: "Aug 2022",
     location: "Ahmedabad, Gujarat, IN",
+    summary:
+      "Joined as an intern and grew into a full-stack developer over two years of client projects.",
     bullets: [
-      "Built secure Node.js/Express REST APIs powering end-to-end apps for 100K+ monthly users at 99.9% uptime and sub-200ms responses.",
-      "Added Redis caching and optimized MongoDB queries, cutting API response ~40% and server load ~25%.",
-      "Integrated third-party services (Stripe, SendGrid, Google Analytics) via resilient server-side workflows, improving efficiency ~15% and reducing manual work ~25%.",
-      "Grew from intern to Full Stack Developer across the MERN stack while reducing technical debt ~30%.",
-      // "Delivered 50+ React.js projects at 99.8% cross-browser compatibility, raising mobile engagement ~20%.",
+      "Built Node.js and Express APIs for client apps with 100K+ monthly users.",
+      "Added Redis caching and rewrote slow MongoDB queries. API responses got about 40% faster and server load fell about 25%.",
+      "Integrated Stripe, SendGrid and Google Analytics, removing about a quarter of the manual work around them.",
+      "Worked on 50+ React projects with 99.8% cross-browser compatibility.",
+      "Cleaned up as I went: technical debt on my projects came down about 30%.",
     ],
   },
 ];
 
 export type Project = {
   name: string;
-  description: string;
-  tech: string[];
+  /** What kind of product it is, in a few words. */
+  kind: string;
   url?: string;
-  /** One scannable, quantified outcome — surfaced as a highlight "impact" badge. */
-  impact?: string;
+  /** For a non-technical reader: what the product is and who uses it. */
+  about: string;
+  /** What I built. */
+  built: string;
+  /** What changed because of it. Featured projects only. */
+  outcome?: string;
+  tech: string[];
 };
 
-export const PROJECTS: Project[] = [
+/** Shown in depth on the home page. */
+export const FEATURED_PROJECTS: Project[] = [
   {
     name: "Time2Enter",
-    description:
-      "Scalable event platform for 100K+ users at 99.9% uptime — Node.js services with Rabbit Bank-integrated data entry (−60% manual input), PCI-compliant Stripe payments (+45% membership revenue), and event modules (Control Sheet, Breed Assignment, Judging) behind a React UI.",
-    tech: ["Node.js", "MongoDB", "Stripe", "React"],
+    kind: "Event entry and judging",
     url: "https://time2enter.net",
-    impact: "100K+ users · +45% revenue",
+    about:
+      "An online platform where people enter events, pay their fees and get scored by judges. More than 100,000 people use it.",
+    built:
+      "The Node.js services behind it, bank-linked data entry so organisers stopped retyping forms, PCI-compliant Stripe payments, and the Control Sheet, Breed Assignment and Judging modules.",
+    outcome:
+      "60% less manual data entry and 45% more membership revenue.",
+    tech: ["Node.js", "MongoDB", "Stripe", "React"],
   },
   {
     name: "EV India",
-    description:
-      "35+ Node/Express APIs powering a fast, SEO-friendly Next.js platform for 10,000+ monthly visitors (−40% load time, +25% organic traffic), with a side-by-side EV comparison engine, layered filters, and a React Master Admin Panel (−50% admin task time).",
-    tech: ["Node.js", "Express", "MongoDB", "Next.js", "React"],
+    kind: "Electric vehicle marketplace",
     url: "https://evindia.online",
-    impact: "35+ APIs · +25% traffic",
+    about:
+      "A site for comparing electric bikes and scooters sold in India. Over 10,000 people visit each month.",
+    built:
+      "35+ APIs in Node.js and Express, a Next.js front end with a side-by-side comparison tool and filters for brand, range and battery, and a React admin panel for the content team.",
+    outcome:
+      "Pages load 40% faster, organic traffic is up 25%, and admin work takes half the time.",
+    tech: ["Node.js", "Express", "MongoDB", "Next.js"],
   },
   {
     name: "Elumat",
-    description:
-      "Interactive K–8 math-learning platform with gamified experiences. Node.js services drive a dynamic adaptive question engine across 5+ topics (+25% quiz accuracy), PDFMake worksheets, and batch export of 1,000+ reports saving educators 6+ hours weekly.",
-    tech: ["Node.js", "MongoDB", "React"],
+    kind: "Maths learning for kids",
     url: "https://elumat.com",
-    impact: "+25% accuracy · 6+ hrs saved/wk",
+    about:
+      "A maths platform for children from kindergarten to grade 8, with games and printable worksheets.",
+    built:
+      "A question engine that adjusts difficulty across 5+ topics, PDF worksheets where solving the problems reveals a hidden message, and a bulk export for 1,000+ reports.",
+    outcome:
+      "Quiz accuracy went up 25%, and teachers get back 6+ hours of admin every week.",
+    tech: ["Node.js", "MongoDB", "React", "PDFMake"],
   },
+];
+
+/** Listed on the About page. Shorter, no outcome line. */
+export const MORE_PROJECTS: Project[] = [
   {
-    name: "Lystigardar (P.M.S)",
-    description:
-      "Property management system on a modular Node.js back-end with reusable React.js/Reactstrap/CoreUI components (+40% dev speed), full English/Icelandic i18n, and 100% cross-browser compatibility across 6+ browsers.",
-    tech: ["Node.js", "React", "Bootstrap"],
-    url: "https://vinna.lystigardar.is",
-    impact: "+40% dev speed",
+    name: "Trading App",
+    kind: "Stock trading community",
+    about:
+      "A real-time platform where investors and advisers share stock tips. 5,000+ active users.",
+    built:
+      "Live chat with Socket.io for 1,000+ people at once under 200ms, Zerodha and TradingView integration, daily picks from 10,000+ tweets of sentiment data, and Razorpay subscriptions.",
+    tech: ["Node.js", "Socket.io", "MongoDB", "React"],
   },
   {
     name: "Water Taker",
-    description:
-      "50+ REST APIs in Node.js/Express/Sequelize (MySQL) at sub-300ms and 99.9% uptime, with geolocation-based dynamic pricing (+45% query speed), live 10s order tracking (98% delivery success), and English/Arabic localization (+30% retention in Dubai).",
-    tech: ["Node.js", "Express", "MySQL"],
-    impact: "50+ APIs · +45% query speed",
+    kind: "Ordering and delivery",
+    about: "An ordering and delivery app used in Dubai.",
+    built:
+      "50+ REST APIs on MySQL, location-based pricing, live order tracking that refreshes every 10 seconds, and English and Arabic support that lifted retention 30%.",
+    tech: ["Node.js", "Express", "MySQL", "Sequelize"],
   },
   {
-    name: "Trading App",
-    description:
-      "Real-time trading back-end (Investor/Consultant/Admin roles) for 5,000+ users with a Socket.io engine (1000+ concurrent, <200ms), Zerodha + TradingView integration, Twitter sentiment analysis (10K+ tweets/day), and Razorpay subscription billing.",
-    tech: ["Node.js", "Socket.io", "MongoDB", "React"],
-    impact: "1000+ concurrent · <200ms",
+    name: "Lystigardar",
+    kind: "Property management",
+    url: "https://vinna.lystigardar.is",
+    about: "A property management system for an Icelandic client.",
+    built:
+      "A library of reusable React components that sped up development 40%, full English and Icelandic switching, and testing across 6+ browsers.",
+    tech: ["React", "Reactstrap", "CoreUI", "i18n"],
   },
   {
     name: "Inter Academy",
-    description:
-      "Full-stack course platform to sell and manage 30+ courses — 15+ Node/Express APIs backed by Sequelize with complete admin control (−40% content management effort), digital course-book sharing, and a dynamic React UI.",
+    kind: "Online courses",
+    about: "A platform to sell and run 30+ courses.",
+    built:
+      "Node.js and Express APIs on MySQL with full admin control over courses and schedules, cutting content management effort 40%.",
     tech: ["Node.js", "Express", "MySQL", "React"],
-    impact: "−40% content effort",
   },
 ];
+
+/**
+ * "Working with me": how I approach the job. Each point is backed by
+ * something from the resume that isn't repeated in EXPERIENCE above.
+ */
+export const PRINCIPLES = [
+  {
+    title: "Measure first, then fix",
+    body: "I profile before I tune. On one React app that meant code splitting and lazy loading, which took Time to Interactive from 4.5s to 3.1s and the Lighthouse score from 60 to 80.",
+  },
+  {
+    title: "Do the boring parts on day one",
+    body: "Login, rate limits, input checks and logging go into the first version. Adding them after launch is slower and riskier.",
+  },
+  {
+    title: "Review code like it matters",
+    body: "I've done 100+ code reviews. They catch bugs, but they're also how a team ends up understanding one codebase instead of five.",
+  },
+  {
+    title: "Leave it better than I found it",
+    body: "Refactoring old code and mentoring juniors at my current job cut duplicated code 35% and feature delivery time 25%, with 95% of sprints finished on time.",
+  },
+] as const;
 
 export type Education = {
   degree: string;
@@ -187,7 +323,7 @@ export type Education = {
 
 export const EDUCATION: Education[] = [
   {
-    degree: "Master of Computer Application (MCA)",
+    degree: "Master of Computer Applications (MCA)",
     institution: "Ganpat University",
     location: "Mehsana, Gujarat, IN",
     year: "2022",
@@ -200,289 +336,5 @@ export const EDUCATION: Education[] = [
   },
 ];
 
-/**
- * At-a-glance recruiter facts for the quick-facts strip on home + about.
- * Keep these current — they're the first thing a hiring manager scans.
- */
-export const QUICK_FACTS = [
-  { label: "Experience", value: "5+ years" },
-  { label: "Role", value: "Full Stack Developer" },
-  { label: "Core stack", value: "Node · Express · Redis · React" },
-  { label: "Location", value: "Ahmedabad, India" },
-  { label: "Status", value: "Not actively looking" },
-  { label: "Open to", value: "Networking & advice" },
-] as const;
-
-export type Testimonial = {
-  quote: string;
-  name: string;
-  title: string;
-};
-
-/**
- * Recommendations / references. Empty until there are REAL quotes — fake
- * "(add company)" placeholders on a public portfolio damage credibility.
- * Paste actual LinkedIn recommendations here ({ quote, name, title }) and
- * the Testimonials component will render them automatically.
- */
-export const TESTIMONIALS: Testimonial[] = [];
-
-/**
- * Services / "what I do" — the concrete offerings a recruiter or client scans
- * to decide if I fit their need. `icon` keys map to react-icons/fa6 glyphs in
- * components/sections/Services.tsx.
- */
-export type Service = {
-  icon: string;
-  title: string;
-  description: string;
-};
-
-export const SERVICES: Service[] = [
-  {
-    icon: "server",
-    title: "Backend APIs & Microservices",
-    description:
-      "Design and build RESTful APIs and microservices in Node.js/Express — clean contracts, sensible boundaries, and sub-200ms responses at 99.9% uptime.",
-  },
-  {
-    icon: "bolt",
-    title: "Performance & Scaling",
-    description:
-      "Redis caching, MongoDB/MySQL query tuning, and load hardening for high-traffic platforms — cutting latency and database load under peak demand.",
-  },
-  {
-    icon: "code",
-    title: "Full-Stack Feature Delivery",
-    description:
-      "Ship features end to end — pairing reliable back-ends with clean, responsive React and Next.js front-ends, from wireframe to production.",
-  },
-  {
-    icon: "credit-card",
-    title: "Payments & Integrations",
-    description:
-      "Secure Stripe payment workflows (PCI-DSS) and resilient third-party integrations — SendGrid, analytics, and external APIs that don't fall over.",
-  },
-  {
-    icon: "shield",
-    title: "API Security & Reliability",
-    description:
-      "JWT auth, rate limiting, input validation, and logging/analytics instrumentation so services stay secure and observable in production.",
-  },
-  {
-    icon: "users",
-    title: "Code Review & Mentorship",
-    description:
-      "Raise team standards through code reviews, refactoring, and mentoring juniors — cutting duplication and delivery time while keeping quality high.",
-  },
-];
-
-/**
- * "How I work" — the engineering process, step by step. Answers the hiring
- * manager's real question ("what is he like to work with?") that raw skill
- * lists can't. Each step is grounded in real practices from EXPERIENCE.
- */
-export type ProcessStep = {
-  step: string;
-  title: string;
-  description: string;
-};
-
-export const HOW_I_WORK: ProcessStep[] = [
-  {
-    step: "01",
-    title: "Understand the problem",
-    description:
-      "Start from the users and the numbers — traffic, latency budgets, failure modes — before writing any code.",
-  },
-  {
-    step: "02",
-    title: "Design the contract first",
-    description:
-      "API-first: clean REST contracts, sensible service boundaries, and data models that stay fast as they grow.",
-  },
-  {
-    step: "03",
-    title: "Build for production",
-    description:
-      "Auth, rate limiting, input validation, and logging from day one — secure and observable by default, not bolted on later.",
-  },
-  {
-    step: "04",
-    title: "Measure, then optimize",
-    description:
-      "Profile hot paths before tuning. Redis caching and query optimization go where the data says — that's where the ~35% latency cuts come from.",
-  },
-  {
-    step: "05",
-    title: "Ship & raise the bar",
-    description:
-      "Zero-downtime CI/CD deploys, code reviews, and mentoring — leave the codebase and the team faster than I found them.",
-  },
-];
-
-/**
- * Headline impact numbers — a richer "by the numbers" dashboard than the hero
- * metrics. Every figure is pulled from real outcomes in EXPERIENCE / PROJECTS.
- */
-export const IMPACT_STATS = [
-  { value: "100K+", label: "Active users served", detail: "on platforms I've built" },
-  { value: "80+", label: "REST APIs shipped", detail: "Node.js / Express" },
-  { value: "99.9%", label: "Uptime", detail: "on high-traffic services" },
-  { value: "<200ms", label: "API response time", detail: "on hot paths" },
-  { value: "$250K+", label: "Payments / month", detail: "PCI-DSS, via Stripe" },
-  { value: "~35%", label: "Latency reduced", detail: "Redis + query tuning" },
-] as const;
-
-/**
- * Deep-dive case studies for flagship work. Problem → approach → result reads
- * as a story a hiring manager can follow. Sourced from the PROJECTS above.
- */
-export type CaseStudy = {
-  name: string;
-  tagline: string;
-  problem: string;
-  approach: string;
-  result: string;
-  tech: string[];
-  url?: string;
-};
-
-export const CASE_STUDIES: CaseStudy[] = [
-  {
-    name: "Time2Enter",
-    tagline: "Scaling an event platform to 100K+ users",
-    problem:
-      "A growing event platform needed to handle 100K+ users with reliable payments and heavy manual data entry slowing operators down.",
-    approach:
-      "Built Node.js services with Bank-integrated data entry, PCI-compliant Stripe payments, and modular event tooling (Control Sheet, Breed Assignment, Judging) behind a React UI.",
-    result:
-      "99.9% uptime at scale, 60% less manual input, and a 45% lift in membership revenue.",
-    tech: ["Node.js", "MongoDB", "Stripe", "React"],
-    url: "https://time2enter.net",
-  },
-  {
-    name: "EV India",
-    tagline: "A fast, SEO-friendly EV discovery platform",
-    problem:
-      "An EV marketplace needed fast page loads, strong SEO, and a comparison engine for 10,000+ monthly visitors — plus a heavy admin workload.",
-    approach:
-      "Built 35+ Node/Express APIs powering a Next.js front-end with a side-by-side comparison engine, layered filters, and a React Master Admin Panel.",
-    result:
-      "40% faster load times, 25% more organic traffic, and 50% less admin task time.",
-    tech: ["Node.js", "Express", "Next.js", "React"],
-    url: "https://evindia.online",
-  },
-];
-
-/**
- * Career achievements / highlights — quantified wins pulled straight from the
- * resume. Distinct from metrics: these are narrative accomplishments.
- */
-export const ACHIEVEMENTS = [
-  "Scaled a platform to 100K+ active users at 99.9% uptime, lifting cross-team efficiency ~30%.",
-  "Cut average API latency ~35% and database load ~25% with Redis caching and query tuning.",
-  "Shipped secure Stripe payment workflows handling $250K+/month with full PCI-DSS coverage.",
-  "Improved Time-to-Interactive from 4.5s to 3.1s (~30%) on a React front-end.",
-  "Grew from intern to Full Stack Developer while reducing technical debt ~30%.",
-  "Maintained a 95% sprint completion rate and mentored junior engineers.",
-] as const;
-
-/**
- * Open-source & side work. Empty until there are REAL repositories — the
- * previous entries pointed at https://github.com/ (nowhere), which reads as
- * fake to anyone who clicks. Add actual repos ({ name, description, tech,
- * url }) and re-enable the OpenSource section on the home page.
- */
-export type Repo = {
-  name: string;
-  description: string;
-  tech: string[];
-  url: string;
-};
-
-export const OPEN_SOURCE: Repo[] = [];
-
-/**
- * Professional certifications. PLACEHOLDER — replace with real credentials
- * (issuer, year, and a verify URL). Component hides itself when the array is
- * empty, so it's safe to clear until you have something to show.
- */
-export type Certification = {
-  name: string;
-  issuer: string;
-  year: string;
-  url?: string;
-};
-
-export const CERTIFICATIONS: Certification[] = [];
-
-/**
- * Community, mentorship & speaking. Real mentorship items from the resume;
- * add talks/meetups as you do them.
- */
-export const COMMUNITY = [
-  "Mentored junior developers, raising the whole team's code-quality bar.",
-  "Ran 100+ code reviews and led Agile ceremonies to keep delivery on track.",
-  "Led front-end and MERN teams, translating wireframes into production modules.",
-] as const;
-
-/**
- * "Now" — what I'm currently focused on. Keep the `updated` date fresh; a stale
- * now-page reads worse than none. Update whenever your focus shifts.
- */
-export const NOW = {
-  updated: "July 2026",
-  items: [
-    "Deep in Node.js microservices and Redis performance work day to day.",
-    "Exploring what's new in Next.js 16 and React 19 on this very site.",
-    "Writing about backend architecture and API design on the blog.",
-    "Sharpening system design and DSA on LeetCode.",
-  ],
-} as const;
-
-/**
- * Frequently asked questions — doubles as recruiter answers and SEO/AEO content.
- * Rendered as a native <details> accordion (no client JS required).
- */
-export const FAQS = [
-  {
-    q: "Are you available for work?",
-    a: "I'm not actively job-hunting right now, but I'm always open to interesting problems, contract conversations, and networking. Email is the fastest way to reach me.",
-  },
-  {
-    q: "What's your core stack?",
-    a: "Node.js and Express on the back-end with MongoDB, MySQL, and Redis, paired with React and Next.js on the front-end. Most of my depth is in the server layer — APIs, microservices, and performance.",
-  },
-  {
-    q: "Do you work full-stack or backend only?",
-    a: "Both. I spend most of my time architecting and scaling back-ends, but I ship features end to end and regularly build the React/Next.js front-ends that sit on top of them.",
-  },
-  {
-    q: "What kind of projects do you take on?",
-    a: "High-traffic platforms that need reliable, low-latency APIs — payments, real-time features, data-heavy dashboards, and SEO-friendly Next.js front-ends.",
-  },
-  {
-    q: "Where are you based?",
-    a: "Ahmedabad, India — I currently work remotely with a Pune-based team. I've worked with distributed teams across time zones and I'm comfortable collaborating async.",
-  },
-] as const;
-
-/**
- * Icon keys for the home-page tech strip. Each string MUST match a case in
- * `components/shared/TechIcon.tsx` so a brand SVG renders.
- */
-export const TECH = [
-  "Node.js",
-  "Express",
-  "MongoDB",
-  "MySQL",
-  "Redis",
-  "Socket.io",
-  "JavaScript",
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Redux",
-  "Git",
-] as const;
+/** Closing contact line on the home page. */
+export const CONTACT_NOTE = `Email is the quickest way to reach me: ${site.email}. I read everything and reply to most.`;

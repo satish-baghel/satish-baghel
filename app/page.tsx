@@ -1,245 +1,146 @@
-import Link from "next/link";
 import Image from "next/image";
-import { Suspense } from "react";
 import { getAllPosts } from "@/lib/posts";
-import {
-  ActivitySection,
-  ActivitySectionSkeleton,
-} from "@/components/sections/ActivitySection";
 import { PostCard } from "@/components/blog/PostCard";
 import { FeaturedPost } from "@/components/blog/FeaturedPost";
 import { SocialLinks } from "@/components/shared/SocialLinks";
-import { Terminal } from "@/components/shared/Terminal";
-import { TechGrid } from "@/components/sections/TechGrid";
-import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
-import { ProjectGrid } from "@/components/sections/ProjectGrid";
-import { ResumeChat } from "@/components/sections/ResumeChat";
-import { QuickFacts } from "@/components/sections/QuickFacts";
 import { ResumeButton } from "@/components/shared/ResumeButton";
-import { Services } from "@/components/sections/Services";
-import { SkillsBreakdown } from "@/components/sections/SkillsBreakdown";
-import { ImpactStats } from "@/components/sections/ImpactStats";
-import { CaseStudies } from "@/components/sections/CaseStudies";
-import { Achievements } from "@/components/sections/Achievements";
-import { EducationCerts } from "@/components/sections/EducationCerts";
-import { NowSection } from "@/components/sections/NowSection";
-import { HowIWork } from "@/components/sections/HowIWork";
-import { Faq } from "@/components/sections/Faq";
-import { Newsletter } from "@/components/sections/Newsletter";
 import { SectionHeader } from "@/components/shared/SectionHeader";
+import { HiringBrief } from "@/components/sections/HiringBrief";
+import { JargonDecoder } from "@/components/sections/JargonDecoder";
+import { FeaturedWork } from "@/components/sections/FeaturedWork";
+import { CareerPath } from "@/components/sections/CareerPath";
+import { Skills } from "@/components/sections/Skills";
+import { Principles } from "@/components/sections/Principles";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { site } from "@/lib/site";
-import { SUMMARY, METRICS, TECH, EXPERIENCE, PROJECTS } from "@/lib/resume";
+import { CONTACT_NOTE, INTRO } from "@/lib/resume";
 
 /*
- * Section order follows the portfolio-grid conversion pattern: pitch → proof.
- * Hero, quick facts, and services make the pitch; work, experience, and
- * impact prove it; everything after is depth for readers who want more.
- * Placeholder-driven sections (Testimonials, OpenSource) stay off the page
- * until lib/resume.ts holds real data.
+ * Home is the overview; /about holds the detail. Each section says something
+ * the others don't (see the rule at the top of lib/resume.ts):
+ * intro → hiring brief → jargon decoder → work → career → skills → habits →
+ * writing → contact.
  */
 export default function Home() {
   const posts = getAllPosts();
   const [featured, ...rest] = posts;
-  const recent = rest.slice(0, 3);
+  const recent = rest.slice(0, 2);
 
   return (
     <div className="mx-auto w-full max-w-5xl px-6">
-      {/* Hero — two columns: intro (left) + avatar & terminal (right) */}
-      <section className="relative isolate py-16 sm:py-24">
-        <div
-          aria-hidden="true"
-          className="hero-grid pointer-events-none absolute inset-x-0 -top-16 -z-10 h-[34rem]"
-        />
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          {/* Left: who I am */}
-          <div>
-            <span className="status-badge reveal reveal-1 font-mono">
-              <span className="status-dot status-dot--idle" aria-hidden="true" />
-              Not actively looking
-            </span>
-            <p className="reveal reveal-2 mt-5 font-mono text-sm font-medium text-primary">
-              {site.tagline}
-            </p>
-            <h1 className="font-display reveal reveal-2 mt-4 text-4xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-5xl">
-              Hi, I&apos;m Satish — I build{" "}
-              <span className="text-primary">fast, scalable</span> back-ends &amp;
-              APIs.
-            </h1>
-            <p className="reveal reveal-3 mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              {SUMMARY}
-            </p>
-
-            {/* Credibility metrics — highlight numbers draw the recruiter's eye. */}
-            <dl className="reveal reveal-3 mt-8 grid grid-cols-3 gap-3">
-              {METRICS.map((m) => (
-                <Card
-                  key={m.label}
-                  className="px-3 py-2.5 shadow-none transition-colors hover:border-highlight/50"
-                >
-                  <dt className="font-display text-lg font-semibold tracking-tight text-highlight sm:text-xl">
-                    {m.value}
-                  </dt>
-                  <dd className="mt-0.5 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
-                    {m.label}
-                  </dd>
-                </Card>
-              ))}
-            </dl>
-
-            <div className="reveal reveal-4 mt-8 flex flex-wrap items-center gap-3">
-              <ResumeButton />
-              <Button asChild variant="outline" className="group gap-1.5 font-mono">
-                <Link href="/about">
-                  View my work
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-0.5"
-                  >
-                    →
-                  </span>
-                </Link>
-              </Button>
-            </div>
-            <SocialLinks className="reveal reveal-4 mt-4" />
-          </div>
-
-          {/* Right: circular caricature avatar + terminal */}
-          <div className="reveal reveal-3 flex flex-col items-center gap-6">
-            <div className="avatar-glow relative">
-              <div
-                className="relative aspect-square w-60 overflow-hidden rounded-full border-2 border-primary/40 bg-card shadow-[var(--shadow-card-hover)] ring-4 ring-background sm:w-72"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(100% 100% at 50% 15%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 65%)",
-                }}
-              >
-                <Image
-                  src="/me.png"
-                  alt="Satish Baghel"
-                  fill
-                  sizes="(max-width: 640px) 15rem, 18rem"
-                  preload
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="w-full">
-              <Terminal command="npm i satish-baghel" />
-            </div>
+      {/* Intro */}
+      <section className="grid items-center gap-14 py-16 sm:py-24 md:grid-cols-[1.25fr_0.75fr]">
+        <div>
+          <p className="section-label">{site.tagline}</p>
+          <h1 className="font-display mt-5 text-5xl font-medium leading-[1.05] text-foreground sm:text-6xl">
+            Satish Baghel
+          </h1>
+          <p className="font-display mt-4 text-2xl font-light italic leading-snug text-primary sm:text-3xl">
+            I build the parts of a web product that have to keep working.
+          </p>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            {INTRO}
+          </p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <ResumeButton />
+            <SocialLinks />
           </div>
         </div>
+
+        <figure className="mx-auto w-full max-w-[17rem]">
+          <div className="portrait">
+            <div className="portrait-frame aspect-[4/5]">
+              <Image
+                src="/me.png"
+                alt="Portrait of Satish Baghel"
+                fill
+                sizes="17rem"
+                preload
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <figcaption className="mt-6 text-right text-xs text-muted-foreground">
+            Ahmedabad, India
+          </figcaption>
+        </figure>
       </section>
 
-      {/* Quick facts — recruiter TL;DR, scannable at a glance */}
-      <section className="border-t border-border py-10 sm:py-12">
-        <p className="font-mono text-xs tracking-wide text-muted-foreground">
-          <span className="text-primary">$</span> at a glance
-        </p>
-        <div className="reveal mt-5">
-          <QuickFacts />
-        </div>
-      </section>
-
-      {/* Services — what I can do for you */}
-      <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader eyebrow="Services" title="What I do" />
-        <div className="reveal mt-8">
-          <Services />
-        </div>
-      </section>
-
-      {/* Selected work — case studies (deep dives) + project grid, right after
-          the pitch so proof lands before the reader scrolls away */}
-      <section className="border-t border-border py-14 sm:py-16">
+      <section id="hiring" className="border-t border-border py-16">
         <SectionHeader
-          eyebrow="Work"
-          title="Selected work"
-          href="/about"
-          linkText="All projects"
+          label="For hiring teams"
+          title="The 30-second version"
         />
-        <div className="reveal mt-6">
-          <CaseStudies />
-        </div>
-        <div className="reveal mt-6">
-          <ProjectGrid projects={PROJECTS.slice(0, 4)} />
+        <div className="mt-10">
+          <HiringBrief />
         </div>
       </section>
 
-      {/* Experience highlights */}
-      <section className="border-t border-border py-14 sm:py-16">
+      <section className="border-t border-border py-16">
         <SectionHeader
-          eyebrow="Experience"
-          title="Where I've worked"
-          href="/about"
-          linkText="Full history"
+          label="Jargon decoder"
+          title="The tech words on this site, in plain English"
+          intro="If you don't write code, this is the cheat sheet for everything below."
         />
-        <div className="reveal mt-8">
-          <ExperienceTimeline items={EXPERIENCE.slice(0, 2)} />
+        <div className="mt-10">
+          <JargonDecoder />
         </div>
       </section>
 
-      {/* Impact — quantified outcomes + narrative career wins in one place */}
-      <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader eyebrow="Impact" title="By the numbers" />
-        <div className="reveal mt-6">
-          <ImpactStats />
-        </div>
-        <div className="reveal mt-4">
-          <Achievements />
-        </div>
-      </section>
-
-      {/* Stack & skills — the tech strip and the grouped inventory together */}
-      <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader eyebrow="Stack" title="Tech I work with" />
-        <div className="reveal mt-6">
-          <TechGrid items={TECH} />
-        </div>
-        <div className="reveal mt-8">
-          <SkillsBreakdown />
+      <section id="work" className="border-t border-border py-16">
+        <SectionHeader
+          label="Selected work"
+          title="Three products I helped build"
+          href="/about#projects"
+          linkText="Four more on the About page"
+        />
+        <div className="mt-10">
+          <FeaturedWork />
         </div>
       </section>
 
-      {/* How I work — process from problem to production */}
-      <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader eyebrow="Process" title="How I work" />
-        <div className="reveal mt-6">
-          <HowIWork />
+      <section className="border-t border-border py-16">
+        <SectionHeader
+          label="Career path"
+          title="From intern to software engineer"
+          href="/about#experience"
+          linkText="Full role history"
+        />
+        <div className="mt-12">
+          <CareerPath />
         </div>
       </section>
 
-      {/* Education & certifications */}
-      <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader eyebrow="Credentials" title="Education & certifications" />
-        <div className="reveal mt-8">
-          <EducationCerts />
+      <section className="border-t border-border py-16">
+        <SectionHeader label="Skills" title="What I work with" />
+        <div className="mt-10">
+          <Skills />
         </div>
       </section>
 
-      {/* Now — what I'm currently focused on */}
-      <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader eyebrow="Now" title="What I'm focused on" />
-        <div className="reveal mt-6">
-          <NowSection />
+      <section className="border-t border-border py-16">
+        <SectionHeader
+          label="Working with me"
+          title="Four habits I bring to a team"
+        />
+        <div className="mt-10">
+          <Principles />
         </div>
       </section>
 
-      {/* Blog preview */}
       {featured && (
-        <section className="border-t border-border py-14 sm:py-16">
+        <section className="border-t border-border py-16">
           <SectionHeader
-            eyebrow="Writing"
-            title="From the blog"
+            label="Writing"
+            title="Notes from the job"
             href="/blog"
-            linkText="View all"
+            linkText="All posts"
           />
-          <div className="reveal mt-6">
+          <div className="mt-10">
             <FeaturedPost post={featured} />
           </div>
           {recent.length > 0 && (
-            <div className="reveal mt-4 grid gap-4 sm:grid-cols-3">
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
               {recent.map((post) => (
                 <PostCard key={post.slug} post={post} />
               ))}
@@ -248,59 +149,31 @@ export default function Home() {
         </section>
       )}
 
-      {/* Coding activity — GitHub + LeetCode */}
-      <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader
-          eyebrow="Activity"
-          title="Last 6 months in code"
-        />
-        <div className="reveal mt-6">
-          <Suspense fallback={<ActivitySectionSkeleton />}>
-            <ActivitySection />
-          </Suspense>
-        </div>
-      </section>
-
-      {/* Questions — static FAQ answers plus the AI resume chat for the rest */}
-      <section className="border-t border-border py-14 sm:py-16">
-        <SectionHeader eyebrow="FAQ" title="Common questions" />
-        <div className="reveal mt-6">
-          <Faq />
-        </div>
-        <h3 className="font-display mt-10 text-lg font-semibold tracking-tight">
-          Something else? Ask my resume
-        </h3>
-        <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-          The assistant below answers straight from my resume — experience,
-          skills, projects, anything.
-        </p>
-        <div className="reveal mt-4">
-          <ResumeChat />
-        </div>
-      </section>
-
-      {/* Get in touch — contact panel + newsletter in one closing beat */}
-      <section className="border-t border-border py-14 sm:py-16">
-        <div className="cta-panel reveal px-6 py-10 sm:px-10 sm:py-12">
-          <p className="font-mono text-xs tracking-wide text-muted-foreground">
-            <span className="text-primary">$</span> ./contact.sh
-          </p>
-          <h2 className="font-display mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
-            Let&apos;s build something.
+      <section id="contact" className="border-t border-border py-16">
+        <div className="rounded-lg bg-primary-solid px-6 py-12 text-white sm:px-12">
+          <h2 className="font-display text-3xl font-medium sm:text-4xl">
+            Got a hard backend problem?
           </h2>
-          <p className="mt-3 max-w-xl text-muted-foreground">
-            I&apos;m not actively job-hunting right now, but I&apos;m always
-            happy to talk shop, swap ideas, or help on an interesting problem.
-            Email is the fastest way to reach me — I read everything and reply
-            to most.
+          <p className="mt-4 max-w-xl leading-relaxed text-white/80">
+            {CONTACT_NOTE}
           </p>
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <ResumeButton />
-            <SocialLinks />
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Button
+              asChild
+              className="bg-white text-primary-solid hover:bg-white/90"
+            >
+              <a href={`mailto:${site.email}`}>Write to me</a>
+            </Button>
+            <Button
+              asChild
+              variant="ghost"
+              className="text-white hover:bg-white/10 hover:text-white"
+            >
+              <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+                LinkedIn
+              </a>
+            </Button>
           </div>
-        </div>
-        <div className="reveal mt-8">
-          <Newsletter />
         </div>
       </section>
     </div>

@@ -7,7 +7,7 @@ export function PostCard({ post }: { post: PostMeta }) {
   return (
     <Card asChild>
       <article className="group relative flex flex-col p-5 transition-all duration-200 hover:border-primary/60 hover:shadow-[var(--shadow-card-hover)]">
-        <div className="flex items-center justify-between gap-2 font-mono text-xs text-muted-foreground">
+        <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
             <time dateTime={post.date}>{formatDate(post.date)}</time>
             <span aria-hidden="true">·</span>

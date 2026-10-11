@@ -16,9 +16,9 @@ function subscribe(onChange: () => void) {
 }
 
 function getSnapshot(): Theme {
-  return document.documentElement.getAttribute("data-theme") === "light"
-    ? "light"
-    : "dark";
+  return document.documentElement.getAttribute("data-theme") === "dark"
+    ? "dark"
+    : "light";
 }
 
 // No theme is known during SSR; null renders the same markup as before mount.
@@ -29,7 +29,8 @@ function getServerSnapshot(): Theme | null {
 /**
  * Dark/light toggle. The current theme is set on <html data-theme> before paint
  * by an inline script in app/layout.tsx; this component reads that attribute,
- * then flips it and persists the choice to localStorage. Dark-first.
+ * then flips it and persists the choice to localStorage. With no saved
+ * choice the script follows the OS setting.
  */
 export function ThemeToggle() {
   const current = useSyncExternalStore(
@@ -38,7 +39,7 @@ export function ThemeToggle() {
     getServerSnapshot,
   );
   const mounted = current !== null;
-  const theme: Theme = current ?? "dark";
+  const theme: Theme = current ?? "light";
 
   const toggle = () => {
     const next: Theme = theme === "dark" ? "light" : "dark";
