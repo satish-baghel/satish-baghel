@@ -23,7 +23,7 @@ export function SectionHeader({
     <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
       <div className="max-w-2xl">
         <div className="flex items-center gap-3">
-          {icon && <IconTile icon={icon} tone="claret" size="sm" />}
+          {icon && <IconTile icon={icon} tone="copper" size="sm" />}
           <p className={icon ? "section-label section-label--bare" : "section-label"}>
             {label}
           </p>

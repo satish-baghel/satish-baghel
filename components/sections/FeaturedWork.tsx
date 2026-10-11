@@ -31,7 +31,7 @@ export function FeaturedWork() {
         >
           <header>
             <div className="flex items-center gap-4">
-              <IconTile icon={PROJECT_ICONS[p.name] ?? LuLightbulb} tone={(["blue", "teal", "gold"] as Tone[])[i % 3]} size="lg" />
+              <IconTile icon={PROJECT_ICONS[p.name] ?? LuLightbulb} tone={(["forest", "ocean", "plum"] as Tone[])[i % 3]} size="lg" />
               <p className="font-display text-5xl font-light text-highlight/70">
                 {String(i + 1).padStart(2, "0")}
               </p>
@@ -62,10 +62,10 @@ export function FeaturedWork() {
           </header>
 
           <dl className="space-y-4">
-            <Row term="What it is" icon={LuLightbulb} tone="gold">{p.about}</Row>
-            <Row term="What I built" icon={LuHammer} tone="blue">{p.built}</Row>
+            <Row term="What it is" icon={LuLightbulb} tone="plum">{p.about}</Row>
+            <Row term="What I built" icon={LuHammer} tone="forest">{p.built}</Row>
             {p.outcome && (
-              <Row term="What changed" icon={LuTrendingUp} tone="claret" emphasis>
+              <Row term="What changed" icon={LuTrendingUp} tone="copper" emphasis>
                 {p.outcome}
               </Row>
             )}

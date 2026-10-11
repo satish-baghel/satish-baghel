@@ -37,7 +37,7 @@ export function HiringBrief() {
     <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
       <div>
         <h3 className="font-display flex items-center gap-3 text-xl font-medium text-foreground">
-          <IconTile icon={LuSparkles} tone="gold" size="sm" />
+          <IconTile icon={LuSparkles} tone="plum" size="sm" />
           In plain words
         </h3>
         <p className="mt-3 text-lg leading-relaxed text-muted-foreground">

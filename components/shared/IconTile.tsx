@@ -1,10 +1,10 @@
 import type { IconType } from "react-icons";
 import { cn } from "@/lib/utils";
 
-export type Tone = "blue" | "claret" | "gold" | "teal";
+export type Tone = "forest" | "copper" | "plum" | "ocean";
 
 /** Cycle through the tones so neighbouring icons never share a colour. */
-export const TONES: Tone[] = ["blue", "claret", "teal", "gold"];
+export const TONES: Tone[] = ["forest", "copper", "ocean", "plum"];
 export const toneAt = (i: number): Tone => TONES[i % TONES.length];
 
 /**
@@ -15,7 +15,7 @@ export const toneAt = (i: number): Tone => TONES[i % TONES.length];
  */
 export function IconTile({
   icon: Icon,
-  tone = "blue",
+  tone = "forest",
   size = "md",
   className,
 }: {

@@ -5,41 +5,43 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
- * Ink & Claret palette. Deep blue carries structure (links, focus, rules)
- * and claret, a burgundy red, is kept for the one thing per view that should
- * catch the eye: the résumé button, numbers, the active marker.
- * :root is the LIGHT "paper" theme; [data-theme="dark"] is midnight navy.
+ * Forest & Copper. Forest green carries structure (links, focus, rules) and
+ * copper is kept for the one thing per view that should catch the eye: the
+ * résumé button, numbers, the active marker. Icon tones add ocean blue and
+ * plum for variety. LIGHT is ivory paper; DARK is deep spruce with mint and
+ * amber, its own shades rather than a straight invert.
+ * :root is LIGHT; [data-theme="dark"] is DARK.
  * An inline script in layout.tsx sets data-theme before paint (no flash).
  */
 :root {
-  --background: #f6f3ee; /* warm paper */
-  --card: #fffcf7; /* lifted sheet */
-  --muted: #ede8e0; /* chips, subtle fills */
-  --border: #ddd5c8; /* hairline */
-  --foreground: #1a1f2e; /* navy ink, ~15:1 on paper */
-  --muted-foreground: #585e6e; /* secondary text, >=5.5:1 */
+  --background: #f7f5ef;
+  --card: #fffdf8;
+  --muted: #edeae0;
+  --border: #ddd7c8;
+  --foreground: #14201a;
+  --muted-foreground: #56605a;
 
-  --primary: #1f3a8a; /* deep blue text/links, ~9:1 */
-  --primary-strong: #162b69;
-  --primary-solid: #1f3a8a;
-  --primary-solid-hover: #162b69;
+  --primary: #17603f;
+  --primary-strong: #0f4a30;
+  --primary-solid: #17603f;
+  --primary-solid-hover: #0f4a30;
 
-  --highlight: #7c1d3a; /* claret text, ~9:1 */
-  --highlight-strong: #5f142b;
-  --highlight-solid: #7c1d3a;
-  --highlight-solid-hover: #64162f;
+  --highlight: #a4511c;
+  --highlight-strong: #843f14;
+  --highlight-solid: #b4561a;
+  --highlight-solid-hover: #9a4914;
   --highlight-ink: #ffffff;
 
   /* Icon tones. Each theme has its own shade of each, not a straight invert. */
-  --tone-blue: #1f3a8a;
-  --tone-claret: #7c1d3a;
-  --tone-teal: #0f6b66;
-  --tone-gold: #8a5a0b;
+  --tone-forest: #17603f;
+  --tone-copper: #a4511c;
+  --tone-ocean: #1f5f8b;
+  --tone-plum: #7a3e6e;
 
   --shadow-card: 0 1px 0 rgba(26, 31, 46, 0.04),
     0 6px 20px -14px rgba(26, 31, 46, 0.18);
   --shadow-card-hover: 0 1px 0 rgba(26, 31, 46, 0.05),
-    0 14px 30px -16px rgba(31, 58, 138, 0.28);
+    0 14px 30px -16px rgba(23, 96, 63, 0.26);
   --shadow-glow-highlight: none;
 
   --card-foreground: var(--foreground);
@@ -57,34 +59,34 @@
 }
 
 :root[data-theme="dark"] {
-  --background: #0d1324; /* midnight navy */
-  --card: #141b30;
-  --muted: #1b2339;
-  --border: #29324f;
-  --foreground: #ece8e1; /* warm off-white */
-  --muted-foreground: #a4aabb;
+  --background: #0d1613;
+  --card: #14201b;
+  --muted: #1a2922;
+  --border: #2a3d34;
+  --foreground: #ece8de;
+  --muted-foreground: #a6b2aa;
 
-  --primary: #9db8ff; /* light blue on navy, ~9:1 */
-  --primary-strong: #c0d1ff;
-  --primary-solid: #2f4fb5; /* white text ~6:1 */
-  --primary-solid-hover: #3b5dc8;
+  --primary: #7fd6a8;
+  --primary-strong: #a8e7c5;
+  --primary-solid: #1f7a50;
+  --primary-solid-hover: #258c5c;
 
-  --highlight: #eea3b9; /* claret tint readable on navy */
-  --highlight-strong: #f6c3d2;
-  --highlight-solid: #8f2647; /* white text ~7.5:1 */
-  --highlight-solid-hover: #a52f54;
-  --highlight-ink: #ffffff;
+  --highlight: #f0a874;
+  --highlight-strong: #f6c59f;
+  --highlight-solid: #d9773a;
+  --highlight-solid-hover: #e48a50;
+  --highlight-ink: #1a0e05;
 
-  --tone-blue: #8fb0ff; /* periwinkle */
-  --tone-claret: #f08fae; /* rose */
-  --tone-teal: #5fd4c4; /* sea glass */
-  --tone-gold: #f0c674; /* brass */
+  --tone-forest: #7fd6a8;
+  --tone-copper: #f0a874;
+  --tone-ocean: #86c5f0;
+  --tone-plum: #d9a6e0;
 
   --shadow-card: 0 1px 0 rgba(0, 0, 0, 0.3), 0 10px 26px -16px rgba(0, 0, 0, 0.7);
   --shadow-card-hover: 0 1px 0 rgba(0, 0, 0, 0.3),
-    0 16px 34px -16px rgba(47, 79, 181, 0.45);
+    0 16px 34px -16px rgba(31, 122, 80, 0.45);
 
-  --primary-foreground: #0d1324;
+  --primary-foreground: #0d1613;
   --destructive: #f97066;
 }
 
@@ -143,7 +145,7 @@ body {
 
 ::selection {
   background: var(--highlight-solid);
-  color: #fff;
+  color: var(--highlight-ink);
 }
 
 /* Headings run in Fraunces, a soft old-style serif, for an editorial voice. */
@@ -164,7 +166,7 @@ body {
   }
 }
 
-/* Section label: small caps in claret with a short blue rule in front. */
+/* Section label: small caps in copper with a short green rule in front. */
 .section-label {
   display: inline-flex;
   align-items: center;
@@ -249,20 +251,20 @@ body {
 
 /* Icon tiles: tinted square in the tone's colour (components/shared/IconTile). */
 .icon-tile {
-  --tone: var(--tone-blue);
+  --tone: var(--tone-forest);
   color: var(--tone);
   background: color-mix(in srgb, var(--tone) 9%, transparent);
   border-color: color-mix(in srgb, var(--tone) 24%, transparent);
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
-.icon-tile[data-tone="claret"] {
-  --tone: var(--tone-claret);
+.icon-tile[data-tone="copper"] {
+  --tone: var(--tone-copper);
 }
-.icon-tile[data-tone="teal"] {
-  --tone: var(--tone-teal);
+.icon-tile[data-tone="ocean"] {
+  --tone: var(--tone-ocean);
 }
-.icon-tile[data-tone="gold"] {
-  --tone: var(--tone-gold);
+.icon-tile[data-tone="plum"] {
+  --tone: var(--tone-plum);
 }
 .group:hover .icon-tile {
   transform: translateY(-1px);

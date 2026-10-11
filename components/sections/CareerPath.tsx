@@ -41,9 +41,9 @@ export function CareerPath() {
             aria-hidden="true"
             className={`absolute -left-12 top-0 flex size-8 items-center justify-center rounded-full border-2 md:-top-12 md:left-0 ${
               s.current
-                ? "border-highlight-solid bg-highlight-solid text-white"
+                ? "border-highlight-solid bg-highlight-solid text-highlight-ink"
                 : s.icon === LuGraduationCap
-                  ? "border-[var(--tone-gold)] bg-background text-[var(--tone-gold)]"
+                  ? "border-[var(--tone-plum)] bg-background text-[var(--tone-plum)]"
                   : "border-primary bg-background text-primary"
             }`}
           >

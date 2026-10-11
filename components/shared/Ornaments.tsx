@@ -4,7 +4,7 @@
  * Kept few and quiet on purpose: they frame the content, never compete with it.
  */
 
-/** "SB" monogram: a serif ligature inside a thin ring with one claret tick. */
+/** "SB" monogram: a serif ligature inside a thin ring with one copper tick. */
 export function Monogram({ className }: { className?: string }) {
   return (
     <svg
@@ -38,7 +38,7 @@ export function Monogram({ className }: { className?: string }) {
 
 /**
  * Hero backdrop: a drafting-table motif. A faint dot grid, three concentric
- * arcs in blue and a single claret arc, like a compass sketch on paper.
+ * arcs in green and a single copper arc, like a compass sketch on paper.
  */
 export function HeroBackdrop({ className }: { className?: string }) {
   return (
