@@ -27,6 +27,7 @@ export default function Icon() {
       >
         <img
           src={photoSrc}
+          alt=""
           width={32}
           height={32}
           style={{
