@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllTags, getTagBySlug } from "@/lib/posts";
 import { tagSlug } from "@/lib/types";
-import { BlogListing } from "@/components/BlogListing";
+import { BlogListing } from "@/components/blog/BlogListing";
 import { listingMetadata, pageCount } from "@/lib/blog-listing";
 
 export const dynamicParams = false;

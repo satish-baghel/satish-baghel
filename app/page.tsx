@@ -5,27 +5,30 @@ import { getAllPosts } from "@/lib/posts";
 import {
   ActivitySection,
   ActivitySectionSkeleton,
-} from "@/components/ActivitySection";
-import { PostCard } from "@/components/PostCard";
-import { FeaturedPost } from "@/components/FeaturedPost";
-import { SocialLinks } from "@/components/SocialLinks";
-import { Terminal } from "@/components/Terminal";
-import { TechGrid } from "@/components/TechGrid";
-import { ExperienceTimeline } from "@/components/ExperienceTimeline";
-import { ProjectGrid } from "@/components/ProjectGrid";
-import { ResumeChat } from "@/components/ResumeChat";
-import { QuickFacts } from "@/components/QuickFacts";
-import { ResumeButton } from "@/components/ResumeButton";
-import { Services } from "@/components/Services";
-import { SkillsBreakdown } from "@/components/SkillsBreakdown";
-import { ImpactStats } from "@/components/ImpactStats";
-import { CaseStudies } from "@/components/CaseStudies";
-import { Achievements } from "@/components/Achievements";
-import { EducationCerts } from "@/components/EducationCerts";
-import { NowSection } from "@/components/NowSection";
-import { HowIWork } from "@/components/HowIWork";
-import { Faq } from "@/components/Faq";
-import { Newsletter } from "@/components/Newsletter";
+} from "@/components/sections/ActivitySection";
+import { PostCard } from "@/components/blog/PostCard";
+import { FeaturedPost } from "@/components/blog/FeaturedPost";
+import { SocialLinks } from "@/components/shared/SocialLinks";
+import { Terminal } from "@/components/shared/Terminal";
+import { TechGrid } from "@/components/sections/TechGrid";
+import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
+import { ProjectGrid } from "@/components/sections/ProjectGrid";
+import { ResumeChat } from "@/components/sections/ResumeChat";
+import { QuickFacts } from "@/components/sections/QuickFacts";
+import { ResumeButton } from "@/components/shared/ResumeButton";
+import { Services } from "@/components/sections/Services";
+import { SkillsBreakdown } from "@/components/sections/SkillsBreakdown";
+import { ImpactStats } from "@/components/sections/ImpactStats";
+import { CaseStudies } from "@/components/sections/CaseStudies";
+import { Achievements } from "@/components/sections/Achievements";
+import { EducationCerts } from "@/components/sections/EducationCerts";
+import { NowSection } from "@/components/sections/NowSection";
+import { HowIWork } from "@/components/sections/HowIWork";
+import { Faq } from "@/components/sections/Faq";
+import { Newsletter } from "@/components/sections/Newsletter";
+import { SectionHeader } from "@/components/shared/SectionHeader";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { site } from "@/lib/site";
 import { SUMMARY, METRICS, TECH, EXPERIENCE, PROJECTS } from "@/lib/resume";
 
@@ -56,49 +59,48 @@ export default function Home() {
               <span className="status-dot status-dot--idle" aria-hidden="true" />
               Not actively looking
             </span>
-            <p className="reveal reveal-2 mt-5 font-mono text-sm font-medium text-accent">
+            <p className="reveal reveal-2 mt-5 font-mono text-sm font-medium text-primary">
               {site.tagline}
             </p>
             <h1 className="font-display reveal reveal-2 mt-4 text-4xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-5xl">
               Hi, I&apos;m Satish — I build{" "}
-              <span className="text-accent">fast, scalable</span> back-ends &amp;
+              <span className="text-primary">fast, scalable</span> back-ends &amp;
               APIs.
             </h1>
-            <p className="reveal reveal-3 mt-6 max-w-xl text-lg leading-relaxed text-muted">
+            <p className="reveal reveal-3 mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
               {SUMMARY}
             </p>
 
             {/* Credibility metrics — highlight numbers draw the recruiter's eye. */}
             <dl className="reveal reveal-3 mt-8 grid grid-cols-3 gap-3">
               {METRICS.map((m) => (
-                <div
+                <Card
                   key={m.label}
-                  className="rounded-xl border border-border bg-surface px-3 py-2.5 transition-colors hover:border-highlight/50"
+                  className="px-3 py-2.5 shadow-none transition-colors hover:border-highlight/50"
                 >
                   <dt className="font-display text-lg font-semibold tracking-tight text-highlight sm:text-xl">
                     {m.value}
                   </dt>
-                  <dd className="mt-0.5 font-mono text-[11px] uppercase tracking-wide text-muted">
+                  <dd className="mt-0.5 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
                     {m.label}
                   </dd>
-                </div>
+                </Card>
               ))}
             </dl>
 
             <div className="reveal reveal-4 mt-8 flex flex-wrap items-center gap-3">
               <ResumeButton />
-              <Link
-                href="/about"
-                className="group inline-flex h-11 items-center gap-1.5 rounded-lg border border-border bg-surface px-4 font-mono text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                View my work
-                <span
-                  aria-hidden="true"
-                  className="transition-transform duration-200 group-hover:translate-x-0.5"
-                >
-                  →
-                </span>
-              </Link>
+              <Button asChild variant="outline" className="group gap-1.5 font-mono">
+                <Link href="/about">
+                  View my work
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  >
+                    →
+                  </span>
+                </Link>
+              </Button>
             </div>
             <SocialLinks className="reveal reveal-4 mt-4" />
           </div>
@@ -107,10 +109,10 @@ export default function Home() {
           <div className="reveal reveal-3 flex flex-col items-center gap-6">
             <div className="avatar-glow relative">
               <div
-                className="relative aspect-square w-60 overflow-hidden rounded-full border-2 border-accent/40 bg-surface shadow-[var(--shadow-card-hover)] ring-4 ring-background sm:w-72"
+                className="relative aspect-square w-60 overflow-hidden rounded-full border-2 border-primary/40 bg-card shadow-[var(--shadow-card-hover)] ring-4 ring-background sm:w-72"
                 style={{
                   backgroundImage:
-                    "radial-gradient(100% 100% at 50% 15%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 65%)",
+                    "radial-gradient(100% 100% at 50% 15%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 65%)",
                 }}
               >
                 <Image
@@ -132,8 +134,8 @@ export default function Home() {
 
       {/* Quick facts — recruiter TL;DR, scannable at a glance */}
       <section className="border-t border-border py-10 sm:py-12">
-        <p className="font-mono text-xs tracking-wide text-muted">
-          <span className="text-accent">$</span> at a glance
+        <p className="font-mono text-xs tracking-wide text-muted-foreground">
+          <span className="text-primary">$</span> at a glance
         </p>
         <div className="reveal mt-5">
           <QuickFacts />
@@ -268,7 +270,7 @@ export default function Home() {
         <h3 className="font-display mt-10 text-lg font-semibold tracking-tight">
           Something else? Ask my resume
         </h3>
-        <p className="mt-2 max-w-xl text-sm text-muted">
+        <p className="mt-2 max-w-xl text-sm text-muted-foreground">
           The assistant below answers straight from my resume — experience,
           skills, projects, anything.
         </p>
@@ -280,13 +282,13 @@ export default function Home() {
       {/* Get in touch — contact panel + newsletter in one closing beat */}
       <section className="border-t border-border py-14 sm:py-16">
         <div className="cta-panel reveal px-6 py-10 sm:px-10 sm:py-12">
-          <p className="font-mono text-xs tracking-wide text-muted">
-            <span className="text-accent">$</span> ./contact.sh
+          <p className="font-mono text-xs tracking-wide text-muted-foreground">
+            <span className="text-primary">$</span> ./contact.sh
           </p>
           <h2 className="font-display mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
             Let&apos;s build something.
           </h2>
-          <p className="mt-3 max-w-xl text-muted">
+          <p className="mt-3 max-w-xl text-muted-foreground">
             I&apos;m not actively job-hunting right now, but I&apos;m always
             happy to talk shop, swap ideas, or help on an interesting problem.
             Email is the fastest way to reach me — I read everything and reply
@@ -301,40 +303,6 @@ export default function Home() {
           <Newsletter />
         </div>
       </section>
-    </div>
-  );
-}
-
-/** Consistent section header: accent eyebrow, title, and an optional link. */
-function SectionHeader({
-  eyebrow,
-  title,
-  href,
-  linkText,
-}: {
-  eyebrow: string;
-  title: string;
-  href?: string;
-  linkText?: string;
-}) {
-  return (
-    <div className="flex items-end justify-between gap-4">
-      <div>
-        <p className="font-mono text-xs tracking-wide text-muted">
-          <span className="text-accent">$</span> {eyebrow.toLowerCase()}
-        </p>
-        <h2 className="font-display mt-1.5 text-xl font-semibold tracking-tight sm:text-2xl">
-          {title}
-        </h2>
-      </div>
-      {href && linkText && (
-        <Link
-          href={href}
-          className="shrink-0 font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        >
-          {linkText} →
-        </Link>
-      )}
     </div>
   );
 }

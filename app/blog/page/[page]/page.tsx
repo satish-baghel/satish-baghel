@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BlogListing } from "@/components/BlogListing";
+import { BlogListing } from "@/components/blog/BlogListing";
 import { listingMetadata, pageCount } from "@/lib/blog-listing";
 
 // Only the pages emitted by generateStaticParams are built; anything else 404s

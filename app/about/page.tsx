@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { SocialLinks } from "@/components/SocialLinks";
+import { SocialLinks } from "@/components/shared/SocialLinks";
 import {
   ActivitySection,
   ActivitySectionSkeleton,
-} from "@/components/ActivitySection";
-import { SkillBadge } from "@/components/SkillBadge";
-import { ExperienceTimeline } from "@/components/ExperienceTimeline";
-import { ProjectGrid } from "@/components/ProjectGrid";
-import { JsonLd } from "@/components/JsonLd";
-import { QuickFacts } from "@/components/QuickFacts";
-import { ResumeButton } from "@/components/ResumeButton";
+} from "@/components/sections/ActivitySection";
+import { SkillBadge } from "@/components/shared/SkillBadge";
+import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
+import { ProjectGrid } from "@/components/sections/ProjectGrid";
+import { JsonLd } from "@/components/shared/JsonLd";
+import { QuickFacts } from "@/components/sections/QuickFacts";
+import { ResumeButton } from "@/components/shared/ResumeButton";
 import { site } from "@/lib/site";
 import { SUMMARY, SKILLS, EXPERIENCE, PROJECTS, EDUCATION } from "@/lib/resume";
+import { Card } from "@/components/ui/card";
 
 const description =
   "Satish Baghel is a Full Stack Developer with 5+ years building scalable web apps with React, Next.js, Node.js, MongoDB, and MySQL.";
@@ -54,11 +55,11 @@ export default function AboutPage() {
     <div className="mx-auto w-full max-w-4xl px-6 py-16">
       <JsonLd data={profileSchema} />
 
-      <p className="font-mono text-sm font-medium text-accent">{site.tagline}</p>
+      <p className="font-mono text-sm font-medium text-primary">{site.tagline}</p>
       <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight">
         About me
       </h1>
-      <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
         {SUMMARY}
       </p>
 
@@ -79,7 +80,7 @@ export default function AboutPage() {
       <div className="mt-6 space-y-6">
         {Object.entries(SKILLS).map(([group, items]) => (
           <div key={group}>
-            <h3 className="font-mono text-xs uppercase tracking-widest text-muted">
+            <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
               {group}
             </h3>
             <ul className="mt-3 flex flex-wrap gap-2.5">
@@ -131,20 +132,19 @@ export default function AboutPage() {
       </h2>
       <ul className="mt-6 space-y-4">
         {EDUCATION.map((edu) => (
-          <li
-            key={edu.degree}
-            className="flex flex-wrap items-baseline justify-between gap-x-3 rounded-xl border border-border bg-surface p-5 shadow-[var(--shadow-card)]"
-          >
-            <div>
-              <h3 className="font-display text-lg font-semibold tracking-tight">
-                {edu.degree}
-              </h3>
-              <p className="mt-1 text-sm text-muted">
-                {edu.institution} · {edu.location}
-              </p>
-            </div>
-            <span className="font-mono text-sm text-accent">{edu.year}</span>
-          </li>
+          <Card asChild key={edu.degree}>
+            <li className="flex flex-wrap items-baseline justify-between gap-x-3 p-5">
+              <div>
+                <h3 className="font-display text-lg font-semibold tracking-tight">
+                  {edu.degree}
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {edu.institution} · {edu.location}
+                </p>
+              </div>
+              <span className="font-mono text-sm text-primary">{edu.year}</span>
+            </li>
+          </Card>
         ))}
       </ul>
 
@@ -152,7 +152,7 @@ export default function AboutPage() {
       <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
         Get in touch
       </h2>
-      <p className="mt-3 text-muted">
+      <p className="mt-3 text-muted-foreground">
         Based in {site.location}. Not actively looking right now, but always
         open to a good conversation — email is the fastest way to reach me.
       </p>

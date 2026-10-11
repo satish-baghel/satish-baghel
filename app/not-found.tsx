@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-6 py-24 text-center sm:py-32">
-      <p className="font-mono text-sm font-medium text-accent">404</p>
+      <p className="font-mono text-sm font-medium text-primary">404</p>
       <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
         Page not found
       </h1>
-      <p className="mt-4 max-w-md text-lg leading-relaxed text-muted">
+      <p className="mt-4 max-w-md text-lg leading-relaxed text-muted-foreground">
         This route doesn&apos;t exist — maybe the link is old, or the page moved.
       </p>
 
@@ -44,7 +44,7 @@ export default function NotFound() {
 
       <Link
         href="/"
-        className="mt-10 inline-flex h-11 items-center gap-1.5 rounded-lg bg-accent-solid px-4 font-mono text-sm font-medium text-white transition-colors hover:bg-accent-solid-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="mt-10 inline-flex h-11 items-center gap-1.5 rounded-lg bg-primary-solid px-4 font-mono text-sm font-medium text-white transition-colors hover:bg-primary-solid-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         Back home
         <span aria-hidden="true">→</span>
