@@ -2,6 +2,7 @@
  * Contact / social links: email, GitHub, LinkedIn. Driven by lib/site.ts so
  * identity stays single-sourced. Add a new entry by extending the array below.
  */
+import { LuMail } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
@@ -11,7 +12,7 @@ export function SocialLinks({ className }: { className?: string }) {
     <div className={cn("flex flex-wrap items-center gap-3", className)}>
       <Button asChild variant="outline" className="font-normal">
         <a href={`mailto:${site.email}`}>
-          <MailIcon />
+          <LuMail aria-hidden="true" size={17} strokeWidth={1.75} />
           Email
         </a>
       </Button>
@@ -36,25 +37,6 @@ export function SocialLinks({ className }: { className?: string }) {
         </a>
       </Button>
     </div>
-  );
-}
-
-function MailIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="m3 7 9 6 9-6" />
-    </svg>
   );
 }
 

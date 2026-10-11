@@ -1,6 +1,14 @@
+import type { IconType } from "react-icons";
+import { LuBriefcaseBusiness, LuGraduationCap } from "react-icons/lu";
 import { EDUCATION, EXPERIENCE } from "@/lib/resume";
 
-type Stop = { when: string; title: string; detail: string; current?: boolean };
+type Stop = {
+  when: string;
+  title: string;
+  detail: string;
+  icon: IconType;
+  current?: boolean;
+};
 
 /**
  * Career path as one line of stops, oldest first: degrees and roles merged
@@ -11,11 +19,13 @@ export function CareerPath() {
     when: e.year,
     title: e.degree.replace(/ \(.*\)$/, ""),
     detail: e.institution,
+    icon: LuGraduationCap,
   }));
   const roleStops: Stop[] = EXPERIENCE.map((job) => ({
     when: job.start,
     title: `${job.role}, ${shortCompany(job.company)}`,
     detail: job.summary,
+    icon: LuBriefcaseBusiness,
     current: job.end === "Present",
   }));
 
@@ -24,17 +34,21 @@ export function CareerPath() {
   );
 
   return (
-    <ol className="career-rail grid gap-8 pl-7 md:grid-cols-5 md:gap-5 md:pl-0 md:pt-8">
+    <ol className="career-rail grid gap-8 pl-12 md:grid-cols-5 md:gap-5 md:pl-0 md:pt-12">
       {stops.map((s) => (
         <li key={`${s.when}-${s.title}`} className="relative">
           <span
             aria-hidden="true"
-            className={`absolute -left-7 top-1 h-3 w-3 rounded-full border-2 md:-top-8 md:left-0 ${
+            className={`absolute -left-12 top-0 flex size-8 items-center justify-center rounded-full border-2 md:-top-12 md:left-0 ${
               s.current
-                ? "border-highlight-solid bg-highlight-solid"
-                : "border-primary bg-background"
+                ? "border-highlight-solid bg-highlight-solid text-highlight-ink"
+                : s.icon === LuGraduationCap
+                  ? "border-[var(--tone-plum)] bg-background text-[var(--tone-plum)]"
+                  : "border-primary bg-background text-primary"
             }`}
-          />
+          >
+            <s.icon size={14} strokeWidth={2} />
+          </span>
           <p className="text-xs font-semibold uppercase tracking-wider text-highlight">
             {s.when}
             {s.current && " to now"}
