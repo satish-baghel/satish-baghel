@@ -11,9 +11,9 @@ import { Card } from "@/components/ui/card";
 export function FeaturedPost({ post }: { post: PostMeta }) {
   return (
     <Card asChild>
-      <article className="group relative overflow-hidden p-7 transition-all duration-200 hover:border-primary/60 hover:shadow-[var(--shadow-card-hover)] sm:p-9">
+      <article className="group relative overflow-hidden p-7 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-clay-hover motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-9">
         <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-highlight/30 bg-highlight/10 px-2.5 py-0.5 font-medium text-highlight">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-highlight-solid/45 px-3 py-1 font-bold text-highlight shadow-clay-sm">
             <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-highlight" />
             Featured
           </span>

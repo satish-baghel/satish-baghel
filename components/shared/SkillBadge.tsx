@@ -68,8 +68,8 @@ const SKILL_ICONS: Record<string, IconType> = {
 export function SkillBadge({ name }: { name: string }) {
   const Icon = SKILL_ICONS[name] ?? FaCode;
   return (
-    <li className="inline-flex items-center gap-2 rounded-md border border-border bg-card py-1.5 pl-2.5 pr-3 text-sm text-foreground">
-      <span aria-hidden="true" className="text-primary">
+    <li className="inline-flex items-center gap-2 rounded-full bg-card py-1.5 pl-1.5 pr-3.5 text-sm font-semibold text-foreground shadow-clay-sm">
+      <span aria-hidden="true" className="flex h-7 w-7 items-center justify-center rounded-full bg-muted text-primary shadow-clay-inset">
         <Icon size={14} />
       </span>
       {name}

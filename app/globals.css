@@ -5,35 +5,67 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
- * Ink & Claret palette. Deep blue carries structure (links, focus, rules)
- * and claret, a burgundy red, is kept for the one thing per view that should
- * catch the eye: the résumé button, numbers, the active marker.
- * :root is the LIGHT "paper" theme; [data-theme="dark"] is midnight navy.
+ * Claymorphism. Surfaces read as soft, puffy clay: pastel fills, big round
+ * corners, and two layers of shadow on every raised element (an outer drop
+ * shadow plus a light rim, and an inner highlight plus an inner shade) so it
+ * looks pressed out of the page. Violet carries structure (links, focus,
+ * solid buttons); peach is kept for the one thing per view that should catch
+ * the eye: the résumé button, the active marker, the portrait block.
+ * :root is the LIGHT lavender theme; [data-theme="dark"] is deep plum.
  * An inline script in layout.tsx sets data-theme before paint (no flash).
  */
 :root {
-  --background: #f6f3ee; /* warm paper */
-  --card: #fffcf7; /* lifted sheet */
-  --muted: #ede8e0; /* chips, subtle fills */
-  --border: #ddd5c8; /* hairline */
-  --foreground: #1a1f2e; /* navy ink, ~15:1 on paper */
-  --muted-foreground: #585e6e; /* secondary text, >=5.5:1 */
+  --background: #f3eefb; /* lavender milk */
+  --card: #fbf9ff; /* lifted clay */
+  --muted: #ebe4f8; /* chips, subtle fills */
+  --border: #e2d9f3; /* soft rim */
+  --foreground: #2b2540; /* plum ink, ~13:1 */
+  --muted-foreground: #625a78; /* secondary text, >=5.6:1 */
 
-  --primary: #1f3a8a; /* deep blue text/links, ~9:1 */
-  --primary-strong: #162b69;
-  --primary-solid: #1f3a8a;
-  --primary-solid-hover: #162b69;
+  --primary: #5a3fc7; /* violet text/links, ~6:1 */
+  --primary-strong: #452ca8;
+  --primary-solid: #6a4fe0; /* white text ~5.5:1 */
+  --primary-solid-hover: #5c41d4;
 
-  --highlight: #7c1d3a; /* claret text, ~9:1 */
-  --highlight-strong: #5f142b;
-  --highlight-solid: #7c1d3a;
-  --highlight-solid-hover: #64162f;
-  --highlight-ink: #ffffff;
+  --highlight: #b23f2c; /* deep coral text, ~5:1 */
+  --highlight-strong: #8f2f1f;
+  --highlight-solid: #ffb4a0; /* pastel peach, dark ink ~9:1 */
+  --highlight-solid-hover: #ffa48c;
+  --highlight-ink: #40160c;
 
-  --shadow-card: 0 1px 0 rgba(26, 31, 46, 0.04),
-    0 6px 20px -14px rgba(26, 31, 46, 0.18);
-  --shadow-card-hover: 0 1px 0 rgba(26, 31, 46, 0.05),
-    0 14px 30px -16px rgba(31, 58, 138, 0.28);
+  /* Pastel accents for decorative clay blobs and icon wells. */
+  --clay-mint: #c9f0de;
+  --clay-sky: #cfe2ff;
+  --clay-butter: #fff0b8;
+  --clay-pink: #ffd3e4;
+
+  /* Clay shadow tints: a violet-grey shade and a white light. */
+  --clay-shade: 108 88 170;
+  --clay-light: 255 255 255;
+
+  --shadow-clay: 12px 14px 28px -6px rgb(var(--clay-shade) / 0.28),
+    -8px -8px 22px -6px rgb(var(--clay-light) / 0.95),
+    inset 3px 4px 8px rgb(var(--clay-light) / 0.85),
+    inset -4px -6px 10px rgb(var(--clay-shade) / 0.14);
+  --shadow-clay-hover: 16px 20px 36px -8px rgb(var(--clay-shade) / 0.34),
+    -10px -10px 24px -6px rgb(var(--clay-light) / 1),
+    inset 3px 4px 8px rgb(var(--clay-light) / 0.9),
+    inset -4px -6px 10px rgb(var(--clay-shade) / 0.16);
+  --shadow-clay-sm: 5px 6px 14px -4px rgb(var(--clay-shade) / 0.3),
+    -4px -4px 10px -4px rgb(var(--clay-light) / 0.9),
+    inset 2px 2px 4px rgb(var(--clay-light) / 0.8),
+    inset -2px -3px 5px rgb(var(--clay-shade) / 0.14);
+  /* Pressed in: used for wells, inputs and the active state of buttons. */
+  --shadow-clay-inset: inset 4px 5px 10px rgb(var(--clay-shade) / 0.2),
+    inset -4px -4px 8px rgb(var(--clay-light) / 0.9);
+  /* Solid buttons carry their own inner light and shade. */
+  --shadow-clay-button: 6px 8px 16px -6px rgb(var(--clay-shade) / 0.45),
+    inset 2px 3px 5px rgb(255 255 255 / 0.4),
+    inset -3px -4px 6px rgb(0 0 0 / 0.16);
+
+  /* Older names kept so every component picks up the clay look. */
+  --shadow-card: var(--shadow-clay);
+  --shadow-card-hover: var(--shadow-clay-hover);
   --shadow-glow-highlight: none;
 
   --card-foreground: var(--foreground);
@@ -44,37 +76,59 @@
   --secondary-foreground: var(--foreground);
   --accent: var(--muted);
   --accent-foreground: var(--foreground);
-  --destructive: #b42318;
+  --destructive: #c4321f;
   --input: var(--border);
   --ring: var(--primary);
-  --radius: 0.5rem;
+  --radius: 1.25rem;
 }
 
 :root[data-theme="dark"] {
-  --background: #0d1324; /* midnight navy */
-  --card: #141b30;
-  --muted: #1b2339;
-  --border: #29324f;
-  --foreground: #ece8e1; /* warm off-white */
-  --muted-foreground: #a4aabb;
+  --background: #1d1a2b; /* deep plum */
+  --card: #28243b;
+  --muted: #312c47;
+  --border: #3a3453;
+  --foreground: #f1edfa; /* lilac white */
+  --muted-foreground: #b2aac8;
 
-  --primary: #9db8ff; /* light blue on navy, ~9:1 */
-  --primary-strong: #c0d1ff;
-  --primary-solid: #2f4fb5; /* white text ~6:1 */
-  --primary-solid-hover: #3b5dc8;
+  --primary: #c3b4ff; /* lilac on plum, ~9:1 */
+  --primary-strong: #dcd2ff;
+  --primary-solid: #6d55e0; /* white text ~5.2:1 */
+  --primary-solid-hover: #7c66ea;
 
-  --highlight: #eea3b9; /* claret tint readable on navy */
-  --highlight-strong: #f6c3d2;
-  --highlight-solid: #8f2647; /* white text ~7.5:1 */
-  --highlight-solid-hover: #a52f54;
-  --highlight-ink: #ffffff;
+  --highlight: #ffb39f; /* peach readable on plum */
+  --highlight-strong: #ffcfc2;
+  --highlight-solid: #ff9e86;
+  --highlight-solid-hover: #ffb09c;
+  --highlight-ink: #2c0f07;
 
-  --shadow-card: 0 1px 0 rgba(0, 0, 0, 0.3), 0 10px 26px -16px rgba(0, 0, 0, 0.7);
-  --shadow-card-hover: 0 1px 0 rgba(0, 0, 0, 0.3),
-    0 16px 34px -16px rgba(47, 79, 181, 0.45);
+  --clay-mint: #2c4a41;
+  --clay-sky: #2b3a5c;
+  --clay-butter: #4d4428;
+  --clay-pink: #4f2f42;
 
-  --primary-foreground: #0d1324;
-  --destructive: #f97066;
+  --clay-shade: 6 4 14;
+  --clay-light: 255 255 255;
+
+  --shadow-clay: 12px 14px 28px -6px rgb(var(--clay-shade) / 0.7),
+    -6px -6px 18px -6px rgb(var(--clay-light) / 0.05),
+    inset 3px 4px 8px rgb(var(--clay-light) / 0.07),
+    inset -4px -6px 10px rgb(var(--clay-shade) / 0.35);
+  --shadow-clay-hover: 16px 20px 36px -8px rgb(var(--clay-shade) / 0.8),
+    -8px -8px 20px -6px rgb(var(--clay-light) / 0.07),
+    inset 3px 4px 8px rgb(var(--clay-light) / 0.09),
+    inset -4px -6px 10px rgb(var(--clay-shade) / 0.4);
+  --shadow-clay-sm: 5px 6px 14px -4px rgb(var(--clay-shade) / 0.7),
+    -3px -3px 8px -4px rgb(var(--clay-light) / 0.06),
+    inset 2px 2px 4px rgb(var(--clay-light) / 0.07),
+    inset -2px -3px 5px rgb(var(--clay-shade) / 0.35);
+  --shadow-clay-inset: inset 4px 5px 10px rgb(var(--clay-shade) / 0.55),
+    inset -3px -3px 8px rgb(var(--clay-light) / 0.05);
+  --shadow-clay-button: 6px 8px 16px -6px rgb(var(--clay-shade) / 0.8),
+    inset 2px 3px 5px rgb(255 255 255 / 0.28),
+    inset -3px -4px 6px rgb(0 0 0 / 0.22);
+
+  --primary-foreground: #1d1a2b;
+  --destructive: #ff8a7a;
 }
 
 @theme inline {
@@ -104,16 +158,26 @@
   --color-highlight-solid: var(--highlight-solid);
   --color-highlight-solid-hover: var(--highlight-solid-hover);
   --color-highlight-ink: var(--highlight-ink);
-  --font-sans: var(--font-geist-sans);
+  --color-clay-mint: var(--clay-mint);
+  --color-clay-sky: var(--clay-sky);
+  --color-clay-butter: var(--clay-butter);
+  --color-clay-pink: var(--clay-pink);
+  --font-sans: var(--font-nunito);
   --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-fraunces);
+  --font-display: var(--font-fredoka);
 
-  /* Small, consistent corners: paper cards, not app tiles. */
-  --radius-sm: 3px;
-  --radius-md: 5px;
-  --radius-lg: 6px;
-  --radius-xl: 8px;
-  --radius-2xl: 10px;
+  --shadow-clay: var(--shadow-clay);
+  --shadow-clay-hover: var(--shadow-clay-hover);
+  --shadow-clay-sm: var(--shadow-clay-sm);
+  --shadow-clay-inset: var(--shadow-clay-inset);
+  --shadow-clay-button: var(--shadow-clay-button);
+
+  /* Big, squishy corners: everything is a pebble of clay. */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 26px;
+  --radius-2xl: 32px;
 }
 
 html {
@@ -126,20 +190,21 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-nunito), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  /* Clip the hero's decorative pebbles without breaking the sticky header. */
+  overflow-x: clip;
 }
 
 ::selection {
   background: var(--highlight-solid);
-  color: #fff;
+  color: var(--highlight-ink);
 }
 
-/* Headings run in Fraunces, a soft old-style serif, for an editorial voice. */
+/* Headings run in Fredoka, a rounded sans, for a friendly, playful voice. */
 .font-display {
-  font-family: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  font-optical-sizing: auto;
-  letter-spacing: -0.015em;
+  font-family: var(--font-fredoka), var(--font-nunito), system-ui, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -153,46 +218,82 @@ body {
   }
 }
 
-/* Section label: small caps in claret with a short blue rule in front. */
+/* Section label: a small clay pill in coral with a peach bead in front. */
 .section-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.6rem;
+  border-radius: 9999px;
+  background: var(--card);
+  box-shadow: var(--shadow-clay-sm);
   font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--highlight);
 }
 .section-label::before {
   content: "";
-  width: 1.75rem;
-  height: 2px;
-  background: var(--primary);
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 9999px;
+  background: var(--highlight-solid);
+  box-shadow: inset 1px 1px 2px rgb(255 255 255 / 0.6),
+    inset -1px -2px 3px rgb(0 0 0 / 0.15);
 }
 
 /*
- * Portrait: the photo sits in a plain frame with a solid claret block offset
- * behind it, like a print layout. No glows, no gradients.
+ * Clay surfaces. `.clay` is a raised pebble, `.clay-inset` a pressed-in well.
+ * Both lean on the shadow tokens above so light and dark stay in step.
+ */
+.clay {
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-clay);
+}
+.clay-inset {
+  background: var(--muted);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-clay-inset);
+}
+
+/* Soft pastel blobs drifting behind the hero. Purely decorative. */
+.clay-blob {
+  position: absolute;
+  z-index: -1;
+  border-radius: 9999px;
+  box-shadow: var(--shadow-clay);
+  pointer-events: none;
+}
+
+/*
+ * Portrait: the photo sits in a thick clay frame with a puffy peach pebble
+ * tucked behind it.
  */
 .portrait {
   position: relative;
   isolation: isolate;
+  padding: 0.65rem;
+  border-radius: var(--radius-2xl);
+  background: var(--card);
+  box-shadow: var(--shadow-clay);
 }
 .portrait::before {
   content: "";
   position: absolute;
-  inset: 0.9rem -0.9rem -0.9rem 0.9rem;
+  inset: 1.4rem -1.1rem -1.1rem 1.4rem;
   z-index: -1;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-2xl);
   background: var(--highlight-solid);
+  box-shadow: var(--shadow-clay);
 }
 .portrait-frame {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
+  border-radius: calc(var(--radius-2xl) - 0.5rem);
   background: var(--muted);
+  box-shadow: var(--shadow-clay-inset);
 }
 
 /* Fact sheet rows: label column + value, ruled like a printed form. */
@@ -200,8 +301,8 @@ body {
   display: grid;
   grid-template-columns: minmax(7.5rem, 34%) 1fr;
   gap: 1rem;
-  padding: 0.8rem 0;
-  border-bottom: 1px dashed var(--border);
+  padding: 0.85rem 0;
+  border-bottom: 2px dotted var(--border);
 }
 .fact-row:last-child {
   border-bottom: 0;
@@ -217,8 +318,11 @@ body {
   left: 0.3rem;
   top: 0.4rem;
   bottom: 0.4rem;
-  width: 2px;
-  background: linear-gradient(var(--primary), var(--highlight-solid));
+  width: 6px;
+  margin-left: -2px;
+  border-radius: 9999px;
+  background: linear-gradient(var(--primary-solid), var(--highlight-solid));
+  box-shadow: var(--shadow-clay-inset);
 }
 @media (min-width: 768px) {
   .career-rail::before {
@@ -227,13 +331,17 @@ body {
     top: 0.3rem;
     bottom: auto;
     width: auto;
-    height: 2px;
-    background: linear-gradient(90deg, var(--primary), var(--highlight-solid));
+    height: 6px;
+    margin-left: 0;
+    margin-top: -2px;
+    background: linear-gradient(90deg, var(--primary-solid), var(--highlight-solid));
   }
 }
 
-.site-header {
-  background: color-mix(in srgb, var(--background) 88%, transparent);
+/* The header floats as a clay pill over the page rather than a ruled bar. */
+.site-header-bar {
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  box-shadow: var(--shadow-clay-sm);
 }
 
 /*
@@ -255,7 +363,7 @@ body {
   font-weight: 600;
   letter-spacing: -0.02em;
   scroll-margin-top: 6rem;
-  font-family: var(--font-fraunces), Georgia, serif;
+  font-family: var(--font-fredoka), var(--font-nunito), sans-serif;
 }
 .prose h3 {
   margin-top: 1.75em;
@@ -264,7 +372,7 @@ body {
   font-weight: 600;
   letter-spacing: -0.02em;
   scroll-margin-top: 6rem;
-  font-family: var(--font-fraunces), Georgia, serif;
+  font-family: var(--font-fredoka), var(--font-nunito), sans-serif;
 }
 .prose p,
 .prose ul,
@@ -299,8 +407,10 @@ body {
   margin-top: 0.4em;
 }
 .prose blockquote {
-  border-left: 3px solid var(--primary);
-  padding-left: 1rem;
+  border-left: 6px solid var(--primary-solid);
+  border-radius: var(--radius-md);
+  background: var(--muted);
+  padding: 0.75rem 1rem;
   color: var(--muted-foreground);
   font-style: italic;
 }
@@ -309,9 +419,10 @@ body {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875em;
   background: var(--muted);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 0.15em 0.4em;
+  border: 0;
+  border-radius: 0.5em;
+  box-shadow: var(--shadow-clay-inset);
+  padding: 0.15em 0.45em;
   color: var(--primary-strong);
 }
 /* Fenced code blocks — cool slate, a distinct surface in both themes. */
@@ -319,9 +430,9 @@ body {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875rem;
   line-height: 1.6;
-  background: #0f1528; /* deep slate */
-  border: 1px solid #1f2937; /* slate-800 */
-  border-radius: var(--radius-md);
+  background: #221d36; /* deep slate */
+  border: 1px solid #342c50; /* slate-800 */
+  border-radius: var(--radius-lg);
   padding: 1rem 1.25rem;
   overflow-x: auto;
 }
@@ -348,10 +459,10 @@ body {
  * surface itself stays a deep slate in both themes for legibility.
  */
 .code-card {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border: 0;
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  background: #0f1528;
+  background: #221d36;
   box-shadow: var(--shadow-card);
 }
 .code-head {
@@ -359,8 +470,8 @@ body {
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 0.75rem 0.5rem 1rem;
-  border-bottom: 1px solid #1f2937;
-  background: #0d1526;
+  border-bottom: 1px solid #342c50;
+  background: #1b172c;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.75rem;
 }
@@ -369,10 +480,18 @@ body {
   gap: 0.375rem;
 }
 .code-dots span {
-  width: 0.6rem;
-  height: 0.6rem;
+  width: 0.7rem;
+  height: 0.7rem;
   border-radius: 9999px;
-  background: #334155;
+  background: #ffb4a0;
+  box-shadow: inset 1px 1px 2px rgb(255 255 255 / 0.5),
+    inset -1px -2px 3px rgb(0 0 0 / 0.25);
+}
+.code-dots span:nth-child(2) {
+  background: #ffe08a;
+}
+.code-dots span:nth-child(3) {
+  background: #a8e6c8;
 }
 .code-file {
   color: #cbd5e1;
@@ -380,7 +499,7 @@ body {
 .code-lang {
   margin-left: auto;
   color: #c0d1ff;
-  border: 1px solid #1f2937;
+  border: 1px solid #342c50;
   border-radius: 9999px;
   padding: 0.1rem 0.5rem;
   background: rgba(157, 184, 255, 0.12);
@@ -390,7 +509,7 @@ body {
   align-items: center;
   gap: 0.3rem;
   color: #94a3b8;
-  border: 1px solid #1f2937;
+  border: 1px solid #342c50;
   border-radius: var(--radius-md);
   padding: 0.15rem 0.5rem;
   background: transparent;

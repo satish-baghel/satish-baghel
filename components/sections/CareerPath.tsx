@@ -29,10 +29,10 @@ export function CareerPath() {
         <li key={`${s.when}-${s.title}`} className="relative">
           <span
             aria-hidden="true"
-            className={`absolute -left-7 top-1 h-3 w-3 rounded-full border-2 md:-top-8 md:left-0 ${
+            className={`absolute -left-7 top-1 -ml-1 h-4 w-4 rounded-full border-2 shadow-clay-sm md:-top-8 md:left-0 md:-mt-1 md:ml-0 ${
               s.current
                 ? "border-highlight-solid bg-highlight-solid"
-                : "border-primary bg-background"
+                : "border-primary-solid bg-card"
             }`}
           />
           <p className="text-xs font-semibold uppercase tracking-wider text-highlight">

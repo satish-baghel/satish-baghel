@@ -17,7 +17,7 @@ export function HiringBrief() {
           {PLAIN_SUMMARY}
         </p>
       </div>
-      <div className="rounded-lg border border-border bg-card px-5 py-2 shadow-[var(--shadow-card)] sm:px-6">
+      <div className="clay px-6 py-3 sm:px-8">
         <dl>
           {facts.map((f) => (
             <div key={f.label} className="fact-row">

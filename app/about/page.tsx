@@ -83,7 +83,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section id="projects" className="mt-20 scroll-mt-24 border-t border-border pt-16">
+      <section id="projects" className="mt-20 scroll-mt-24 pt-4">
         <SectionHeader
           label="More projects"
           title="Other things I've built"
@@ -96,7 +96,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="mt-20 border-t border-border pt-16">
+      <section className="mt-20 pt-4">
         <SectionHeader
           label="Activity"
           title="The last six months in code"

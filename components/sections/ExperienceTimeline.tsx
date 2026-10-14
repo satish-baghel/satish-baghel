@@ -11,7 +11,7 @@ export function ExperienceTimeline({ items }: { items: Experience[] }) {
         return (
           <li
             key={`${job.company}-${job.start}`}
-            className="grid gap-4 border-t border-border pt-6 md:grid-cols-[13rem_1fr] md:gap-10"
+            className="clay grid gap-4 p-6 sm:p-8 md:grid-cols-[13rem_1fr] md:gap-10"
           >
             <div>
               <p className="text-sm font-semibold text-highlight">

@@ -7,7 +7,7 @@ export function MoreProjects() {
       {MORE_PROJECTS.map((p) => (
         <li
           key={p.name}
-          className="rounded-lg border border-border bg-card p-6 shadow-[var(--shadow-card)]"
+          className="clay p-6"
         >
           <p className="text-xs font-semibold uppercase tracking-wider text-highlight">
             {p.kind}

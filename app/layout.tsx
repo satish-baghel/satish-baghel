@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Geist, Geist_Mono } from "next/font/google";
+import { Fredoka, Geist_Mono, Nunito } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
@@ -8,16 +8,17 @@ import { JsonLd } from "@/components/shared/JsonLd";
 import { site } from "@/lib/site";
 import { EDUCATION, EXPERIENCE, SKILLS } from "@/lib/resume";
 
-// Fraunces (headings) + Geist (body) + Geist Mono (code). next/font downloads
-// them at build time and self-hosts them, so visitors never hit Google.
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+// Fredoka (rounded headings) + Nunito (rounded, readable body) + Geist Mono
+// (code). next/font downloads them at build time and self-hosts them, so
+// visitors never hit Google.
+const fredoka = Fredoka({
+  variable: "--font-fredoka",
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const nunito = Nunito({
+  variable: "--font-nunito",
   subsets: ["latin"],
   display: "swap",
 });
@@ -85,8 +86,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: "light dark",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f3ee" },
-    { media: "(prefers-color-scheme: dark)", color: "#0d1324" },
+    { media: "(prefers-color-scheme: light)", color: "#f3eefb" },
+    { media: "(prefers-color-scheme: dark)", color: "#1d1a2b" },
   ],
 };
 
@@ -170,7 +171,7 @@ export default function RootLayout({
       // this element's attributes (one level deep only). See Next.js "Preventing
       // flash before hydration" guide.
       suppressHydrationWarning
-      className={`${fraunces.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${fredoka.variable} ${nunito.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
@@ -178,7 +179,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary-solid focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-primary-solid focus:px-4 focus:py-2 focus:text-white"
         >
           Skip to content
         </a>
