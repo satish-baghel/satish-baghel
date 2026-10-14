@@ -29,13 +29,17 @@ export default function Home() {
   return (
     <div className="mx-auto w-full max-w-5xl px-6">
       {/* Intro */}
-      <section className="grid items-center gap-14 py-16 sm:py-24 md:grid-cols-[1.25fr_0.75fr]">
+      <section className="relative isolate grid items-center gap-14 py-16 sm:py-24 md:grid-cols-[1.25fr_0.75fr]">
+        {/* Decorative clay pebbles; hidden from assistive tech. */}
+        <span aria-hidden="true" className="clay-blob -left-16 top-0 h-20 w-20 bg-clay-mint sm:-left-16 sm:top-10 sm:h-24 sm:w-24" />
+        <span aria-hidden="true" className="clay-blob right-[38%] top-6 hidden h-10 w-10 bg-clay-butter md:block" />
+        <span aria-hidden="true" className="clay-blob -right-6 bottom-8 h-16 w-16 bg-clay-sky sm:-right-12" />
         <div>
           <p className="section-label">{site.tagline}</p>
-          <h1 className="font-display mt-5 text-5xl font-medium leading-[1.05] text-foreground sm:text-6xl">
+          <h1 className="font-display mt-5 text-5xl font-semibold leading-[1.05] text-foreground sm:text-6xl">
             Satish Baghel
           </h1>
-          <p className="font-display mt-4 text-2xl font-light italic leading-snug text-primary sm:text-3xl">
+          <p className="font-display mt-4 text-2xl font-normal leading-snug text-primary sm:text-3xl">
             I build the parts of a web product that have to keep working.
           </p>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
@@ -66,7 +70,7 @@ export default function Home() {
         </figure>
       </section>
 
-      <section id="hiring" className="border-t border-border py-16">
+      <section id="hiring" className="py-16">
         <SectionHeader
           label="For hiring teams"
           title="The 30-second version"
@@ -76,7 +80,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-t border-border py-16">
+      <section className="py-16">
         <SectionHeader
           label="Jargon decoder"
           title="The tech words on this site, in plain English"
@@ -87,7 +91,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="work" className="border-t border-border py-16">
+      <section id="work" className="py-16">
         <SectionHeader
           label="Selected work"
           title="Three products I helped build"
@@ -99,7 +103,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-t border-border py-16">
+      <section className="py-16">
         <SectionHeader
           label="Career path"
           title="From intern to software engineer"
@@ -111,14 +115,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-t border-border py-16">
+      <section className="py-16">
         <SectionHeader label="Skills" title="What I work with" />
         <div className="mt-10">
           <Skills />
         </div>
       </section>
 
-      <section className="border-t border-border py-16">
+      <section className="py-16">
         <SectionHeader
           label="Working with me"
           title="Four habits I bring to a team"
@@ -129,7 +133,7 @@ export default function Home() {
       </section>
 
       {featured && (
-        <section className="border-t border-border py-16">
+        <section className="py-16">
           <SectionHeader
             label="Writing"
             title="Notes from the job"
@@ -149,8 +153,8 @@ export default function Home() {
         </section>
       )}
 
-      <section id="contact" className="border-t border-border py-16">
-        <div className="rounded-lg bg-primary-solid px-6 py-12 text-white sm:px-12">
+      <section id="contact" className="py-16">
+        <div className="rounded-[2.25rem] bg-primary-solid px-6 py-12 text-white shadow-clay-button sm:px-12">
           <h2 className="font-display text-3xl font-medium sm:text-4xl">
             Got a hard backend problem?
           </h2>

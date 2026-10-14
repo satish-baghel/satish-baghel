@@ -6,23 +6,23 @@ import { FEATURED_PROJECTS } from "@/lib/resume";
  */
 export function FeaturedWork() {
   return (
-    <div className="divide-y divide-border border-y border-border">
+    <div className="space-y-6">
       {FEATURED_PROJECTS.map((p, i) => (
         <article
           key={p.name}
-          className="grid gap-6 py-10 md:grid-cols-[0.8fr_1.2fr] md:gap-12"
+          className="clay grid gap-6 p-6 sm:p-8 md:grid-cols-[0.8fr_1.2fr] md:gap-12"
         >
           <header>
-            <p className="font-display text-5xl font-light text-highlight/70">
+            <p className="font-display flex h-14 w-14 items-center justify-center rounded-full bg-highlight-solid text-2xl font-semibold text-highlight-ink shadow-clay-button">
               {String(i + 1).padStart(2, "0")}
             </p>
-            <h3 className="font-display mt-3 text-2xl font-medium text-foreground">
+            <h3 className="font-display mt-4 text-2xl font-semibold text-foreground">
               {p.url ? (
                 <a
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline decoration-border underline-offset-[6px] transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="rounded-sm underline decoration-primary/30 decoration-2 underline-offset-[6px] transition-colors hover:text-primary hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {p.name}
                   <span aria-hidden="true" className="ml-1 text-base text-muted-foreground">
@@ -65,7 +65,7 @@ function Row({
 }) {
   return (
     <div>
-      <dt className="text-xs font-semibold uppercase tracking-wider text-primary">
+      <dt className="text-xs font-extrabold uppercase tracking-wider text-primary">
         {term}
       </dt>
       <dd

@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 export function PostCard({ post }: { post: PostMeta }) {
   return (
     <Card asChild>
-      <article className="group relative flex flex-col p-5 transition-all duration-200 hover:border-primary/60 hover:shadow-[var(--shadow-card-hover)]">
+      <article className="group relative flex flex-col p-5 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-clay-hover motion-reduce:transition-none motion-reduce:hover:translate-y-0">
         <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
             <time dateTime={post.date}>{formatDate(post.date)}</time>

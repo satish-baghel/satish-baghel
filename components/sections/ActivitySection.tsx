@@ -80,11 +80,11 @@ function ActivityCard({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex flex-col p-5 transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+        className="group flex flex-col p-5 transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-clay-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none motion-reduce:hover:translate-y-0"
       >
         {/* Header: brand chip + name/handle + external hint */}
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-muted text-foreground transition-colors group-hover:border-primary/50 group-hover:text-primary">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-muted text-foreground shadow-clay-inset transition-colors group-hover:text-primary">
             {icon}
           </span>
           <div className="min-w-0">
@@ -173,7 +173,7 @@ function Stat({
 /** Shown when there is no activity in the current window. */
 function EmptyState({ unit }: { unit: string }) {
   return (
-    <div className="flex h-[128px] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border text-center">
+    <div className="flex h-[128px] flex-col items-center justify-center gap-2 clay-inset text-center">
       <CalendarIcon className="h-6 w-6 text-muted-foreground" />
       <p className="max-w-[16rem] text-sm text-muted-foreground">
         No {unit} in the last 6 months.
@@ -192,7 +192,7 @@ export function ActivitySectionSkeleton() {
       {[0, 1].map((i) => (
         <div
           key={i}
-          className="h-[280px] animate-pulse rounded-2xl border border-border bg-card"
+          className="h-[280px] clay animate-pulse"
         />
       ))}
     </div>

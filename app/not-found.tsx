@@ -19,7 +19,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-10 inline-flex h-11 items-center gap-1.5 rounded-md bg-primary-solid px-4 text-sm font-medium text-white transition-colors hover:bg-primary-solid-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="mt-10 inline-flex h-11 items-center gap-1.5 rounded-full bg-primary-solid px-5 text-sm font-bold text-white shadow-clay-button transition-colors hover:bg-primary-solid-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         Back home
       </Link>

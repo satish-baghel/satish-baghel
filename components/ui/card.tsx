@@ -4,8 +4,8 @@ import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 
 /*
- * shadcn/ui Card. The site's panels are hard-edged surfaces with a soft drop
- * shadow; padding is left to the caller because cards range from compact
+ * shadcn/ui Card as a puffy clay pebble: big corners, no hard border, and the
+ * layered clay shadow; padding is left to the caller because cards range from compact
  * tiles to roomy feature panels. `asChild` renders the card styles onto a
  * semantic child (li, article, a, details) instead of an extra div.
  */
@@ -20,7 +20,7 @@ function Card({
     <Comp
       data-slot="card"
       className={cn(
-        "rounded-xl border border-border bg-card text-card-foreground shadow-[var(--shadow-card)]",
+        "rounded-2xl border border-transparent bg-card text-card-foreground shadow-clay",
         className,
       )}
       {...props}

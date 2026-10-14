@@ -5,9 +5,9 @@ import { PostCard } from "@/components/blog/PostCard";
 import { FeaturedPost } from "@/components/blog/FeaturedPost";
 
 const chipBase =
-  "inline-flex h-9 items-center gap-1.5 rounded-full border px-3 text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
-const chipActive = "border-primary bg-primary/10 text-primary";
-const chipIdle = "border-border bg-card text-muted-foreground hover:text-foreground";
+  "inline-flex h-9 items-center gap-1.5 rounded-full border border-transparent px-3.5 text-xs font-semibold transition-[box-shadow,color,background-color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+const chipActive = "bg-primary-solid text-white shadow-clay-button";
+const chipIdle = "bg-card text-muted-foreground shadow-clay-sm hover:text-foreground";
 
 export function BlogList({
   posts,
@@ -78,7 +78,7 @@ function PaginationNav({
   const { page, totalPages, hasPrev, hasNext } = pagination;
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   const arrow =
-    "inline-flex h-9 items-center rounded-full border px-3 text-xs transition-colors";
+    "inline-flex h-9 items-center rounded-full border border-transparent px-3.5 text-xs font-semibold transition-colors";
 
   return (
     <nav
