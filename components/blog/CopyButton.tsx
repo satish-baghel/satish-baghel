@@ -4,8 +4,8 @@ import { useState } from "react";
 
 /**
  * Copy-to-clipboard button. Used by the code block chrome and the home-page
- * terminal card. Progressive: if the clipboard API is unavailable it fails
- * silently and the surrounding content is still readable.
+ * terminal card. Progressive: if copying is impossible it fails silently and
+ * the surrounding content is still readable.
  */
 export function CopyButton({
   code,
@@ -17,12 +17,9 @@ export function CopyButton({
   const [copied, setCopied] = useState(false);
 
   async function copy() {
-    try {
-      await navigator.clipboard.writeText(code);
+    if (await writeClipboard(code)) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
-    } catch {
-      // Clipboard blocked (e.g. insecure context) — no-op.
     }
   }
 
@@ -42,8 +39,38 @@ export function CopyButton({
           <ClipboardIcon /> Copy
         </>
       )}
+      {/* Announces the result; the label change alone is not read out. */}
+      <span className="sr-only" role="status">
+        {copied ? "Code copied to clipboard" : ""}
+      </span>
     </button>
   );
+}
+
+/**
+ * Clipboard API first; falls back to a hidden textarea + execCommand for
+ * browsers or contexts (plain http, older Safari) where the API is missing.
+ */
+async function writeClipboard(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const area = document.createElement("textarea");
+    area.value = text;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    try {
+      return document.execCommand("copy");
+    } catch {
+      return false;
+    } finally {
+      area.remove();
+    }
+  }
 }
 
 function ClipboardIcon() {

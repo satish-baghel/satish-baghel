@@ -459,24 +459,29 @@ body {
  * surface itself stays a deep slate in both themes for legibility.
  */
 .code-card {
-  border: 0;
+  --code-bg: #221d36;
+  --code-rule: #342c50;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  background: #221d36;
-  box-shadow: var(--shadow-card);
+  background: var(--code-bg);
+  /* Outer drop only: the clay inset highlights read as a white streak on a
+     dark surface. The 1px ring keeps the edge visible on the dark plum page. */
+  box-shadow: 0 0 0 1px var(--code-rule),
+    12px 14px 28px -10px rgb(var(--clay-shade) / 0.35);
 }
 .code-head {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 0.75rem 0.5rem 1rem;
-  border-bottom: 1px solid #342c50;
+  border-bottom: 1px solid var(--code-rule);
   background: #1b172c;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.75rem;
 }
 .code-dots {
   display: inline-flex;
+  flex-shrink: 0;
   gap: 0.375rem;
 }
 .code-dots span {
@@ -493,25 +498,33 @@ body {
 .code-dots span:nth-child(3) {
   background: #a8e6c8;
 }
+/* Long paths truncate instead of pushing the copy button off a phone screen. */
 .code-file {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: #cbd5e1;
 }
 .code-lang {
-  margin-left: auto;
+  flex-shrink: 0;
   color: #c0d1ff;
-  border: 1px solid #342c50;
+  border: 1px solid var(--code-rule);
   border-radius: 9999px;
   padding: 0.1rem 0.5rem;
   background: rgba(157, 184, 255, 0.12);
 }
 .code-copy {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 0.3rem;
-  color: #94a3b8;
-  border: 1px solid #342c50;
+  min-height: 1.75rem;
+  color: #b4bfd0;
+  border: 1px solid var(--code-rule);
   border-radius: var(--radius-md);
-  padding: 0.15rem 0.5rem;
+  padding: 0.15rem 0.55rem;
   background: transparent;
   cursor: pointer;
   transition: color 0.15s, border-color 0.15s;
@@ -522,13 +535,33 @@ body {
 }
 .code-copy:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--primary);
+  box-shadow: 0 0 0 2px #c3b4ff;
 }
-/* react-syntax-highlighter renders its own <pre>; reset prose spacing/border. */
-.code-card pre {
+/*
+ * react-syntax-highlighter renders its own <pre> with inline One Dark styles;
+ * reset them. The background layers are scroll shadows: edge fades that only
+ * appear when there is more code to scroll to on that side (CSS only).
+ */
+.code-card pre.code-body {
   margin: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background: transparent !important;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #4a4068 transparent;
+  background:
+    linear-gradient(to right, var(--code-bg) 40%, transparent) left / 2.5rem 100% no-repeat local,
+    linear-gradient(to left, var(--code-bg) 40%, transparent) right / 2.5rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgb(195 180 255 / 0.28), transparent) left / 0.75rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgb(195 180 255 / 0.28), transparent) right / 0.75rem 100% no-repeat scroll,
+    var(--code-bg) !important;
+}
+.code-card pre.code-body:focus-visible {
+  outline: 2px solid #c3b4ff;
+  outline-offset: -2px;
+}
+/* Keep tokens on the shadow layer's surface, not their own boxes. */
+.code-card pre.code-body code {
+  background: none !important;
 }
 
