@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug, formatDate, type Post } from "@/lib/posts";
 import { parseMarkdown, slugify } from "@/lib/markdown";
@@ -75,7 +77,11 @@ function buildSchemas(post: Post): Record<string, unknown>[] {
       url: `${site.url}/about`,
       sameAs: [site.github, site.linkedin, site.leetcode],
     },
-    publisher: { "@type": "Person", "@id": `${site.url}/#person`, name: site.name },
+    publisher: {
+      "@type": "Person",
+      "@id": `${site.url}/#person`,
+      name: site.name,
+    },
     mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
     keywords: post.tags.join(", "),
     audience: { "@type": "Audience", audienceType: "Software developers" },
@@ -86,7 +92,12 @@ function buildSchemas(post: Post): Record<string, unknown>[] {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: site.url },
-      { "@type": "ListItem", position: 2, name: "Blog", item: `${site.url}/blog` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: `${site.url}/blog`,
+      },
       { "@type": "ListItem", position: 3, name: post.title, item: pageUrl },
     ],
   });
@@ -138,21 +149,25 @@ export default async function PostPage({
         <JsonLd key={index} data={schema} />
       ))}
 
-      <Link
-        href="/blog"
-        className="font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+      <Button
+        asChild
+        variant="ghost"
+        size="sm"
+        className="-ml-3 text-muted-foreground hover:text-primary"
       >
-        ← Back to blog
-      </Link>
+        <Link href="/blog">
+          <ArrowLeft aria-hidden="true" /> Back to blog
+        </Link>
+      </Button>
 
       <header className="mt-6 border-b border-border pb-8">
-        <p className="font-mono text-sm font-medium text-accent">
+        <p className="text-xs font-semibold uppercase tracking-widest text-primary">
           {post.type === "howto" ? "Guide" : "Article"}
         </p>
-        <h1 className="font-display mt-3 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+        <h1 className="font-display mt-3 text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
           {post.title}
         </h1>
-        <div className="mt-4 flex flex-wrap items-center gap-2 font-mono text-xs text-muted">
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           {post.updated && post.updated !== post.date && (
             <>
@@ -192,15 +207,14 @@ export default async function PostPage({
       </div>
 
       <footer className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-8">
-        <p className="text-sm text-muted">
+        <p className="text-sm text-muted-foreground">
           Written by <span className="text-foreground">{site.name}</span>
         </p>
-        <Link
-          href="/blog"
-          className="font-mono inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3.5 py-2 text-sm text-muted transition-colors hover:border-accent/60 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        >
-          <span aria-hidden="true">←</span> All posts
-        </Link>
+        <Button asChild variant="outline">
+          <Link href="/blog">
+            <ArrowLeft aria-hidden="true" /> All posts
+          </Link>
+        </Button>
       </footer>
     </article>
   );

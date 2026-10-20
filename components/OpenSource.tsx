@@ -1,4 +1,7 @@
 import { OPEN_SOURCE } from "@/lib/resume";
+import { ArrowRight, ArrowUpRight, Code2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
 
 /**
@@ -10,37 +13,38 @@ export function OpenSource({ className = "" }: { className?: string }) {
 
   return (
     <div className={className}>
-      <ul className="grid gap-4 sm:grid-cols-2" aria-label="Open-source projects">
+      <ul
+        className="grid gap-4 sm:grid-cols-2"
+        aria-label="Open-source projects"
+      >
         {OPEN_SOURCE.map((repo) => (
           <li key={repo.name}>
             <a
               href={repo.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex h-full flex-col rounded-xl border border-border bg-surface p-5 shadow-[var(--shadow-card)] transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="group flex h-full flex-col rounded-xl border bg-card p-6 text-card-foreground shadow-[var(--shadow-card)] outline-none transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-[var(--shadow-card-hover)] focus-visible:ring-[3px] focus-visible:ring-ring/50"
             >
-              <span className="flex items-center gap-2 font-mono text-sm font-semibold text-foreground">
-                <span aria-hidden="true" className="text-accent">
-                  {"</>"}
-                </span>
+              <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                <Code2 aria-hidden="true" className="size-4 text-primary" />
                 {repo.name}
-                <span
+                <ArrowUpRight
                   aria-hidden="true"
-                  className="ml-auto text-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
-                >
-                  ↗
-                </span>
+                  className="ml-auto size-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-primary"
+                />
               </span>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {repo.description}
               </p>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {repo.tech.map((t) => (
-                  <li
-                    key={t}
-                    className="rounded-md border border-border bg-surface-muted px-2 py-1 font-mono text-xs text-muted"
-                  >
-                    {t}
+                  <li key={t}>
+                    <Badge
+                      variant="secondary"
+                      className="font-normal text-muted-foreground"
+                    >
+                      {t}
+                    </Badge>
                   </li>
                 ))}
               </ul>
@@ -48,15 +52,17 @@ export function OpenSource({ className = "" }: { className?: string }) {
           </li>
         ))}
       </ul>
-      <a
-        href={site.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-4 inline-flex items-center gap-1.5 font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+      <Button
+        asChild
+        variant="ghost"
+        size="sm"
+        className="mt-4 text-muted-foreground hover:text-primary"
       >
-        See more on GitHub
-        <span aria-hidden="true">→</span>
-      </a>
+        <a href={site.github} target="_blank" rel="noopener noreferrer">
+          See more on GitHub
+          <ArrowRight aria-hidden="true" />
+        </a>
+      </Button>
     </div>
   );
 }

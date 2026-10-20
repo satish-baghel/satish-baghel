@@ -192,6 +192,7 @@ export function getAllPostsMeta(): PostMeta[] {
       continue;
     }
     // `content` is intentionally discarded — the index only holds metadata.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { content: _content, ...meta } = readPost(file);
     metaCache.set(file, { mtimeMs, meta });
     metas.push(meta);

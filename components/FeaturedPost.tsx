@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { type PostMeta, formatDate } from "@/lib/types";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { TagChip } from "@/components/TagChip";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 
 /**
  * Large editorial "featured" card for the newest post. Visually heavier than
@@ -9,12 +12,12 @@ import { TagChip } from "@/components/TagChip";
  */
 export function FeaturedPost({ post }: { post: PostMeta }) {
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-border bg-surface p-7 shadow-[var(--shadow-card)] transition-all duration-200 hover:border-accent/60 hover:shadow-[var(--shadow-card-hover)] sm:p-9">
-      <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-muted">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-highlight/30 bg-highlight/10 px-2.5 py-0.5 font-medium text-highlight">
-          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-highlight" />
+    <Card className="cta-glow group relative gap-0 overflow-hidden p-7 shadow-[var(--shadow-card)] transition-all duration-200 hover:border-primary/50 hover:shadow-[var(--shadow-card-hover)] sm:p-9">
+      <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+        <Badge className="bg-brand-gradient text-white">
+          <Sparkles aria-hidden="true" />
           Featured
-        </span>
+        </Badge>
         <time dateTime={post.date}>{formatDate(post.date)}</time>
         <span aria-hidden="true">·</span>
         <span>{post.readingMinutes} min read</span>
@@ -23,13 +26,15 @@ export function FeaturedPost({ post }: { post: PostMeta }) {
       <h3 className="font-display mt-4 text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
         <Link
           href={`/blog/${post.slug}`}
-          className="text-foreground transition-colors after:absolute after:inset-0 group-hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+          className="rounded-sm text-foreground outline-none transition-colors after:absolute after:inset-0 group-hover:text-primary focus-visible:ring-[3px] focus-visible:ring-ring/50"
         >
           {post.title}
         </Link>
       </h3>
 
-      <p className="mt-3 max-w-2xl leading-relaxed text-muted">{post.excerpt}</p>
+      <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
+        {post.excerpt}
+      </p>
 
       {post.tags.length > 0 && (
         <div className="relative mt-5 flex flex-wrap gap-2">
@@ -39,12 +44,13 @@ export function FeaturedPost({ post }: { post: PostMeta }) {
         </div>
       )}
 
-      <span className="font-mono relative mt-6 inline-flex items-center gap-1 text-sm font-medium text-accent">
+      <span className="relative mt-6 inline-flex items-center gap-1 text-sm font-medium text-primary">
         Read article
-        <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-0.5">
-          →
-        </span>
+        <ArrowRight
+          aria-hidden="true"
+          className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+        />
       </span>
-    </article>
+    </Card>
   );
 }

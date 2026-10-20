@@ -1,10 +1,11 @@
-import { FaTag } from "react-icons/fa6";
+import { Hash } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export function TagChip({ tag }: { tag: string }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-xs text-muted">
-      <FaTag className="text-accent" size={10} aria-hidden="true" />
+    <Badge variant="secondary" className="font-normal text-muted-foreground">
+      <Hash className="text-primary" aria-hidden="true" />
       {tag}
-    </span>
+    </Badge>
   );
 }

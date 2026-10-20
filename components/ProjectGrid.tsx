@@ -7,7 +7,7 @@ import type { Project } from "@/lib/resume";
  */
 export function ProjectGrid({ projects }: { projects: Project[] }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
+    <div data-reveal-stagger className="grid gap-4 sm:grid-cols-2">
       {projects.map((project, i) => (
         <div key={project.name} className={i === 0 ? "sm:col-span-2" : ""}>
           <ProjectCard project={project} index={i} featured={i === 0} />

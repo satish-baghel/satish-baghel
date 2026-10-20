@@ -1,35 +1,43 @@
+import { ArrowUpRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { CASE_STUDIES } from "@/lib/resume";
 
 /**
  * Flagship case studies — problem → approach → result, told as a short story a
  * hiring manager can follow. Deeper than a project card, lighter than a page.
  */
-export function CaseStudies({ className = "" }: { className?: string }) {
+export function CaseStudies({ className }: { className?: string }) {
   if (CASE_STUDIES.length === 0) return null;
 
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div data-reveal-stagger className={cn("space-y-4", className)}>
       {CASE_STUDIES.map((cs) => (
-        <article
+        <Card
           key={cs.name}
-          className="rounded-2xl border border-border bg-surface p-6 shadow-[var(--shadow-card)] transition-colors hover:border-accent/40 sm:p-8"
+          className="spotlight gap-0 p-6 shadow-[var(--shadow-card)] transition-colors hover:border-primary/40 sm:p-8"
         >
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
               {cs.name}
             </h3>
             {cs.url && (
-              <a
-                href={cs.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-sm text-muted transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground hover:text-primary"
               >
-                Visit site →
-              </a>
+                <a href={cs.url} target="_blank" rel="noopener noreferrer">
+                  Visit site
+                  <ArrowUpRight />
+                </a>
+              </Button>
             )}
           </div>
-          <p className="mt-1 font-mono text-sm text-accent">{cs.tagline}</p>
+          <p className="mt-1 text-sm font-medium text-primary">{cs.tagline}</p>
 
           <dl className="mt-5 space-y-4">
             <Row label="Problem" value={cs.problem} />
@@ -39,15 +47,17 @@ export function CaseStudies({ className = "" }: { className?: string }) {
 
           <ul className="mt-5 flex flex-wrap gap-2">
             {cs.tech.map((t) => (
-              <li
-                key={t}
-                className="rounded-md border border-border bg-surface-muted px-2 py-1 font-mono text-xs text-muted"
-              >
-                {t}
+              <li key={t}>
+                <Badge
+                  variant="secondary"
+                  className="font-normal text-muted-foreground"
+                >
+                  {t}
+                </Badge>
               </li>
             ))}
           </ul>
-        </article>
+        </Card>
       ))}
     </div>
   );
@@ -64,13 +74,14 @@ function Row({
 }) {
   return (
     <div className="grid gap-1 sm:grid-cols-[7rem_1fr] sm:gap-4">
-      <dt className="font-mono text-xs uppercase tracking-widest text-muted">
+      <dt className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
         {label}
       </dt>
       <dd
-        className={`text-sm leading-relaxed ${
-          accent ? "font-medium text-foreground" : "text-muted"
-        }`}
+        className={cn(
+          "text-sm leading-relaxed",
+          accent ? "font-medium text-foreground" : "text-muted-foreground",
+        )}
       >
         {value}
       </dd>

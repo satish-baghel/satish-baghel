@@ -5,9 +5,11 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
+import { ScrollEffects } from "@/components/ScrollEffects";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { site } from "@/lib/site";
 
-// Technical pairing: Geist (UI + headings) + Geist Mono (code).
+// Technical pairing: Geist (UI + headings) + Geist Mono (code/terminal).
 // Geist is bundled/self-hosted by Next.js, so it needs no build-time
 // network fetch to Google Fonts (unlike Inter, which was flaky here).
 const geistSans = Geist({
@@ -54,14 +56,16 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: "light dark",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#020617" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#09090b" },
   ],
 };
 
 // Runs before paint to set the theme from storage (dark-first default),
 // avoiding a flash of the wrong theme on load.
-const themeScript = `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
+// Also tags <html class="js"> so scroll-reveal start states only apply when
+// JavaScript is running (no-JS visitors and crawlers see all content).
+const themeScript = `(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');d.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){d.setAttribute('data-theme','dark');}})();`;
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -128,16 +132,19 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-accent-solid focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
         >
           Skip to content
         </a>
         <JsonLd data={websiteSchema} />
-        <Header />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <TooltipProvider delayDuration={200}>
+          <Header />
+          <main id="main" className="flex-1 overflow-x-clip">
+            {children}
+          </main>
+          <Footer />
+        </TooltipProvider>
+        <ScrollEffects />
         <Analytics />
       </body>
     </html>

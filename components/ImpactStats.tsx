@@ -1,32 +1,35 @@
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { IMPACT_STATS } from "@/lib/resume";
 
 /**
  * "By the numbers" dashboard — a richer, quantified impact grid than the hero
- * metrics. Amber figures draw the eye; the detail line gives each number context.
+ * metrics. Gradient figures draw the eye; the detail line gives each number context.
  */
-export function ImpactStats({ className = "" }: { className?: string }) {
+export function ImpactStats({ className }: { className?: string }) {
   return (
     <dl
-      className={`grid grid-cols-2 gap-3 sm:grid-cols-3 ${className}`}
+      data-reveal-stagger
+      className={cn("grid grid-cols-2 gap-3 sm:grid-cols-3", className)}
       aria-label="Impact by the numbers"
     >
       {IMPACT_STATS.map((stat) => (
-        <div
+        <Card
           key={stat.label}
-          className="rounded-xl border border-border bg-surface px-4 py-4 transition-colors hover:border-highlight/50"
+          className="spotlight gap-0 p-5 shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/50"
         >
-          <dt className="font-display text-2xl font-semibold tracking-tight text-highlight sm:text-3xl">
+          <dt className="font-display w-fit text-3xl font-bold tracking-tight text-gradient sm:text-4xl">
             {stat.value}
           </dt>
           <dd className="mt-1.5">
-            <span className="block text-sm font-semibold tracking-tight text-foreground">
+            <span className="block text-sm font-semibold text-foreground">
               {stat.label}
             </span>
-            <span className="mt-0.5 block font-mono text-[11px] text-muted">
+            <span className="mt-0.5 block text-xs text-muted-foreground">
               {stat.detail}
             </span>
           </dd>
-        </div>
+        </Card>
       ))}
     </dl>
   );

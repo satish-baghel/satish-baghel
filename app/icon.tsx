@@ -14,30 +14,29 @@ const photoSrc = `data:image/png;base64,${photo.toString("base64")}`;
 
 export default function Icon() {
   return new ImageResponse(
-    (
-      <div
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(135deg, #7c3aed, #4f46e5)",
+      }}
+    >
+      <img
+        alt=""
+        src={photoSrc}
+        width={32}
+        height={32}
         style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#020617",
+          width: 32,
+          height: 32,
+          borderRadius: "50%",
+          objectFit: "cover",
         }}
-      >
-        <img
-          src={photoSrc}
-          width={32}
-          height={32}
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: "50%",
-            objectFit: "cover",
-          }}
-        />
-      </div>
-    ),
+      />
+    </div>,
     { ...size },
   );
 }

@@ -7,10 +7,10 @@ import { SkillBadge } from "@/components/SkillBadge";
  */
 export function SkillsBreakdown({ className = "" }: { className?: string }) {
   return (
-    <div className={`space-y-7 ${className}`}>
+    <div data-reveal-stagger className={`space-y-7 ${className}`}>
       {Object.entries(SKILLS).map(([group, items]) => (
         <div key={group}>
-          <h3 className="font-mono text-xs uppercase tracking-widest text-muted">
+          <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             {group}
           </h3>
           <ul className="mt-3 flex flex-wrap gap-2.5">

@@ -1,6 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 
 /**
@@ -11,7 +16,7 @@ import { site } from "@/lib/site";
  * real provider (Buttondown, ConvertKit, Resend, …), replace the body of
  * `handleSubmit` with a fetch to your API route.
  */
-export function Newsletter({ className = "" }: { className?: string }) {
+export function Newsletter({ className }: { className?: string }) {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
 
@@ -25,21 +30,21 @@ export function Newsletter({ className = "" }: { className?: string }) {
   }
 
   return (
-    <div
-      className={`rounded-2xl border border-border bg-surface p-6 shadow-[var(--shadow-card)] sm:p-8 ${className}`}
+    <Card
+      className={cn("gap-0 p-6 shadow-[var(--shadow-card)] sm:p-8", className)}
     >
-      <h3 className="font-display text-lg font-semibold tracking-tight text-foreground">
+      <h3 className="font-display text-lg font-semibold text-foreground">
         Stay in the loop
       </h3>
-      <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
+      <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
         Occasional notes on backend architecture, performance, and what I&apos;m
         building. No spam — unsubscribe anytime.
       </p>
 
       {done ? (
-        <p className="mt-5 inline-flex items-center gap-2 rounded-lg border border-accent/30 bg-accent/10 px-4 py-2.5 text-sm font-medium text-accent">
-          <span aria-hidden="true">✓</span> Thanks — check your mail client to
-          confirm.
+        <p className="mt-5 inline-flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/10 px-4 py-2.5 text-sm font-medium text-primary">
+          <Check className="size-4" aria-hidden="true" /> Thanks — check your
+          mail client to confirm.
         </p>
       ) : (
         <form
@@ -49,23 +54,20 @@ export function Newsletter({ className = "" }: { className?: string }) {
           <label htmlFor="newsletter-email" className="sr-only">
             Email address
           </label>
-          <input
+          <Input
             id="newsletter-email"
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="h-11 flex-1 rounded-lg border border-border bg-background px-4 font-mono text-sm text-foreground placeholder:text-muted focus-visible:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="h-10 flex-1"
           />
-          <button
-            type="submit"
-            className="inline-flex h-11 items-center justify-center rounded-lg bg-accent-solid px-5 font-mono text-sm font-semibold text-white transition-colors hover:bg-accent-solid-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
+          <Button type="submit" size="lg">
             Subscribe
-          </button>
+          </Button>
         </form>
       )}
-    </div>
+    </Card>
   );
 }

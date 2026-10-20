@@ -33,25 +33,25 @@ type IconProps = { name: string; size?: number };
 
 /**
  * Brand mark + colour per tech. `color` is the official brand hue; on the
- * dark canvas near-black brands (Next.js, GitHub, Express) fall back to a
- * light neutral so they stay visible.
+ * near-black brands (Next.js, GitHub, Express, Socket.io) use the theme's
+ * foreground, and JS yellow uses a per-theme var, so they read in both modes.
  */
 const BRANDS: Record<string, { Icon: IconType; color: string }> = {
-  JavaScript: { Icon: SiJavascript, color: "#F7DF1E" },
+  JavaScript: { Icon: SiJavascript, color: "var(--brand-js)" },
   TypeScript: { Icon: SiTypescript, color: "#3178C6" },
   React: { Icon: SiReact, color: "#61DAFB" },
-  "Next.js": { Icon: SiNextdotjs, color: "#E5E9F0" },
+  "Next.js": { Icon: SiNextdotjs, color: "var(--foreground)" },
   "Node.js": { Icon: SiNodedotjs, color: "#5FA04E" },
-  Express: { Icon: SiExpress, color: "#CBD5E1" },
+  Express: { Icon: SiExpress, color: "var(--foreground)" },
   MongoDB: { Icon: SiMongodb, color: "#47A248" },
   MySQL: { Icon: SiMysql, color: "#4479A1" },
   Redis: { Icon: SiRedis, color: "#FF4438" },
-  "Socket.io": { Icon: SiSocketdotio, color: "#CBD5E1" },
+  "Socket.io": { Icon: SiSocketdotio, color: "var(--foreground)" },
   Redux: { Icon: SiRedux, color: "#9B6BE0" },
   Tailwind: { Icon: SiTailwindcss, color: "#38BDF8" },
   "Tailwind CSS": { Icon: SiTailwindcss, color: "#38BDF8" },
   Git: { Icon: SiGit, color: "#F05032" },
-  GitHub: { Icon: SiGithub, color: "#E5E9F0" },
+  GitHub: { Icon: SiGithub, color: "var(--foreground)" },
   Stripe: { Icon: SiStripe, color: "#8B85FF" },
   Bootstrap: { Icon: SiBootstrap, color: "#8B5CF6" },
 };
@@ -71,7 +71,7 @@ export function TechIcon({ name, size = 28 }: IconProps) {
           height: tile,
           fontSize: Math.round(size * 0.42),
         }}
-        className="inline-flex flex-shrink-0 items-center justify-center rounded-[7px] border border-white/10 bg-white/[0.06] font-mono font-bold uppercase text-muted"
+        className="inline-flex flex-shrink-0 items-center justify-center rounded-[7px] border border-border bg-muted font-mono font-bold uppercase text-muted-foreground"
       >
         {name.slice(0, 2)}
       </span>

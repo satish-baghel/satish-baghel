@@ -1,24 +1,32 @@
+import { Check } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { ACHIEVEMENTS } from "@/lib/resume";
 
 /**
- * Career highlights — quantified wins as a checklist. Each amber tick reinforces
+ * Career highlights — quantified wins as a checklist. Each violet tick reinforces
  * "done, shipped, measured" at a glance.
  */
-export function Achievements({ className = "" }: { className?: string }) {
+export function Achievements({ className }: { className?: string }) {
   return (
-    <ul className={`grid gap-3 sm:grid-cols-2 ${className}`} aria-label="Achievements">
+    <ul
+      data-reveal-stagger
+      className={cn("grid gap-3 sm:grid-cols-2", className)}
+      aria-label="Achievements"
+    >
       {ACHIEVEMENTS.map((item) => (
-        <li
-          key={item}
-          className="flex items-start gap-3 rounded-xl border border-border bg-surface p-4 shadow-[var(--shadow-card)] transition-colors hover:border-accent/40"
-        >
-          <span
-            aria-hidden="true"
-            className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-[11px] font-bold text-accent"
-          >
-            ✓
-          </span>
-          <span className="text-sm leading-relaxed text-foreground/90">{item}</span>
+        <li key={item}>
+          <Card className="spotlight h-full flex-row items-start gap-3 p-4 shadow-none transition-colors hover:border-primary/40">
+            <span
+              aria-hidden="true"
+              className="mt-0.5 flex size-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary"
+            >
+              <Check className="size-3" strokeWidth={3} />
+            </span>
+            <span className="text-sm leading-relaxed text-foreground/90">
+              {item}
+            </span>
+          </Card>
         </li>
       ))}
     </ul>

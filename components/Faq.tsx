@@ -1,30 +1,33 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { FAQS } from "@/lib/resume";
 
 /**
- * FAQ accordion. Uses native <details>/<summary> — no client JS, works without
- * hydration, and stays accessible by default. Doubles as SEO/AEO content;
- * pair with FAQPage JSON-LD on the page if you want rich results.
+ * FAQ accordion (shadcn/Radix). Answers stay in the server-rendered HTML, so
+ * the content still doubles as SEO/AEO copy; pair with FAQPage JSON-LD on the
+ * page if you want rich results.
  */
-export function Faq({ className = "" }: { className?: string }) {
+export function Faq({ className }: { className?: string }) {
   return (
-    <div className={`space-y-3 ${className}`}>
-      {FAQS.map((item) => (
-        <details
-          key={item.q}
-          className="group rounded-xl border border-border bg-surface px-5 py-4 shadow-[var(--shadow-card)] transition-colors hover:border-accent/40 open:border-accent/40"
-        >
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-base font-semibold tracking-tight text-foreground marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded">
-            {item.q}
-            <span
-              aria-hidden="true"
-              className="flex-shrink-0 font-mono text-lg text-accent transition-transform duration-200 group-open:rotate-45"
-            >
-              +
-            </span>
-          </summary>
-          <p className="mt-3 text-sm leading-relaxed text-muted">{item.a}</p>
-        </details>
-      ))}
-    </div>
+    <Card className={cn("gap-0 px-6 py-2", className)}>
+      <Accordion type="single" collapsible>
+        {FAQS.map((item) => (
+          <AccordionItem key={item.q} value={item.q}>
+            <AccordionTrigger className="font-display text-base font-semibold hover:text-primary hover:no-underline">
+              {item.q}
+            </AccordionTrigger>
+            <AccordionContent className="leading-relaxed text-muted-foreground">
+              {item.a}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </Card>
   );
 }

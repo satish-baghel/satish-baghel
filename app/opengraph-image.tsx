@@ -7,39 +7,44 @@ export const contentType = "image/png";
 
 export default function Image() {
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        padding: "80px",
+        background: "linear-gradient(135deg, #09090b 0%, #1e1b4b 100%)",
+        color: "#fafafa",
+        fontFamily: "sans-serif",
+      }}
+    >
+      <div style={{ display: "flex", fontSize: 28, color: "#a78bfa" }}>
+        {new URL(site.url).hostname}
+      </div>
       <div
         style={{
-          width: "100%",
-          height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "80px",
-          background: "#020617",
-          color: "#f8fafc",
-          fontFamily: "sans-serif",
+          fontSize: 72,
+          fontWeight: 600,
+          marginTop: 24,
+          letterSpacing: "-0.02em",
         }}
       >
-        <div style={{ display: "flex", fontSize: 28, color: "#818cf8" }}>
-          {new URL(site.url).hostname}
-        </div>
-        <div
-          style={{
-            display: "flex",
-            fontSize: 72,
-            fontWeight: 600,
-            marginTop: 24,
-            letterSpacing: "-0.02em",
-          }}
-        >
-          {site.name}
-        </div>
-        <div style={{ display: "flex", fontSize: 34, color: "#94a3b8", marginTop: 16 }}>
-          {site.jobTitle} · Next.js, React & TypeScript
-        </div>
+        {site.name}
       </div>
-    ),
+      <div
+        style={{
+          display: "flex",
+          fontSize: 34,
+          color: "#a1a1aa",
+          marginTop: 16,
+        }}
+      >
+        {site.jobTitle} · Next.js, React & TypeScript
+      </div>
+    </div>,
     { ...size },
   );
 }

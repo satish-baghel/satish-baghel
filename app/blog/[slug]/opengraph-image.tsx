@@ -20,39 +20,37 @@ export default async function Image({
   const title = post?.title ?? site.name;
 
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "80px",
+        background: "linear-gradient(135deg, #09090b 0%, #1e1b4b 100%)",
+        color: "#fafafa",
+        fontFamily: "sans-serif",
+      }}
+    >
+      <div style={{ display: "flex", fontSize: 28, color: "#a78bfa" }}>
+        {new URL(site.url).hostname} / blog
+      </div>
       <div
         style={{
-          width: "100%",
-          height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "80px",
-          background: "#020617",
-          color: "#f8fafc",
-          fontFamily: "sans-serif",
+          fontSize: 60,
+          fontWeight: 600,
+          letterSpacing: "-0.02em",
+          lineHeight: 1.15,
         }}
       >
-        <div style={{ display: "flex", fontSize: 28, color: "#818cf8" }}>
-          {new URL(site.url).hostname} / blog
-        </div>
-        <div
-          style={{
-            display: "flex",
-            fontSize: 60,
-            fontWeight: 600,
-            letterSpacing: "-0.02em",
-            lineHeight: 1.15,
-          }}
-        >
-          {title}
-        </div>
-        <div style={{ display: "flex", fontSize: 30, color: "#94a3b8" }}>
-          {site.name}
-        </div>
+        {title}
       </div>
-    ),
+      <div style={{ display: "flex", fontSize: 30, color: "#a1a1aa" }}>
+        {site.name}
+      </div>
+    </div>,
     { ...size },
   );
 }

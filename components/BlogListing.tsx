@@ -39,14 +39,16 @@ export function BlogListing({
     <div className="mx-auto w-full max-w-3xl px-6 py-16">
       {prevUrl && <link rel="prev" href={prevUrl} />}
       {nextUrl && <link rel="next" href={nextUrl} />}
-      <p className="font-mono text-sm font-medium text-accent">Writing</p>
-      <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight">
+      <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+        Writing
+      </p>
+      <h1 className="font-display mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
         All posts
       </h1>
-      <p className="mt-3 text-muted">
+      <p className="mt-3 text-muted-foreground">
         {pagination.total} {pagination.total === 1 ? "post" : "posts"}
-        {activeTag ? ` tagged "${activeTag}"` : " on web engineering"}. Filter by
-        tag below.
+        {activeTag ? ` tagged "${activeTag}"` : " on web engineering"}. Filter
+        by tag below.
       </p>
       <div className="mt-10">
         <BlogList

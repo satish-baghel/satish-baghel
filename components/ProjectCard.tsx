@@ -1,4 +1,8 @@
+import { ArrowUpRight, TrendingUp } from "lucide-react";
 import { TechIcon } from "@/components/TechIcon";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import type { Project } from "@/lib/resume";
 
 /** How many tech pills to render before collapsing the rest into "+N". */
@@ -7,8 +11,7 @@ const MAX_VISIBLE_TECH = 4;
 /**
  * Project preview card — "indexed" variant.
  *
- * A faint monospace ordinal watermarks each card and ignites to accent on
- * hover, echoing the terminal/dev feel used across the site. Pass `featured`
+ * A faint ordinal watermarks each card and ignites to violet on hover. Pass `featured`
  * to render the wider two-column hero layout (see ProjectGrid).
  */
 export function ProjectCard({
@@ -26,30 +29,30 @@ export function ProjectCard({
   const overflow = project.tech.length - visibleTech.length;
 
   return (
-    <article
-      className={[
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-[var(--shadow-card)]",
-        "transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-card-hover)]",
+    <Card
+      className={cn(
+        "spotlight group relative h-full gap-0 overflow-hidden shadow-[var(--shadow-card)]",
+        "transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[var(--shadow-card-hover)]",
         featured ? "p-7 sm:p-8" : "p-6",
-      ].join(" ")}
+      )}
     >
       {/* Gradient top edge that draws in on hover. */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 transition-all duration-300 group-hover:scale-x-100 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px scale-x-0 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 transition-all duration-300 group-hover:scale-x-100 group-hover:opacity-100"
       />
       {/* Corner accent wash that blooms on hover for a premium, lifted feel. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full bg-accent/15 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-brand-gradient opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-25"
       />
       {/* Large faint ordinal watermark. */}
       <span
         aria-hidden="true"
-        className={[
-          "pointer-events-none absolute right-5 top-4 font-mono font-semibold leading-none text-foreground/[0.06] transition-colors duration-300 group-hover:text-accent/25",
+        className={cn(
+          "pointer-events-none absolute right-5 top-4 font-display font-bold leading-none text-foreground/[0.06] transition-colors duration-300 group-hover:text-primary/25",
           featured ? "text-6xl sm:text-7xl" : "text-5xl",
-        ].join(" ")}
+        )}
       >
         {ordinal}
       </span>
@@ -65,25 +68,25 @@ export function ProjectCard({
         <div className={featured ? "" : "flex flex-1 flex-col"}>
           <div className="relative flex items-center gap-2">
             {external ? (
-              <span className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-accent">
+              <Badge className="border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
                 <span
                   aria-hidden="true"
-                  className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_0_3px_color-mix(in_srgb,var(--accent)_20%,transparent)]"
+                  className="size-1.5 rounded-full bg-emerald-500"
                 />
                 Live
-              </span>
+              </Badge>
             ) : (
-              <span className="font-mono text-[11px] uppercase tracking-wide text-muted">
+              <Badge variant="secondary" className="text-muted-foreground">
                 Case study
-              </span>
+              </Badge>
             )}
           </div>
 
           <h3
-            className={[
-              "font-display mt-2 font-semibold tracking-tight",
+            className={cn(
+              "font-display mt-3 font-semibold tracking-tight",
               featured ? "text-2xl sm:text-3xl" : "text-lg",
-            ].join(" ")}
+            )}
           >
             {external ? (
               <a
@@ -92,15 +95,13 @@ export function ProjectCard({
                 rel="noopener noreferrer"
                 // Stretched link: makes the whole card a click target while
                 // keeping a single semantic link for accessibility.
-                className="inline-flex items-center gap-1.5 rounded text-foreground transition-colors after:absolute after:inset-0 group-hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="inline-flex items-center gap-1.5 rounded-sm text-foreground outline-none transition-colors after:absolute after:inset-0 group-hover:text-primary focus-visible:ring-[3px] focus-visible:ring-ring/50"
               >
                 {project.name}
-                <span
+                <ArrowUpRight
                   aria-hidden="true"
-                  className="text-muted transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
-                >
-                  ↗
-                </span>
+                  className="size-4 text-muted-foreground transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary"
+                />
               </a>
             ) : (
               <span className="text-foreground">{project.name}</span>
@@ -109,16 +110,19 @@ export function ProjectCard({
 
           {/* Headline outcome — the number a recruiter scans for. */}
           {project.impact && (
-            <p className="impact-badge mt-3 font-mono">
-              <ImpactIcon />
+            <Badge
+              variant="outline"
+              className="mt-3 border-primary/30 bg-primary/10 text-primary"
+            >
+              <TrendingUp aria-hidden="true" />
               {project.impact}
-            </p>
+            </Badge>
           )}
 
           {/* In the compact card, description + tech live in this column. */}
           {!featured && (
             <>
-              <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-muted">
+              <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">
                 {project.description}
               </p>
               <TechList
@@ -133,7 +137,7 @@ export function ProjectCard({
         {/* Featured cards keep description + tech in the second column. */}
         {featured && (
           <div>
-            <p className="line-clamp-4 text-[15px] leading-relaxed text-muted sm:line-clamp-none">
+            <p className="line-clamp-4 text-[15px] leading-relaxed text-muted-foreground sm:line-clamp-none">
               {project.description}
             </p>
             <TechList
@@ -144,27 +148,7 @@ export function ProjectCard({
           </div>
         )}
       </div>
-    </article>
-  );
-}
-
-/** Small upward-trend glyph paired with the impact metric. */
-function ImpactIcon() {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M3 17l6-6 4 4 8-8" />
-      <path d="M17 7h4v4" />
-    </svg>
+    </Card>
   );
 }
 
@@ -172,26 +156,33 @@ function ImpactIcon() {
 function TechList({
   visible,
   overflow,
-  className = "",
+  className,
 }: {
   visible: string[];
   overflow: number;
   className?: string;
 }) {
   return (
-    <ul className={`relative flex flex-wrap gap-2 ${className}`}>
+    <ul className={cn("relative flex flex-wrap gap-2", className)}>
       {visible.map((name) => (
-        <li
-          key={name}
-          className="font-mono inline-flex items-center gap-1.5 rounded-full border border-border bg-surface-muted px-2.5 py-1 text-xs text-muted transition-colors group-hover:border-accent/25"
-        >
-          <TechIcon name={name} size={14} />
-          {name}
+        <li key={name}>
+          <Badge
+            variant="secondary"
+            className="gap-1.5 px-2.5 py-1 font-normal text-muted-foreground"
+          >
+            <TechIcon name={name} size={14} />
+            {name}
+          </Badge>
         </li>
       ))}
       {overflow > 0 && (
-        <li className="font-mono inline-flex items-center rounded-full border border-border bg-surface-muted px-2.5 py-1 text-xs text-muted">
-          +{overflow}
+        <li>
+          <Badge
+            variant="secondary"
+            className="px-2.5 py-1 font-normal text-muted-foreground"
+          >
+            +{overflow}
+          </Badge>
         </li>
       )}
     </ul>

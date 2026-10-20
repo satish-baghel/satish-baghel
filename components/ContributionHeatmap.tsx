@@ -8,15 +8,25 @@ import type { ContributionDay } from "@/lib/contributions";
 
 const WEEKDAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTH = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 /** Fill color per intensity level, mixed from the theme accent. */
 function cellColor(level: ContributionDay["level"]): string {
-  if (level === 0) return "var(--surface-muted)";
+  if (level === 0) return "var(--muted)";
   const pct = { 1: 28, 2: 48, 3: 70, 4: 100 }[level];
-  return `color-mix(in srgb, var(--accent) ${pct}%, transparent)`;
+  return `color-mix(in srgb, var(--primary) ${pct}%, transparent)`;
 }
 
 /** "2026-03-14" → "Mar 14, 2026" for tooltips. */
@@ -60,7 +70,7 @@ export function ContributionHeatmap({ days }: { days: ContributionDay[] }) {
       <div className="inline-flex gap-2">
         {/* Weekday rail (Mon / Wed / Fri) */}
         <div
-          className="grid shrink-0 gap-[3px] pt-[15px] font-mono text-[9px] text-muted"
+          className="grid shrink-0 gap-[3px] pt-[15px] font-mono text-[9px] text-muted-foreground"
           style={{ gridTemplateRows: "repeat(7, 11px)" }}
           aria-hidden="true"
         >
@@ -77,7 +87,7 @@ export function ContributionHeatmap({ days }: { days: ContributionDay[] }) {
             {monthLabels.map((label, i) => (
               <span
                 key={i}
-                className="w-[11px] font-mono text-[9px] text-muted"
+                className="w-[11px] font-mono text-[9px] text-muted-foreground"
                 style={{ overflow: "visible", whiteSpace: "nowrap" }}
               >
                 {label}
@@ -88,20 +98,25 @@ export function ContributionHeatmap({ days }: { days: ContributionDay[] }) {
           {/* Week columns */}
           <div className="mt-1 flex gap-[3px]">
             {weeks.map((week, wi) => (
-              <div key={wi} className="grid gap-[3px]" style={{ gridTemplateRows: "repeat(7, 11px)" }}>
+              <div
+                key={wi}
+                className="grid gap-[3px]"
+                style={{ gridTemplateRows: "repeat(7, 11px)" }}
+              >
                 {Array.from({ length: 7 }, (_, di) => {
                   const day = week[di];
-                  if (!day) return <span key={di} className="h-[11px] w-[11px]" />;
+                  if (!day)
+                    return <span key={di} className="h-[11px] w-[11px]" />;
                   return (
                     <span
                       key={di}
                       title={`${day.count} ${day.count === 1 ? "contribution" : "contributions"} on ${formatDate(day.date)}`}
-                      className="h-[11px] w-[11px] rounded-[2px] ring-1 ring-inset ring-border/40 transition-[transform,box-shadow] duration-150 hover:scale-125 hover:ring-accent motion-reduce:transition-none motion-reduce:hover:scale-100"
+                      className="h-[11px] w-[11px] rounded-[2px] ring-1 ring-inset ring-border/40 transition-[transform,box-shadow] duration-150 hover:scale-125 hover:ring-ring motion-reduce:transition-none motion-reduce:hover:scale-100"
                       style={{
                         backgroundColor: cellColor(day.level),
                         boxShadow:
                           day.level === 4
-                            ? "0 0 6px color-mix(in srgb, var(--accent) 55%, transparent)"
+                            ? "0 0 6px color-mix(in srgb, var(--primary) 55%, transparent)"
                             : undefined,
                       }}
                     />
@@ -119,7 +134,7 @@ export function ContributionHeatmap({ days }: { days: ContributionDay[] }) {
 /** Small legend: "Less □□□□ More". */
 export function HeatmapLegend() {
   return (
-    <div className="flex items-center gap-1.5 font-mono text-[10px] text-muted">
+    <div className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
       <span>Less</span>
       {([0, 1, 2, 3, 4] as const).map((level) => (
         <span

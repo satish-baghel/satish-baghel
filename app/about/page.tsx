@@ -10,8 +10,9 @@ import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { JsonLd } from "@/components/JsonLd";
 import { QuickFacts } from "@/components/QuickFacts";
-import { Testimonials } from "@/components/Testimonials";
 import { ResumeButton } from "@/components/ResumeButton";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { site } from "@/lib/site";
 import { SUMMARY, SKILLS, EXPERIENCE, PROJECTS, EDUCATION } from "@/lib/resume";
 
@@ -55,11 +56,13 @@ export default function AboutPage() {
     <div className="mx-auto w-full max-w-4xl px-6 py-16">
       <JsonLd data={profileSchema} />
 
-      <p className="font-mono text-sm font-medium text-accent">{site.tagline}</p>
-      <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight">
+      <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+        {site.tagline}
+      </p>
+      <h1 className="font-display mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
         About me
       </h1>
-      <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
         {SUMMARY}
       </p>
 
@@ -74,13 +77,16 @@ export default function AboutPage() {
       </div>
 
       {/* Skills */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
+      <h2
+        data-reveal
+        className="font-display mt-16 text-2xl font-bold tracking-tight sm:text-3xl"
+      >
         Skills
       </h2>
       <div className="mt-6 space-y-6">
         {Object.entries(SKILLS).map(([group, items]) => (
           <div key={group}>
-            <h3 className="font-mono text-xs uppercase tracking-widest text-muted">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               {group}
             </h3>
             <ul className="mt-3 flex flex-wrap gap-2.5">
@@ -93,7 +99,10 @@ export default function AboutPage() {
       </div>
 
       {/* Experience */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
+      <h2
+        data-reveal
+        className="font-display mt-16 text-2xl font-bold tracking-tight sm:text-3xl"
+      >
         Experience
       </h2>
       <div className="mt-8">
@@ -101,15 +110,18 @@ export default function AboutPage() {
       </div>
 
       {/* Recommendations */}
-      {/* <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
+      {/* <h2 data-reveal className="font-display mt-16 text-2xl font-bold tracking-tight sm:text-3xl">
         What people say
       </h2>
       <div className="mt-6">
-        <Testimonials />
+        <Testimonials />  // re-add: import { Testimonials } from "@/components/Testimonials";
       </div> */}
 
       {/* Coding activity — GitHub + LeetCode, past year */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
+      <h2
+        data-reveal
+        className="font-display mt-16 text-2xl font-bold tracking-tight sm:text-3xl"
+      >
         Last 6 months in code
       </h2>
       <div className="mt-6">
@@ -119,7 +131,10 @@ export default function AboutPage() {
       </div>
 
       {/* Projects */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
+      <h2
+        data-reveal
+        className="font-display mt-16 text-2xl font-bold tracking-tight sm:text-3xl"
+      >
         Projects
       </h2>
       <div className="mt-6">
@@ -127,33 +142,43 @@ export default function AboutPage() {
       </div>
 
       {/* Education */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
+      <h2
+        data-reveal
+        className="font-display mt-16 text-2xl font-bold tracking-tight sm:text-3xl"
+      >
         Education
       </h2>
-      <ul className="mt-6 space-y-4">
+      <ul data-reveal-stagger className="mt-6 space-y-4">
         {EDUCATION.map((edu) => (
-          <li
-            key={edu.degree}
-            className="flex flex-wrap items-baseline justify-between gap-x-3 rounded-xl border border-border bg-surface p-5 shadow-[var(--shadow-card)]"
-          >
-            <div>
-              <h3 className="font-display text-lg font-semibold tracking-tight">
-                {edu.degree}
-              </h3>
-              <p className="mt-1 text-sm text-muted">
-                {edu.institution} · {edu.location}
-              </p>
-            </div>
-            <span className="font-mono text-sm text-accent">{edu.year}</span>
+          <li key={edu.degree}>
+            <Card className="flex-row flex-wrap items-baseline justify-between gap-x-3 gap-y-2 p-5 shadow-none">
+              <div>
+                <h3 className="font-display text-lg font-semibold">
+                  {edu.degree}
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {edu.institution} · {edu.location}
+                </p>
+              </div>
+              <Badge
+                variant="outline"
+                className="border-primary/30 text-primary"
+              >
+                {edu.year}
+              </Badge>
+            </Card>
           </li>
         ))}
       </ul>
 
       {/* Contact */}
-      <h2 className="font-display mt-14 text-2xl font-semibold tracking-tight">
+      <h2
+        data-reveal
+        className="font-display mt-16 text-2xl font-bold tracking-tight sm:text-3xl"
+      >
         Get in touch
       </h2>
-      <p className="mt-3 text-muted">
+      <p className="mt-3 text-muted-foreground">
         Based in {site.location}. Not actively looking right now, but always
         open to a good conversation — email is the fastest way to reach me.
       </p>

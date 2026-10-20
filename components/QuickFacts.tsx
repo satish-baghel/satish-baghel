@@ -1,29 +1,34 @@
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { QUICK_FACTS } from "@/lib/resume";
 
 /**
  * At-a-glance recruiter facts. A compact, scannable grid that answers a hiring
  * manager's first questions (experience, stack, location, availability) before
- * they scroll. Amber label dots tie into the site's highlight accent.
+ * they scroll. Violet label dots tie into the brand accent.
  */
-export function QuickFacts({ className = "" }: { className?: string }) {
+export function QuickFacts({ className }: { className?: string }) {
   return (
     <dl
-      className={`grid grid-cols-2 gap-3 sm:grid-cols-3 ${className}`}
+      className={cn("grid grid-cols-2 gap-3 sm:grid-cols-3", className)}
       aria-label="Quick facts"
     >
       {QUICK_FACTS.map((fact) => (
-        <div key={fact.label} className="fact-tile">
-          <dt className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-muted">
+        <Card
+          key={fact.label}
+          className="gap-0 px-4 py-3.5 shadow-none transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/50"
+        >
+          <dt className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <span
               aria-hidden="true"
-              className="h-1.5 w-1.5 rounded-full bg-highlight"
+              className="size-1.5 rounded-full bg-primary"
             />
             {fact.label}
           </dt>
-          <dd className="mt-1 text-sm font-semibold tracking-tight text-foreground">
+          <dd className="mt-1 text-sm font-semibold text-foreground">
             {fact.value}
           </dd>
-        </div>
+        </Card>
       ))}
     </dl>
   );
