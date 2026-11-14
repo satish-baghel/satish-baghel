@@ -116,7 +116,14 @@ const websiteSchema = {
       givenName: "Satish",
       familyName: "Baghel",
       url: site.url,
-      image: `${site.url}/me.png`,
+      // Size matches public/me.png; update it if the photo changes.
+      image: {
+        "@type": "ImageObject",
+        url: `${site.url}/me.png`,
+        width: 577,
+        height: 432,
+        caption: `Portrait of ${site.name}`,
+      },
       jobTitle: site.jobTitle,
       description: site.description,
       email: `mailto:${site.email}`,

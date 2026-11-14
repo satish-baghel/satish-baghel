@@ -414,6 +414,32 @@ body {
   color: var(--muted-foreground);
   font-style: italic;
 }
+/* Tables scroll inside their wrapper so a wide one never widens the page. */
+.prose .table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  background: var(--muted);
+  box-shadow: var(--shadow-clay-inset);
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.prose th,
+.prose td {
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.prose tbody tr {
+  border-top: 1px solid var(--border);
+}
 /* Inline code — tinted on a subtle surface for the light canvas. */
 .prose :not(pre) > code {
   font-family: var(--font-mono), ui-monospace, monospace;

@@ -12,7 +12,7 @@ faq:
     a: Partial is shallow. It makes the top-level properties optional but leaves nested objects unchanged. For nested optionality you need a recursive DeepPartial type.
 ---
 
-TypeScript ships a set of built-in utility types that remove most of the hand-written generics people reach for. Here are the five I use in nearly every project.
+The five TypeScript utility types I use in nearly every project are `Partial`, `Required`, `Pick`, `Omit` and `Record`. They're built in, and they replace most of the hand-written generics people reach for.
 
 ## TL;DR
 

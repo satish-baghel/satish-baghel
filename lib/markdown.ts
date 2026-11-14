@@ -3,8 +3,8 @@
  *
  * Scope is intentionally small: it supports exactly the syntax used by the
  * blog posts in `posts/` (headings, paragraphs, bold/italic, inline code,
- * links, ordered/unordered lists, blockquotes, and fenced code blocks with an
- * optional caption). It is NOT a general-purpose Markdown engine.
+ * links, ordered/unordered lists, blockquotes, pipe tables, and fenced code
+ * blocks with an optional caption). It is NOT a general-purpose Markdown engine.
  *
  * All raw text is HTML-escaped before any markup is generated, so post content
  * cannot inject arbitrary HTML.
@@ -44,6 +44,26 @@ function renderInline(text: string): string {
   out = out.replace(/(^|[^*])\*([^*]+)\*/g, "$1<em>$2</em>");
   out = out.replace(/_([^_]+)_/g, "<em>$1</em>");
   return out;
+}
+
+/** Cells of a `| a | b |` row. Leading and trailing pipes are optional. */
+function tableCells(line: string): string[] {
+  return line
+    .trim()
+    .replace(/^\|/, "")
+    .replace(/\|$/, "")
+    .split("|")
+    .map((cell) => cell.trim());
+}
+
+/** The `|---|:---:|` row that turns the line above it into a table header. */
+function isTableSeparator(line: string | undefined): boolean {
+  return line !== undefined && /^\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)*\|?\s*$/.test(line);
+}
+
+/** A table starts at a `|` row whose next line is a separator row. */
+function isTableStart(lines: string[], i: number): boolean {
+  return lines[i].trim().startsWith("|") && isTableSeparator(lines[i + 1]);
 }
 
 export function markdownToHtml(markdown: string): string {
@@ -97,6 +117,24 @@ export function markdownToHtml(markdown: string): string {
       continue;
     }
 
+    // Table: header row, separator row, then body rows until a non-| line.
+    if (isTableStart(lines, i)) {
+      closeList();
+      const cell = (text: string, tag: "th" | "td") =>
+        `<${tag}>${renderInline(escapeHtml(text))}</${tag}>`;
+      const head = tableCells(line).map((c) => cell(c, "th")).join("");
+      i += 2;
+      const body: string[] = [];
+      while (i < lines.length && lines[i].trim().startsWith("|")) {
+        body.push(`<tr>${tableCells(lines[i]).map((c) => cell(c, "td")).join("")}</tr>`);
+        i++;
+      }
+      html.push(
+        `<div class="table-wrap"><table><thead><tr>${head}</tr></thead><tbody>${body.join("")}</tbody></table></div>`,
+      );
+      continue;
+    }
+
     // Blockquote
     if (line.startsWith(">")) {
       closeList();
@@ -147,6 +185,7 @@ export function markdownToHtml(markdown: string): string {
       lines[i].trim() !== "" &&
       !lines[i].startsWith("```") &&
       !/^#{2,3}\s/.test(lines[i]) &&
+      !isTableStart(lines, i) &&
       !lines[i].startsWith(">") &&
       !/^[-*]\s+/.test(lines[i]) &&
       !/^\d+\.\s+/.test(lines[i])

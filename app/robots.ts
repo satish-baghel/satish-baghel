@@ -23,7 +23,7 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "*", allow: "/" },
       { userAgent: AI_CRAWLERS, allow: "/" },
     ],
+    // No `host`: it was a Yandex-only directive that Yandex itself retired.
     sitemap: `${site.url}/sitemap.xml`,
-    host: site.url,
   };
 }

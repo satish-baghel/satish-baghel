@@ -3,7 +3,17 @@ import { type PostMeta, formatDate } from "@/lib/types";
 import { TagChip } from "@/components/blog/TagChip";
 import { Card } from "@/components/ui/card";
 
-export function PostCard({ post }: { post: PostMeta }) {
+/**
+ * `headingAs` keeps the outline valid wherever the card lands: h3 under a
+ * section h2 on the home page, h2 directly under the h1 on /blog.
+ */
+export function PostCard({
+  post,
+  headingAs: Heading = "h3",
+}: {
+  post: PostMeta;
+  headingAs?: "h2" | "h3";
+}) {
   return (
     <Card asChild>
       <article className="group relative flex flex-col p-5 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-clay-hover motion-reduce:transition-none motion-reduce:hover:translate-y-0">
@@ -20,7 +30,7 @@ export function PostCard({ post }: { post: PostMeta }) {
             →
           </span>
         </div>
-        <h3 className="font-display mt-2 text-lg font-semibold tracking-tight">
+        <Heading className="font-display mt-2 text-lg font-semibold tracking-tight">
           {/* Stretched link — the whole card is one click/tap target (Fitts's law). */}
           <Link
             href={`/blog/${post.slug}`}
@@ -28,7 +38,7 @@ export function PostCard({ post }: { post: PostMeta }) {
           >
             {post.title}
           </Link>
-        </h3>
+        </Heading>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
         {post.tags.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">

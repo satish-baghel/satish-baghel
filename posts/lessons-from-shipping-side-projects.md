@@ -28,3 +28,8 @@ The best blog posts come from problems you just solved, while the frustration is
 ## The takeaway
 
 Side projects are a low-stakes gym for high-stakes skills: scoping, finishing, choosing tools, and communicating. You do not need a big idea. You need a small one you will actually ship.
+
+## Related
+
+- [Case Study: EVINDIA, an EV Marketplace for India](/blog/evindia-case-study)
+- [Fix: "Hydration failed" in Next.js 16](/blog/fix-hydration-failed-nextjs)
