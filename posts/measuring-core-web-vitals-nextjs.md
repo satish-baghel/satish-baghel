@@ -1,7 +1,7 @@
 ---
 title: Measuring Core Web Vitals in a Next.js App
 date: 2026-06-23
-excerpt: You cannot improve what you do not measure. Here is how to capture real Core Web Vitals from your Next.js App Router site and where each metric usually goes wrong.
+excerpt: Measure real-user Core Web Vitals (LCP, INP, CLS) in a Next.js App Router site with useReportWebVitals, and where each metric usually goes wrong.
 tags: [next.js, performance]
 keyword: next.js core web vitals
 type: howto
@@ -12,7 +12,7 @@ faq:
     a: Use the useReportWebVitals hook from next/web-vitals in a client component to receive each metric, then forward it to your analytics endpoint for real-user data.
 ---
 
-You cannot improve what you do not measure. Lab tools like Lighthouse are a start, but real-user metrics from your actual visitors are what Google ranks on. Here is how to capture them in a Next.js App Router site.
+To measure Core Web Vitals in a Next.js App Router site, call `useReportWebVitals` from `next/web-vitals` in a client component and send each metric (LCP, INP and CLS) to an analytics endpoint. That gives you numbers from real visitors, which is what Google uses, rather than a single Lighthouse run on your own machine.
 
 ## TL;DR
 

@@ -10,7 +10,8 @@ export const yearsOfExperience = Math.floor(
 export const site = {
   name: "Satish Baghel",
   title: "Satish Baghel | Software Engineer (Node.js, React)",
-  description: `Satish Baghel is a software engineer in Ahmedabad, India with ${yearsOfExperience}+ years of full-stack experience: REST APIs in Node.js and Express, MongoDB and MySQL databases, Stripe payments, and React or Next.js front ends for products used by 100K+ people.`,
+  // Kept to ~155 characters so Google shows it whole in search results.
+  description: `Satish Baghel is a software engineer in Ahmedabad, India with ${yearsOfExperience}+ years building Node.js APIs, Stripe payments and React/Next.js front ends for 100K+ users.`,
   url: "https://satishbaghel.com",
   jobTitle: "Software Engineer",
   tagline: "Software engineer · Ahmedabad, India",
@@ -26,3 +27,15 @@ export const site = {
   linkedin: "https://www.linkedin.com/in/satish-baghel",
   locale: "en_US",
 } as const;
+
+/**
+ * The site-wide share card from app/opengraph-image.tsx. Metadata merges
+ * shallowly, so any page that sets its own `openGraph` or `twitter` drops the
+ * root image and must list it again.
+ */
+export const shareImage = {
+  url: "/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: site.title,
+};

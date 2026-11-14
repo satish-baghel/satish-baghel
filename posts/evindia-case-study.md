@@ -1,5 +1,5 @@
 ---
-title: "Case Study: Building EVINDIA, an Electric Vehicle Marketplace for India"
+title: "Case Study: EVINDIA, an EV Marketplace for India"
 date: 2026-07-08
 excerpt: How I built evindia.online — 35+ Node.js APIs behind a SEO-friendly Next.js front-end that serves 10,000+ monthly visitors browsing, filtering, and comparing electric vehicles. The problem, the architecture, and what the numbers say.
 tags: [case-study]
@@ -87,10 +87,12 @@ Before it, updates meant a developer touching data by hand. After it, the conten
 
 The numbers after launch and optimization:
 
-- **10,000+ monthly visitors**, arriving mostly through organic search
-- **~40% faster page loads** after tuning server rendering and payload sizes
-- **+25% organic traffic** from the SEO-first architecture
-- **~50% less admin task time** via the master admin panel
+| Metric | Result | What drove it |
+|---|---|---|
+| Monthly visitors | **10,000+**, mostly from organic search | Server-rendered, indexable pages |
+| Page load time | **~40% faster** | Tuned server rendering and smaller payloads |
+| Organic traffic | **+25%** | The SEO-first architecture |
+| Admin task time | **~50% less** | The master admin panel |
 
 ## What I'd take away
 
@@ -98,3 +100,9 @@ The numbers after launch and optimization:
 - **Make the shareable thing a URL.** The comparison engine earns visitors because a comparison can travel.
 - **The admin panel is a product too.** Fresh data is what people come back for, and the tooling that keeps data fresh deserves the same care as the public site.
 - **Boring stacks let you spend effort where it counts.** Node, Express, MongoDB, and Next.js are unexciting on purpose — the interesting problems were the catalog model, the filters, and the comparison engine, not the infrastructure.
+
+## Related
+
+- [How to Add a Sitemap in Next.js 16](/blog/nextjs-16-sitemap)
+- [Measuring Core Web Vitals in a Next.js App](/blog/measuring-core-web-vitals-nextjs)
+- [6 Backend Lessons From Shipping Real Products](/blog/lessons-from-shipping-side-projects)

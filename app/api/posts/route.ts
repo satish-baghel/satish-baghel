@@ -42,6 +42,8 @@ export function GET(request: NextRequest) {
         // Cache at the CDN for a minute; serve stale while revalidating so
         // bursts of traffic don't all hit the filesystem.
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        // Raw JSON for the UI, not a page: keep it out of search results.
+        "X-Robots-Tag": "noindex",
       },
     },
   );

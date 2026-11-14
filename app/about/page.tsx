@@ -10,7 +10,7 @@ import { MoreProjects } from "@/components/sections/MoreProjects";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { ResumeButton } from "@/components/shared/ResumeButton";
-import { site, yearsOfExperience } from "@/lib/site";
+import { shareImage, site, yearsOfExperience } from "@/lib/site";
 import { EXPERIENCE } from "@/lib/resume";
 
 const description = `How Satish Baghel went from intern to software engineer: ${yearsOfExperience}+ years of Node.js, React and database work, every role in detail, and more projects.`;
@@ -24,6 +24,15 @@ export const metadata: Metadata = {
     description,
     url: "/about",
     type: "profile",
+    siteName: site.name,
+    locale: site.locale,
+    images: [shareImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About | Satish Baghel",
+    description,
+    images: [shareImage],
   },
 };
 

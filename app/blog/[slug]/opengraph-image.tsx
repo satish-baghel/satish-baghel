@@ -2,12 +2,28 @@ import { ImageResponse } from "next/og";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { site } from "@/lib/site";
 
-export const alt = `Blog post — ${site.name}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+/** URL segment of the single card per post: /blog/<slug>/opengraph-image/card */
+export const OG_IMAGE_ID = "card";
+
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
+}
+
+// A static `alt` export can't vary by post, so the per-post alt text comes from
+// here. It also fixes the image URL, which the TechArticle schema points at.
+export function generateImageMetadata({ params }: { params: { slug: string } }) {
+  const post = getPostBySlug(params.slug);
+  return [
+    {
+      id: OG_IMAGE_ID,
+      alt: post?.title ?? site.name,
+      size,
+      contentType,
+    },
+  ];
 }
 
 export default async function Image({

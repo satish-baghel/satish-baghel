@@ -14,7 +14,7 @@ export type Post = {
   excerpt: string;
   tags: string[];
   keyword?: string; // primary SEO keyword/intent
-  /** "article" (default) | "howto" — drives which JSON-LD schema is emitted. */
+  /** "article" (default) | "howto" — sets the post's on-page label ("Article" or "Guide"). */
   type?: "article" | "howto";
   content: string; // raw Markdown body (frontmatter stripped)
   readingMinutes: number;
@@ -49,6 +49,25 @@ export function tagSlug(tag: string): string {
     .replace(/[^\w\s-]/g, "")
     .trim()
     .replace(/\s+/g, "-");
+}
+
+/** Proper-cased names for tags whose frontmatter spelling is lowercase. */
+const TAG_LABELS: Record<string, string> = {
+  css: "CSS",
+  javascript: "JavaScript",
+  "next.js": "Next.js",
+  seo: "SEO",
+  typescript: "TypeScript",
+};
+
+/**
+ * Human-readable tag name for headings and titles, e.g. `next.js` → `Next.js`,
+ * `case-study` → `Case study`. Frontmatter tags stay lowercase so slugs and
+ * filters are unaffected.
+ */
+export function tagLabel(tag: string): string {
+  const label = TAG_LABELS[tag] ?? tag.replace(/-/g, " ");
+  return label.charAt(0).toUpperCase() + label.slice(1);
 }
 
 /**

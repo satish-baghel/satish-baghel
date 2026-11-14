@@ -1,5 +1,5 @@
 import { getAllTags } from "@/lib/posts";
-import { blogPath } from "@/lib/types";
+import { blogPath, tagLabel } from "@/lib/types";
 import { site } from "@/lib/site";
 import { BlogList } from "@/components/blog/BlogList";
 import { resolveListing } from "@/lib/blog-listing";
@@ -41,11 +41,11 @@ export function BlogListing({
       {nextUrl && <link rel="next" href={nextUrl} />}
       <p className="section-label">Writing</p>
       <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight">
-        All posts
+        {activeTag ? `Posts tagged ${tagLabel(activeTag)}` : "All posts"}
       </h1>
       <p className="mt-3 text-muted-foreground">
         {pagination.total} {pagination.total === 1 ? "post" : "posts"}
-        {activeTag ? ` tagged "${activeTag}"` : " on web engineering"}. Filter by
+        {activeTag ? ` tagged "${tagLabel(activeTag)}"` : " on web engineering"}. Filter by
         tag below.
       </p>
       <div className="mt-10">

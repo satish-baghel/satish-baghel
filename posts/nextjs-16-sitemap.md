@@ -70,6 +70,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
 }
 ```
 
+## Should I use app/sitemap.ts, next-sitemap or a static file?
+
+For most Next.js 16 sites, `app/sitemap.ts` is the right choice. Here's how the three options compare:
+
+| | `app/sitemap.ts` | `next-sitemap` package | Static `public/sitemap.xml` |
+|---|---|---|---|
+| Extra dependency | None | Yes | None |
+| New posts added automatically | Yes | Yes, on each build | No, edited by hand |
+| Type-checked | Yes (`MetadataRoute.Sitemap`) | Config only | No |
+| Also writes robots.txt | No (use `app/robots.ts`) | Yes | No |
+| Very large sites (50,000+ URLs) | Split with `generateSitemaps` | Splits automatically | Split by hand |
+
+Reach for `next-sitemap` only if you're on an older setup that already uses it. A static file goes stale the first time you forget to update it.
+
 ## How do I verify it works?
 
 Run a production build and request the route:

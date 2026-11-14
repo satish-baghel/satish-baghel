@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug, formatDate, type Post } from "@/lib/posts";
-import { parseMarkdown, slugify } from "@/lib/markdown";
+import { parseMarkdown } from "@/lib/markdown";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { CodeBlock } from "@/components/blog/CodeBlock";
+import { OG_IMAGE_ID } from "./opengraph-image";
 import { TagChip } from "@/components/blog/TagChip";
 import { Button } from "@/components/ui/button";
-import { site } from "@/lib/site";
+import { site, yearsOfExperience } from "@/lib/site";
 
 type Params = { slug: string };
 
@@ -48,16 +49,6 @@ export async function generateMetadata({
   };
 }
 
-/** H2 headings, excluding meta sections — used for HowTo step schema. */
-function stepHeadings(content: string): string[] {
-  const skip = ["tl;dr", "faq", "related"];
-  return content
-    .split("\n")
-    .filter((line) => line.startsWith("## "))
-    .map((line) => line.replace(/^##\s+/, "").trim())
-    .filter((heading) => !skip.includes(heading.toLowerCase()));
-}
-
 function buildSchemas(post: Post): Record<string, unknown>[] {
   const pageUrl = `${site.url}/blog/${post.slug}`;
   const schemas: Record<string, unknown>[] = [];
@@ -67,6 +58,7 @@ function buildSchemas(post: Post): Record<string, unknown>[] {
     "@type": "TechArticle",
     headline: post.title,
     description: post.excerpt,
+    image: `${pageUrl}/opengraph-image/${OG_IMAGE_ID}`,
     datePublished: post.date,
     dateModified: post.updated ?? post.date,
     author: {
@@ -104,19 +96,8 @@ function buildSchemas(post: Post): Record<string, unknown>[] {
     });
   }
 
-  if (post.type === "howto") {
-    schemas.push({
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      name: post.title,
-      description: post.excerpt,
-      step: stepHeadings(post.content).map((heading) => ({
-        "@type": "HowToStep",
-        name: heading,
-        url: `${pageUrl}#${slugify(heading)}`,
-      })),
-    });
-  }
+  // No HowTo schema for "howto" posts: Google retired HowTo rich results in
+  // Sept 2023. TechArticle above already describes these posts.
 
   return schemas;
 }
@@ -194,7 +175,15 @@ export default async function PostPage({
 
       <footer className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-8">
         <p className="text-sm text-muted-foreground">
-          Written by <span className="text-foreground">{site.name}</span>
+          Written by{" "}
+          <Link
+            href="/about"
+            rel="author"
+            className="text-foreground underline-offset-4 transition-colors hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+          >
+            {site.name}
+          </Link>
+          , software engineer with {yearsOfExperience}+ years of experience
         </p>
         <Button
           asChild
