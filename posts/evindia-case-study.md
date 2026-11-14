@@ -105,4 +105,4 @@ The numbers after launch and optimization:
 
 - [How to Add a Sitemap in Next.js 16](/blog/nextjs-16-sitemap)
 - [Measuring Core Web Vitals in a Next.js App](/blog/measuring-core-web-vitals-nextjs)
-- [What Shipping Side Projects Taught Me About Engineering](/blog/lessons-from-shipping-side-projects)
+- [6 Backend Lessons From Shipping Real Products](/blog/lessons-from-shipping-side-projects)
