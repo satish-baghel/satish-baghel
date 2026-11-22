@@ -1,13 +1,13 @@
 {
   "extraKnownMarketplaces": {
-    "unslop-marketplace": {
+    "unslop": {
       "source": {
         "source": "github",
-        "repo": "MohamedAbdallah-14/unslop"
+        "repo": "marcosnovo/unslop-design"
       }
     }
   },
   "enabledPlugins": {
-    "unslop@unslop-marketplace": true
+    "unslop-design@unslop": true
   }
 }
